@@ -1,0 +1,12 @@
+@startuml
+state "ホーム画面(検索画面)" as Home
+state "検索結果画面" as Results
+state "商品詳細画面" as Details
+state "ECサイト" as EC
+
+[*] --> Home
+Home --> Results : 検索結果を表示
+Results --> Details : 詳細をリクエスト
+Details --> EC : ECサイトへのリンクをクリック
+EC --> [*] : 商品を注文
+@enduml
