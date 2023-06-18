@@ -16,7 +16,7 @@
   - そもそもどのような検索条件で調べれば良いのかがわからない。
   - iPhone13 Pro のケースを買いたかったが、Pro というワードが抜けていたため iPhone13 のケースがヒットしていることに気付かず購入。
 
-    <img src="https://github.com/KoichiYanagisawa/apprentice/blob/main/original_product/IMG_0414.jpeg" alt="iPhone13Proのケースを買いたかったが・・・？" width="400px" />
+    <img src="./IMG_0414.jpeg" width="400px" />
 
 ## 3.なぜそれを解決したいのか？
 
