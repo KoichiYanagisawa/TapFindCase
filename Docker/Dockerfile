@@ -1,19 +1,25 @@
 FROM ubuntu:22.04
 
+# ワークディレクトリの作成
+WORKDIR /root/src
+
+# ホストOS上にあるGemfileとGemfile.lockをコンテナにコピー
+COPY ./src /root/src
+
+# 必要なパッケージのインストール
 RUN apt-get update -qq && \
     apt-get upgrade -y && \
-    apt-get install -y curl git libssl-dev libreadline-dev zlib1g-dev autoconf bison build-essential libyaml-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev
+    apt-get install -y curl build-essential zlib1g-dev libssl-dev libreadline-dev libffi-dev libyaml-dev
 
-RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-RUN git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
-RUN echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
-RUN /bin/bash -l -c "rbenv install 3.2.2 && rbenv global 3.2.2"
+# Rubyのインストール
+RUN curl -fsSL https://cache.ruby-lang.org/pub/ruby/3.2/ruby-3.2.2.tar.gz | tar -xz && \
+    cd ruby-3.2.2 && \
+    ./configure && make && make install && \
+    cd .. && rm -rf ruby-3.2.2
 
-WORKDIR /root/app
+# Bundlerで依存関係をインストール
+RUN gem install bundler && \
+    bundle install
 
-RUN /bin/bash -l -c "gem install bundler"
-
-COPY ./app/Gemfile ./app/Gemfile.lock /root/app/
-
-RUN /bin/bash -l -c "bundle install"
+# コンテナ起動時に実行されるコマンド
+CMD ["bin/bash"]

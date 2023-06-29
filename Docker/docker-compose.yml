@@ -1,8 +1,8 @@
 version: "3.7"
 services:
-  web_scraper:
+  scraper:
     build: .
     tty: true
     volumes:
-      - .:/root
+      - ./src:/root/src
     command: /bin/bash
