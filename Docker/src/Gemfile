@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-# スクレイピングに使用
-gem 'nokogiri'
+# seleniumで動的サイトのスクレイピングに使用
+gem 'selenium-webdriver', '~> 4.10'
+
+# seleniumでchromium browserを動かすために必要
+gem 'webdrivers', '~> 5.2'
