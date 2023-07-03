@@ -1,2 +1,5 @@
 # .envファイルを除外
 .env
+
+# ローカルでバインドしたmysqlのディレクトリを除外
+/docker/mysql

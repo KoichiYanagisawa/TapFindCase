@@ -2,6 +2,18 @@
 
 require 'selenium-webdriver'
 require 'set'
+require 'active_record'
+require 'mysql2'
+require 'yaml'
+require 'dotenv/load'
+require 'erb'
+
+# database.ymlを読み込む設定
+db_config = YAML.load(ERB.new(File.read('./config/database.yml')).result, aliases: true)
+ActiveRecord::Base.establish_connection(db_config['development'])
+
+class Product < ActiveRecord::Base
+end
 
 # Scraperというクラスを作成
 class Scraper
@@ -15,7 +27,7 @@ class Scraper
     setup_driver # ドライバをセットアップ
     @wait = Selenium::WebDriver::Wait.new(timeout: 20) # 明示的に待ち時間を設定
     @urls = Set.new # 商品詳細ページのURLを格納するSetを作成
-    @item_info = [] # 商品情報を格納する配列を作成
+    # @item_info = [] # 商品情報を格納する配列を作成
   end
 
   # UserAgentのリストを作成するメソッドを定義
@@ -64,30 +76,6 @@ class Scraper
     end
   end
 
-# アイテムの詳細ページから情報を取得するメソッドを定義
-def get_item_info
-  @urls.each_with_index do |url, index| # Setの中身を1つずつ取り出す
-    retry_count = 0
-    begin
-      # 現在の処理を5/89のように表示する
-      puts "現在の処理: #{index + 1}/#{@urls.length}"
-      item_info = {} # 商品情報を格納するハッシュを作成
-      @driver.get(url) # 指定したURLにアクセス
-      sleep(3) # 3秒待つ
-      item_info[:name] = @wait.until { @driver.find_element(:xpath, '//div[@id="titleBox"]/div[1]/h2[@itemprop="name"]').text } # 商品名を取得
-      item_info[:maker] = @wait.until { @driver.find_element(:xpath, '//*[@id="relateList"]/li/a').text } # メーカー名を取得
-      item_info[:url] = @wait.until { @driver.find_element(:xpath, '//*[@id="priceBox"]/div[1]/div/div[3]/span/a').attribute('href') } # 商品URLを取得
-      item_info[:price] = @wait.until { @driver.find_element(:xpath, '//*[@id="priceBox"]/div[1]/div/p/span[@class="priceTxt"]').text } # 価格を取得
-      @item_info << item_info # item_infoをitem_info配列に追加
-    rescue StandardError => e
-      puts "get_item_info: #{e.message}"
-      retry_count += 1
-      retry if retry_count <= 3
-      puts "URL #{url} に対するリトライが3回失敗しました"
-    end
-  end
-end
-
   # 検索結果からアイテムのURLを取得するメソッドを定義
   def get_urls(xpath)
     elements = @wait.until { @driver.find_elements(:xpath, xpath) } # 検索結果の要素を取得
@@ -109,6 +97,43 @@ end
   else
     true # リンクが存在する場合、trueを返す
   end
+
+  # アイテムの詳細ページから情報を取得するメソッドを定義
+  def get_item_info
+    @urls.each_with_index do |url, index| # Setの中身を1つずつ取り出す
+      retry_count = 0
+      begin
+        # 現在の処理の進捗を表示する
+        puts "現在の処理: #{index + 1}/#{@urls.length}"
+        item_info = {} # 商品情報を格納するハッシュを作成
+        @driver.get(url) # 指定したURLにアクセス
+        sleep(3) # 3秒待つ
+        item_info[:name] = @wait.until { @driver.find_element(:xpath, '//div[@id="titleBox"]/div[1]/h2[@itemprop="name"]').text } # 商品名を取得
+        item_info[:maker] = @wait.until { @driver.find_element(:xpath, '//*[@id="relateList"]/li/a').text } # メーカー名を取得
+        item_info[:url] = @wait.until { @driver.find_element(:xpath, '//*[@id="priceBox"]/div[1]/div/div[3]/span/a').attribute('href') } # 商品URLを取得
+        item_info[:price] = @wait.until { @driver.find_element(:xpath, '//*[@id="priceBox"]/div[1]/div/p/span[@class="priceTxt"]').text } # 価格を取得
+        store_data_to_db(item_info) # 商品データをデータベースに保存
+      rescue StandardError => e
+        puts "get_item_info: #{e.message}"
+        retry_count += 1
+        retry if retry_count <= 3
+        puts "URL #{url} に対するリトライが3回失敗しました"
+      end
+    end
+  end
+
+  # 商品データを重複なく保存するメソッドを定義
+  def store_data_to_db(item_info)
+    puts "商品名:#{item_info[:name]}をDBに保存します"
+    product = Product.find_or_create_by(name: item_info[:name], maker: item_info[:maker], url: item_info[:url], price: item_info[:price])
+
+    # URLまたは価格が異なる場合、データを更新する
+    if product.url != item_info[:url] || product.price != item_info[:price]
+      product.update(url: item_info[:url], price: item_info[:price])
+    end
+  end
+
+
 end
 
 # Scraperのインスタンスを作成し、アイテムを検索
@@ -117,9 +142,3 @@ url = 'https://kakaku.com/keitai/mobilephone-accessories/itemlist.aspx?pdf_Spec1
 scraper = Scraper.new
 scraper.search_item(url)
 scraper.get_item_info
-scraper.item_info.each do |item_info|
-  puts item_info[:name]
-  puts item_info[:maker]
-  puts item_info[:url]
-  puts item_info[:price]
-end
