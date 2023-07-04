@@ -15,6 +15,9 @@ CREATE TABLE products (
     name VARCHAR(255),
     maker VARCHAR(255),
     url TEXT,
-    price DECIMAL(10,0)
+    price CHAR(10),
+    model CHAR(30),
+    url_image TEXT,
+    checked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 );
 EOF

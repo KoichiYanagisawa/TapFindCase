@@ -7,6 +7,8 @@ require 'mysql2'
 require 'yaml'
 require 'dotenv/load'
 require 'erb'
+require 'net/http'
+require 'uri'
 
 # database.ymlを読み込む設定
 db_config = YAML.load(ERB.new(File.read('./config/database.yml')).result, aliases: true)
@@ -27,7 +29,6 @@ class Scraper
     setup_driver # ドライバをセットアップ
     @wait = Selenium::WebDriver::Wait.new(timeout: 20) # 明示的に待ち時間を設定
     @urls = Set.new # 商品詳細ページのURLを格納するSetを作成
-    # @item_info = [] # 商品情報を格納する配列を作成
   end
 
   # UserAgentのリストを作成するメソッドを定義
@@ -112,7 +113,21 @@ class Scraper
         item_info[:maker] = @wait.until { @driver.find_element(:xpath, '//*[@id="relateList"]/li/a').text } # メーカー名を取得
         item_info[:url] = @wait.until { @driver.find_element(:xpath, '//*[@id="priceBox"]/div[1]/div/div[3]/span/a').attribute('href') } # 商品URLを取得
         item_info[:price] = @wait.until { @driver.find_element(:xpath, '//*[@id="priceBox"]/div[1]/div/p/span[@class="priceTxt"]').text } # 価格を取得
-        store_data_to_db(item_info) # 商品データをデータベースに保存
+        # 対応機種の情報を取得
+        model_info_text = @wait.until { @driver.find_element(:xpath, '//div[@id="specBox"]/p').text }
+        models = model_info_text.match(/対応機種：(iPhone .+)/)[1].split(/\/|\s\/\s/) # "対応機種："の後の文字列を取得し、スラッシュ('/')またはスペース+スラッシュ+スペース(' / ')で分割
+
+        models.each do |model|
+          model = model.gsub(/(\s第)(\d+)(世代)/, '(第\2世代)') # " 第X世代" を "第X世代" に統一
+          model = "iPhone #{model}" unless model.include?("iPhone") # "iPhone"が含まれていない場合は、"iPhone"を追加
+          item_info[:model] = model.strip # モデル名を取得（前後の空白を削除）
+          puts "モデル名:#{item_info[:model]}"
+          store_data_to_db(item_info) # 商品データをデータベースに保存
+        end
+
+        # 今のURLを取得して、商品画像を取得する
+        get_item_images(@driver.current_url)
+
       rescue StandardError => e
         puts "get_item_info: #{e.message}"
         retry_count += 1
@@ -122,18 +137,94 @@ class Scraper
     end
   end
 
+  # 商品画像を取得するメソッドを定義
+  def get_item_images(url)
+    puts "商品画像を取得します: #{url}"
+    retry_count = 0
+    begin
+      # 商品IDを取得
+      item_id = url.match(/https:\/\/kakaku\.com\/item\/(K\d+)\//)[1]
+
+      # 画像一覧ページのURLを作成
+      image_list_url = "https://kakaku.com/item/#{item_id}/images/"
+
+      # 画像一覧ページにアクセス
+      @driver.get(image_list_url)
+      sleep(3) # 3秒待つ
+
+      # 小さい画像の要素を取得
+      thumbnail_elements = @wait.until { @driver.find_elements(:xpath, '//div[@class="zoomimgList"]//img') }
+
+      # 小さい画像の要素の数だけループ
+      thumbnail_elements.each_with_index do |thumbnail_element, i|
+        # 小さい画像のURLを取得
+        thumbnail_url = thumbnail_element.attribute('src')
+
+        # 小さい画像を保存
+        save_image(thumbnail_url, "#{item_id}_thumbnail_#{i}", true)
+
+        # 小さい画像をクリックして大きい画像を表示
+        thumbnail_element.click
+        sleep(3) # 3秒待つ
+
+        # 大きい画像のURLを取得
+        image_url = @wait.until { @driver.find_element(:xpath, '//img[@class="zoomimg"]').attribute('src') }
+
+        # 大きい画像を保存
+        save_image(image_url, "#{item_id}_large_#{i}")
+      end
+
+    rescue Selenium::WebDriver::Error::NoSuchElementError
+      puts "URL #{url} に対する画像取得が終了しました"
+    rescue StandardError => e
+      puts "get_item_images: #{e.message}"
+      retry_count += 1
+      retry if retry_count <= 3
+      puts "URL #{url} に対する画像取得が3回失敗しました"
+    end
+  end
+
+  # 画像を保存するメソッドを定義
+  def save_image(image_url, filename, is_thumbnail = false)
+    begin
+      uri = URI(image_url)
+      Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+        request = Net::HTTP::Get.new uri
+
+        http.request request do |response|
+          # 保存するディレクトリを指定
+          directory = is_thumbnail ? "/root/src/thumbnail" : "/root/src/images"
+          open "#{directory}/#{filename}.jpg", "wb" do |io|
+            response.read_body do |chunk|
+              io.write chunk
+            end
+          end
+        end
+      end
+    rescue => e
+      puts "Failed to save image: #{e.message}"
+    end
+  end
+
   # 商品データを重複なく保存するメソッドを定義
   def store_data_to_db(item_info)
     puts "商品名:#{item_info[:name]}をDBに保存します"
-    # find_or_create_byの基準をnameとmakerのみに変更
-    product = Product.find_or_create_by(name: item_info[:name], maker: item_info[:maker])
+    # find_or_create_byの基準(name,maker,model)が同じレコードが存在する場合、そのレコードを返す
+    product = Product.find_or_create_by(name: item_info[:name], maker: item_info[:maker], model: item_info[:model])
 
     # URLまたは価格が異なる場合、データを更新する
     if product.url != item_info[:url] || product.price != item_info[:price]
       product.update(url: item_info[:url], price: item_info[:price])
     end
+
+    # 商品を確認した日時を更新する
+    product.update(checked_at: Time.now)
   end
 
+  # 一定期間確認がなかったデータを削除するメソッドを定義
+  def delete_unchecked_data
+    Product.where('checked_at < ?', 1.week.ago).destroy_all
+  end
 
 end
 
@@ -143,3 +234,4 @@ url = 'https://kakaku.com/keitai/mobilephone-accessories/itemlist.aspx?pdf_Spec1
 scraper = Scraper.new
 scraper.search_item(url)
 scraper.get_item_info
+scraper.delete_unchecked_data

@@ -3,3 +3,7 @@
 
 # ローカルでバインドしたmysqlのディレクトリを除外
 mysql
+
+# scraperのsrc下のファイルを除外
+docker/scraper/src/images
+docker/scraper/src/thumbnail
