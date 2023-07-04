@@ -125,7 +125,8 @@ class Scraper
   # 商品データを重複なく保存するメソッドを定義
   def store_data_to_db(item_info)
     puts "商品名:#{item_info[:name]}をDBに保存します"
-    product = Product.find_or_create_by(name: item_info[:name], maker: item_info[:maker], url: item_info[:url], price: item_info[:price])
+    # find_or_create_byの基準をnameとmakerのみに変更
+    product = Product.find_or_create_by(name: item_info[:name], maker: item_info[:maker])
 
     # URLまたは価格が異なる場合、データを更新する
     if product.url != item_info[:url] || product.price != item_info[:price]
