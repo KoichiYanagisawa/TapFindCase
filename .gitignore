@@ -2,4 +2,8 @@
 .env
 
 # ローカルでバインドしたmysqlのディレクトリを除外
-/docker/mysql
+mysql
+
+# scraperのsrc下のファイルを除外
+docker/scraper/src/images
+docker/scraper/src/thumbnail
