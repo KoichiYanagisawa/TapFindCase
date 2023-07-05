@@ -46,3 +46,5 @@ group :development do
   # gem "spring"
 end
 
+# .envを使うので追加する
+gem 'dotenv-rails', groups: [:development, :test]

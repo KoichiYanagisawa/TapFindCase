@@ -9,3 +9,5 @@ WORKDIR /root/app
 COPY ./src /root/app
 
 RUN bundle install
+
+CMD ["rails", "s", "-b", "0.0.0.0"]
