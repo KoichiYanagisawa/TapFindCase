@@ -37,3 +37,14 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  frontend:
+    build: ./frontend/
+    container_name: frontend
+    platform: linux/x86_64
+    tty: true
+    volumes:
+      - ./frontend/src:/root/app/
+    ports:
+      - 3001:3000
+    depends_on:
+      - backend
