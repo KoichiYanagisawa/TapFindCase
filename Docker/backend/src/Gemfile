@@ -48,3 +48,6 @@ end
 
 # .envを使うので追加する
 gem 'dotenv-rails', groups: [:development, :test]
+
+# CORSを許可するために追加する
+gem 'rack-cors'
