@@ -122,115 +122,77 @@ class Scraper
     true # リンクが存在する場合、trueを返す
   end
 
-  # アイテムの詳細ページから情報を取得するメソッドを定義
   def get_item_info
-    @urls.each_with_index do |url, index| # Setの中身を1つずつ取り出す
-      retry_count = 0
-      begin
-        # 現在の処理の進捗を表示する
+    @urls.each_with_index do |url, index|
+      retry_on_error do
         puts "現在の処理: #{index + 1}/#{@urls.length}"
-        item_info = {} # 商品情報を格納するハッシュを作成
-        @driver.get(url) # 指定したURLにアクセス
-        sleep(3) # 3秒待つ
-        item_info[:name] = @wait.until { @driver.find_element(:xpath, '//div[@id="titleBox"]/div[1]/h2[@itemprop="name"]').text } # 商品名を取得
-        item_info[:maker] = @wait.until { @driver.find_element(:xpath, '//*[@id="relateList"]/li/a').text } # メーカー名を取得
-        item_info[:ec_site_url] = @wait.until { @driver.find_element(:xpath, '//*[@id="priceBox"]/div[1]/div/div[3]/span/a').attribute('href') } # 商品URLを取得
-        uri = URI.parse(@wait.until { @driver.find_element(:xpath, '//*[@id="priceBox"]/div[1]/div/div[3]/span/a').attribute('href') })
-        params = CGI.parse(uri.query)
-        item_info[:ec_site_url] = URI.decode_www_form_component(params['Url'][0])
-        item_info[:price] = @wait.until { @driver.find_element(:xpath, '//*[@id="priceBox"]/div[1]/div/p/span[@class="priceTxt"]').text } # 価格を取得
-        item_info[:image_url], item_info[:thumbnail_url] = get_item_images(@driver.current_url) # 商品画像とサムネイル画像のURLを取得
-        @driver.get(url) # 指定したURLにアクセス
-        sleep(3) # 3秒待つ
-        model_info_text = @wait.until { @driver.find_element(:xpath, '//div[@id="specBox"]/p').text }
-        models = model_info_text.match(/対応機種：(iPhone .+)/)[1].split(/\/|\s\/\s/) # "対応機種："の後の文字列を取得し、スラッシュ('/')またはスペース+スラッシュ+スペース(' / ')で分割
-        models.each do |model|
-          model = model.gsub(/(\s第)(\d+)(世代)/, '(第\2世代)') # " 第X世代" を "第X世代" に統一
-          model = "iPhone #{model}" unless model.include?("iPhone") # "iPhone"が含まれていない場合は、"iPhone"を追加
-          item_info[:model] = model.strip # モデル名を取得（前後の空白を削除）
-          puts "モデル名:#{item_info[:model]}"
-          store_data_to_db(item_info) # 商品データをデータベースに保存
-        end
-
-        # 今のURLを取得して、商品画像を取得する
-        # get_item_images(@driver.current_url)
-
-      rescue StandardError => e
-        puts "get_item_info: #{e.message}"
-        retry_count += 1
-        retry if retry_count <= 3
-        puts "URL #{url} に対するリトライが3回失敗しました"
+        @driver.get(url)
+        sleep(3)
+        item_info = extract_item_info
+        item_info[:models] = extract_models
+        item_info[:image_url], item_info[:thumbnail_url] = get_item_images(@driver.current_url)
+        store_data_to_db(item_info)
       end
     end
   end
 
-  # 商品画像を取得するメソッドを定義
-  def get_item_images(url)
-    puts "商品画像を取得します: #{url}"
-    retry_count = 0
-    image_file_paths = []
-    thumbnail_file_paths = []
-
-    begin
-      # 商品IDを取得
-      item_id = url.match(/https:\/\/kakaku\.com\/item\/(K\d+)\//)[1]
-
-      # 画像一覧ページのURLを作成
-      image_list_url = "https://kakaku.com/item/#{item_id}/images/"
-
-      # 画像一覧ページにアクセス
-      @driver.get(image_list_url)
-      sleep(3) # 3秒待つ
-
-      # 小さい画像の要素を取得
-      thumbnail_elements = @wait.until { @driver.find_elements(:xpath, '//div[@class="zoomimgList"]//img') }
-
-      # 小さい画像の要素の数だけループ
-      thumbnail_elements.each_with_index do |thumbnail_element, i|
-        # 小さい画像のURLを取得
-        thumbnail_url = thumbnail_element.attribute('src')
-
-        # 小さい画像を保存
-        thumbnail_file_path = save_image(thumbnail_url, "#{item_id}_thumbnail_#{i}", true)
-        thumbnail_file_paths << thumbnail_file_path
-
-        # 小さい画像をクリックして大きい画像を表示
-        thumbnail_element.click
-        sleep(3) # 3秒待つ
-
-        # 大きい画像のURLを取得
-        image_url = @wait.until { @driver.find_element(:xpath, '//img[@class="zoomimg"]').attribute('src') }
-
-        # 大きい画像を保存
-        image_file_path = save_image(image_url, "#{item_id}_large_#{i}")
-        image_file_paths << image_file_path
-      end
-
-    rescue Selenium::WebDriver::Error::NoSuchElementError
-      puts "URL #{url} に対する画像取得が終了しました"
-    rescue StandardError => e
-      puts "get_item_images: #{e.message}"
-      retry_count += 1
-      retry if retry_count <= 3
-      puts "URL #{url} に対する画像取得が3回失敗しました"
-    end
-
-    return image_file_paths, thumbnail_file_paths
+  def extract_item_info
+    item_info = {}
+    item_info[:name] = @wait.until { @driver.find_element(:xpath, '//div[@id="titleBox"]/div[1]/h2[@itemprop="name"]').text }
+    item_info[:maker] = @wait.until { @driver.find_element(:xpath, '//*[@id="relateList"]/li/a').text }
+    item_info[:ec_site_url] = decode_url(@wait.until { @driver.find_element(:xpath, '//*[@id="priceBox"]/div[1]/div/div[3]/span/a').attribute('href') })
+    item_info[:price] = @wait.until { @driver.find_element(:xpath, '//*[@id="priceBox"]/div[1]/div/p/span[@class="priceTxt"]').text }
+    item_info
   end
 
-  # 画像を保存するメソッドを定義
+  def decode_url(url)
+    uri = URI.parse(url)
+    params = CGI.parse(uri.query)
+    URI.decode_www_form_component(params['Url'][0])
+  end
+
+  def extract_models
+    model_info_text = @wait.until { @driver.find_element(:xpath, '//div[@id="specBox"]/p').text }
+    models = model_info_text.match(/対応機種：(iPhone .+)/)[1].split(/\/|\s\/\s/)
+    models.map do |model|
+      model = model.gsub(/(\s第)(\d+)(世代)/, '(第\2世代)')
+      model = "iPhone #{model}" unless model.include?("iPhone")
+      model.strip
+    end
+  end
+
+  # 商品IDを取得する
+  def get_item_id(url)
+    url.match(/https:\/\/kakaku\.com\/item\/(K\d+)\//)[1]
+  end
+
+  # 画像一覧ページのURLを生成する
+  def generate_image_list_url(item_id)
+    "https://kakaku.com/item/#{item_id}/images/"
+  end
+
+  # サムネイル要素を取得する
+  def get_thumbnail_elements
+    @wait.until { @driver.find_elements(:xpath, '//div[@class="zoomimgList"]//img') }
+  end
+
+  # 大きな画像のURLを取得する
+  def get_large_image_url
+    @wait.until { @driver.find_element(:xpath, '//img[@class="zoomimg"]').attribute('src') }
+  end
+
+  # ローカルに画像を保存する
   def save_image(image_url, filename, is_thumbnail = false)
     file_path = nil
+    uri = URI(image_url)
+    directory = is_thumbnail ? "/root/src/thumbnails" : "/root/src/images"
+    file_path = "#{directory}/#{filename}.jpg"
 
-    begin
-      uri = URI(image_url)
+    retry_on_error do
       Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
         request = Net::HTTP::Get.new uri
 
         http.request request do |response|
-          # 保存するディレクトリを指定
-          directory = is_thumbnail ? "/root/src/thumbnail" : "/root/src/images"
-          file_path = "#{directory}/#{filename}.jpg"
           open file_path, "wb" do |io|
             response.read_body do |chunk|
               io.write chunk
@@ -238,48 +200,93 @@ class Scraper
           end
         end
       end
-
-    rescue => e
-      puts "get_item_images: #{e.message}"
     end
 
-    return file_path
+    file_path
   end
 
-  # 商品データを重複なく保存するメソッドを定義
+  # 商品画像を取得する
+  def get_item_images(url)
+    puts "商品画像を取得します: #{url}"
+
+    retry_on_error do
+      item_id = get_item_id(url)
+      image_list_url = generate_image_list_url(item_id)
+
+      @driver.get(image_list_url)
+      sleep(3)
+
+      thumbnail_elements = get_thumbnail_elements
+      thumbnail_file_paths = []
+      image_file_paths = []
+
+      thumbnail_elements.each_with_index do |thumbnail_element, i|
+        # サムネイルを保存
+        thumbnail_url = thumbnail_element.attribute('src')
+        thumbnail_file_path = save_image(thumbnail_url, "#{item_id}_thumbnail_#{i}", true)
+        thumbnail_file_paths << thumbnail_file_path
+
+        # サムネイルをクリックして大きい画像を表示
+        thumbnail_element.click
+        sleep(3)
+
+        # 大きな画像を保存
+        image_url = get_large_image_url
+        image_file_path = save_image(image_url, "#{item_id}_large_#{i}")
+        image_file_paths << image_file_path
+      end
+
+      [image_file_paths, thumbnail_file_paths]
+    end
+  end
+
   def store_data_to_db(item_info)
-    puts "商品名:#{item_info[:name]}をDBに保存します"
-
     ActiveRecord::Base.transaction do
-      product = Product.find_or_initialize_by(name: item_info[:name], maker: item_info[:maker])
-
-      # URL, 価格が異なる場合、または新規のレコードである場合、データを更新する
-      if product.new_record? || product.ec_site_url != item_info[:ec_site_url] || product.price != item_info[:price]
-        product.attributes = {
-          ec_site_url: item_info[:ec_site_url],
-          price: item_info[:price],
-          checked_at: Time.now # 商品を確認した日時を更新
-        }
-        product.save!
+      product = update_or_create_product(item_info)
+      item_info[:models].each do |model_name|
+        model = Model.find_or_create_by!(model: model_name)
+        ProductModel.find_or_create_by!(product: product, model: model)
       end
-
-      # productが正常に作成または更新された場合のみ、modelとの関連付けを行う
-      model = Model.find_or_create_by!(model: item_info[:model])
-      ProductModel.find_or_create_by!(product: product, model: model)
-
-      # 画像データをimagesテーブルに保存
-      # 商品画像とサムネイル画像が異なる場合、または新規のレコードである場合、データを更新する
-      image = Image.find_or_initialize_by(product_id: product.id)
-      if image.new_record? || image.image_url != item_info[:image_url] || image.thumbnail_url != item_info[:thumbnail_url]
-        image.attributes = {
-          image_url: item_info[:image_url],
-          thumbnail_url: item_info[:thumbnail_url]
-        }
-        image.save!
-      end
+      update_or_create_image(item_info, product.id)
     end
   rescue ActiveRecord::RecordInvalid => e
     puts "store_data_to_db: #{e.message}"
+  end
+
+  def update_or_create_product(item_info)
+    product = Product.find_or_initialize_by(name: item_info[:name], maker: item_info[:maker])
+    if product.new_record? || product.ec_site_url != item_info[:ec_site_url] || product.price != item_info[:price]
+      product.attributes = {
+        ec_site_url: item_info[:ec_site_url],
+        price: item_info[:price],
+        checked_at: Time.now
+      }
+      product.save!
+    end
+    product
+  end
+
+  def update_or_create_image(item_info, product_id)
+    image = Image.find_or_initialize_by(product_id: product_id)
+    if image.new_record? || image.image_url != item_info[:image_url] || image.thumbnail_url != item_info[:thumbnail_url]
+      image.attributes = {
+        image_url: item_info[:image_url],
+        thumbnail_url: item_info[:thumbnail_url]
+      }
+      image.save!
+    end
+  end
+
+  def retry_on_error
+    retry_count = 0
+    begin
+      yield
+    rescue StandardError => e
+      puts "Error: #{e.message}"
+      retry_count += 1
+      retry if retry_count <= 3
+      puts "リトライが3回失敗しました"
+    end
   end
 
   # 一定期間確認がなかったデータを削除するメソッドを定義
