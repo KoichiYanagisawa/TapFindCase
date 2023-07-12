@@ -30,6 +30,8 @@ services:
     tty: true
     volumes:
       - ./backend/src:/root/app
+      - ./scraper/src/images:/root/app/public/images
+      - ./scraper/src/thumbnails:/root/app/public/thumbnails
     ports:
       - 3000:3000
     depends_on:

@@ -23,11 +23,18 @@
 |id|BIGINT|NO|PRIMARY|NULL|YES|
 |name|VARCHAR(255)|NO||NULL|NO|
 |maker|VARCHAR(255)|NO||NULL|NO|
-|price|DECIMAL(10,2)|YES||NULL|NO|
-|thumbnail_url|VARCHAR(255)|NO|UNIQUE|NULL|NO|
-|image_url|VARCHAR(255)|NO|UNIQUE|NULL|NO|
+|price|CHAR(20)|YES||NULL|NO|
 |ec_site_url|VARCHAR(255)|NO|UNIQUE|NULL|NO|
 |checked_at|TIMESTAMP|NO||CURRENT_TIMESTAMP|NO|
+
+**imagesテーブル**
+
+|カラム名|データ型|NULL|キー|初期値|AUTO INCREMENT|
+|-------|--------|----|---|-----|--------------|
+|id|BIGINT|NO|PRIMARY|NULL|YES|
+|product_id|BIGINT|NO|FOREIGN KEY|NULL|NO|
+|image_url|VARCHAR(255)|NO||NULL|NO|
+|thumbnail_url|VARCHAR(255)|NO||NULL|NO|
 
 **modelsテーブル**
 
