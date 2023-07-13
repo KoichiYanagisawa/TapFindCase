@@ -1,19 +1,19 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import 'tailwindcss/tailwind.css'; // これまだ使ってない！！！
+import 'tailwindcss/tailwind.css';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../components/Header'; // Headerコンポーネントをインポート
-import Dropdown from '../components/Dropdown'; // Dropdownコンポーネントをインポート
-import SearchButton from '../components/SearchButton'; // SearchButtonコンポーネントをインポート
-import Footer from '../components/Footer'; // Footerコンポーネントをインポート
+import Header from '../components/Header';
+import Dropdown from '../components/Dropdown';
+import SearchButton from '../components/SearchButton';
+import Footer from '../components/Footer';
 
 const containerStyles = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: calc(100vh - 20px); // フッターの高さを引く
   padding: 20px;
   box-sizing: border-box;
   background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('./ts038A4472_TP_V.jpg') no-repeat center center fixed;

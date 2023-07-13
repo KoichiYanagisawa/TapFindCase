@@ -22,6 +22,7 @@
 |-------|--------|----|---|-----|--------------|
 |id|BIGINT|NO|PRIMARY|NULL|YES|
 |name|VARCHAR(255)|NO||NULL|NO|
+|color|VARCHAR(255)|NO||NULL|NO|
 |maker|VARCHAR(255)|NO||NULL|NO|
 |price|CHAR(20)|YES||NULL|NO|
 |ec_site_url|VARCHAR(255)|NO|UNIQUE|NULL|NO|

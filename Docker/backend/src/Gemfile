@@ -51,3 +51,6 @@ gem 'dotenv-rails', groups: [:development, :test]
 
 # CORSを許可するために追加する
 gem 'rack-cors'
+
+# ページングを実装するために追加する
+gem 'kaminari'

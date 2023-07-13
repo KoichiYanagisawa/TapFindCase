@@ -7,6 +7,7 @@ USE scraper;
 CREATE TABLE products (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+    color VARCHAR(255) NOT NULL,
     maker VARCHAR(255) NOT NULL,
     price CHAR(20) NOT NULL,
     ec_site_url VARCHAR(255) NOT NULL UNIQUE,
