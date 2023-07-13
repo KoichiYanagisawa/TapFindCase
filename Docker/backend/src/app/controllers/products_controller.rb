@@ -1,16 +1,75 @@
 class ProductsController < ApplicationController
   def index
-    @products = Product.select(:model).distinct
+    @products = Model.select(:model).distinct
     render json: @products.as_json(only: [:model])
   end
 
   def show
-    @products = Product.where(model: params[:model])
-    render json: @products.as_json(only: [:id, :name, :price])
+    page = params[:page] || 1
+    limit = params[:limit] || 20
+
+    @products = Product.joins(:models, :images)
+                       .where(models: { model: params[:model] })
+                       .select('products.id',
+                               'products.name',
+                               'products.color',
+                               'products.price',
+                               'images.thumbnail_url as thumbnail_url')
+                       .page(page).per(limit)
+
+    @products.each do |product|
+      # データベースから取得したパスを書き換え
+      product.thumbnail_url = product.thumbnail_url.gsub('/root/src', '/root/app/public')
+
+      # パスが配列形式で保存されている場合、最初の画像だけを取り出す
+      file_path = product.thumbnail_url.tr('[]\"', '').split(",").first
+
+      # 画像ファイルのパスを生成
+      file_path = Rails.root.join(file_path)
+
+      # ファイルを読み込み、Base64でエンコード
+      encoded_image = Base64.encode64(File.read(file_path))
+
+      # エンコードした画像を商品情報に追加
+      product.thumbnail_url = encoded_image
+    end
+    render json: @products.as_json(only: [:id, :name, :color, :price, :thumbnail_url])
   end
 
   def detail
-    @product = Product.find(params[:id])
-    render json: @product.as_json(only: [:id, :name, :maker, :url, :price, :model, :url_image])
+    @product = Product.joins(:models, :images).find(params[:id])
+    image_urls = []
+    thumbnail_urls = []
+
+    @product.images.each do |image|
+      # 画像URLのパスを書き換え
+      image_paths = image.image_url.gsub('/root/src', '/root/app/public').tr('[]\"', '').split(",")
+
+      # パスが配列形式で保存されている場合、それぞれの画像をエンコード
+      image_paths.each do |path|
+        file_path = Rails.root.join(path)
+        # 画像ファイルを読み込み、Base64でエンコード
+        encoded_image = Base64.encode64(File.read(file_path))
+        image_urls << encoded_image
+      end
+
+      # サムネイルURLのパスを書き換え
+      thumbnail_paths = image.thumbnail_url.gsub('/root/src', '/root/app/public').tr('[]\"', '').split(",")
+
+      # パスが配列形式で保存されている場合、それぞれの画像をエンコード
+      thumbnail_paths.each do |path|
+        file_path = Rails.root.join(path)
+        # 画像ファイルを読み込み、Base64でエンコード
+        encoded_thumbnail = Base64.encode64(File.read(file_path))
+        thumbnail_urls << encoded_thumbnail
+      end
+    end
+
+    # JSONに変換してフロントエンドに返す
+    render json: {
+      product: @product.as_json(only: [:id, :name, :color, :maker, :price, :ec_site_url, :checked_at]),
+      images: image_urls,
+      thumbnails: thumbnail_urls
+    }
   end
 end

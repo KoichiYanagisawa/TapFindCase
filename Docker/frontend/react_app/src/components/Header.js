@@ -17,6 +17,14 @@ const headerStyles = css`
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
+
+  @media (max-width: 600px) {
+    font-size: 35px;
+  }
+
+  @media (max-width: 450px) {
+    font-size: 25px;
+  }
 `;
 
 const hamburgerStyles = props => css`
@@ -52,7 +60,7 @@ const menuStyles = props => css`
   top: 60px;
   transform : translateX(${props.isMenuOpen ? "0" : "100%"});
   width: 70%;
-  max-width: 200px; // control the maximum width of the menu
+  max-width: 200px;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -63,10 +71,10 @@ const menuStyles = props => css`
 
 const menuItemStyles = css`
   width: 100%;
-  // padding: 20px 0; // Added padding to increase clickable area
-  text-align: center; // Center the text
-  font-size: 0.5em; // control the font size
-  border-bottom: 1px solid #fff; // create separation lines
+  padding: 20px 0;
+  text-align: center;
+  font-size: 0.5em;
+  border-bottom: 1px solid #fff;
   &:last-child {
     border-bottom: 0;
   }
@@ -79,8 +87,8 @@ const menuItemStyles = css`
 `;
 
 const hamburgerContainerStyles = css`
-  width: 60px; // increase this to increase the clickable area
-  height: 60px; // increase this to increase the clickable area
+  width: 60px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;

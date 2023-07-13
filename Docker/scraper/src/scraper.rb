@@ -10,29 +10,28 @@ require 'erb'
 require 'net/http'
 require 'uri'
 
-# database.ymlを読み込む設定
-db_config = YAML.load(ERB.new(File.read('./config/database.yml')).result, aliases: true)
+db_config = YAML.safe_load(ERB.new(File.read('./config/database.yml')).result, aliases: true)
 ActiveRecord::Base.establish_connection(db_config['development'])
 
-# ModelのActiveRecordモデルを定義します
+# 機種名のクラス
 class Model < ActiveRecord::Base
   has_many :product_models
   has_many :products, through: :product_models
 end
 
-# ProductModelのActiveRecordモデルを定義します
+# 商品と機種名の中間テーブルのクラス
 class ProductModel < ActiveRecord::Base
   belongs_to :product
   belongs_to :model
 end
 
-# ImageのActiveRecordモデルを定義します
+# 写真の保存先を管理するクラス
 class Image < ActiveRecord::Base
   belongs_to :product
   validates :image_url, :thumbnail_url, presence: true
 end
 
-# ProductのActiveRecordモデルを更新します
+# 商品のクラス
 class Product < ActiveRecord::Base
   has_many :product_models
   has_many :models, through: :product_models
@@ -40,21 +39,19 @@ class Product < ActiveRecord::Base
   validates :name, :maker, :price, :ec_site_url, presence: true
 end
 
-# Scraperというクラスを作成
+# スクレイピングを行うクラス
 class Scraper
   attr_reader :driver, :options
   attr_accessor :item_info
 
-  # 初期化メソッドを定義
   def initialize
-    setup_user_agents # UserAgentのリストを作成
-    setup_options # オプションを設定
-    setup_driver # ドライバをセットアップ
-    @wait = Selenium::WebDriver::Wait.new(timeout: 20) # 明示的に待ち時間を設定
-    @urls = Set.new # 商品詳細ページのURLを格納するSetを作成
+    setup_user_agents
+    setup_options
+    setup_driver
+    @wait = Selenium::WebDriver::Wait.new(timeout: 20)
+    @urls = Set.new
   end
 
-  # UserAgentのリストを作成するメソッドを定義
   def setup_user_agents
     @user_agents = [
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
@@ -63,14 +60,13 @@ class Scraper
     ]
   end
 
-  # オプションを設定するメソッドを定義
   def setup_options
-    @options = Selenium::WebDriver::Chrome::Options.new # インスタンスを作成
-    @options.add_argument('--headless') # ヘッドレスモードで実行
-    @options.add_argument('--no-sandbox') # サンドボックスを無効にする
-    @options.add_argument('--disable-dev-shm-usage') # メモリファイルの場所を指定する
-    @options.add_argument('--disable-gpu') # GPUを使わない
-    @options.add_argument("--user-agent=#{@user_agents.sample}") # UserAgentをランダムに指定
+    @options = Selenium::WebDriver::Chrome::Options.new
+    @options.add_argument('--headless')
+    @options.add_argument('--no-sandbox')
+    @options.add_argument('--disable-dev-shm-usage')
+    @options.add_argument('--disable-gpu')
+    @options.add_argument("--user-agent=#{@user_agents.sample}")
   end
 
   # ドライバをセットアップするメソッドを定義
@@ -138,11 +134,21 @@ class Scraper
 
   def extract_item_info
     item_info = {}
-    item_info[:name] = @wait.until { @driver.find_element(:xpath, '//div[@id="titleBox"]/div[1]/h2[@itemprop="name"]').text }
+    raw_name = @wait.until { @driver.find_element(:xpath, '//div[@id="titleBox"]/div[1]/h2[@itemprop="name"]').text }
+    name, color = split_name_and_color(raw_name)
+    item_info[:name] = name
+    item_info[:color] = color
     item_info[:maker] = @wait.until { @driver.find_element(:xpath, '//*[@id="relateList"]/li/a').text }
     item_info[:ec_site_url] = decode_url(@wait.until { @driver.find_element(:xpath, '//*[@id="priceBox"]/div[1]/div/div[3]/span/a').attribute('href') })
     item_info[:price] = @wait.until { @driver.find_element(:xpath, '//*[@id="priceBox"]/div[1]/div/p/span[@class="priceTxt"]').text }
     item_info
+  end
+
+  def split_name_and_color(item_name)
+    color = item_name.match(/\[(.*?)\]/)
+    name = item_name.gsub(/\[(.*?)\]/, '').strip
+    color = color[1] if color
+    return name, color
   end
 
   def decode_url(url)
@@ -155,7 +161,9 @@ class Scraper
     model_info_text = @wait.until { @driver.find_element(:xpath, '//div[@id="specBox"]/p').text }
     models = model_info_text.match(/対応機種：(iPhone .+)/)[1].split(/\/|\s\/\s/)
     models.map do |model|
-      model = model.gsub(/(\s第)(\d+)(世代)/, '(第\2世代)')
+      model = model.gsub(/(\s第)(\d+)(世代)/, '(第\2世代)')  # 既存の正規表現
+      model = model.gsub(/SE2/, 'SE(第2世代)')  # 新しい正規表現: SE2 を SE(第2世代) に変換
+      model = model.gsub(/SE3/, 'SE(第3世代)')  # 新しい正規表現: SE3 を SE(第3世代) に変換
       model = "iPhone #{model}" unless model.include?("iPhone")
       model.strip
     end
@@ -254,27 +262,23 @@ class Scraper
   end
 
   def update_or_create_product(item_info)
-    product = Product.find_or_initialize_by(name: item_info[:name], maker: item_info[:maker])
-    if product.new_record? || product.ec_site_url != item_info[:ec_site_url] || product.price != item_info[:price]
-      product.attributes = {
-        ec_site_url: item_info[:ec_site_url],
-        price: item_info[:price],
-        checked_at: Time.now
-      }
-      product.save!
-    end
+    product = Product.find_or_initialize_by(name: item_info[:name], maker: item_info[:maker], color: item_info[:color])
+    product.assign_attributes(
+      ec_site_url: item_info[:ec_site_url],
+      price: item_info[:price],
+      checked_at: Time.now
+    )
+    product.save! if product.new_record? || product.changed?
     product
   end
 
   def update_or_create_image(item_info, product_id)
     image = Image.find_or_initialize_by(product_id: product_id)
-    if image.new_record? || image.image_url != item_info[:image_url] || image.thumbnail_url != item_info[:thumbnail_url]
-      image.attributes = {
-        image_url: item_info[:image_url],
-        thumbnail_url: item_info[:thumbnail_url]
-      }
-      image.save!
-    end
+    image.assign_attributes(
+      image_url: item_info[:image_url],
+      thumbnail_url: item_info[:thumbnail_url]
+    )
+    image.save! if image.new_record? || image.changed?
   end
 
   def retry_on_error
@@ -285,7 +289,7 @@ class Scraper
       puts "Error: #{e.message}"
       retry_count += 1
       retry if retry_count <= 3
-      puts "リトライが3回失敗しました"
+      puts 'リトライが3回失敗しました'
     end
   end
 

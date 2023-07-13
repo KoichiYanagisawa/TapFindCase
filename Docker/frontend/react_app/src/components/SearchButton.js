@@ -8,6 +8,9 @@ const containerStyles = css`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: 450px) {
+    width: 100%;
+  }
 `;
 
 const buttonStyles = css`
@@ -24,6 +27,9 @@ const buttonStyles = css`
   &:hover {
     background: #262626;
     cursor: pointer;
+  }
+  @media (max-width: 450px) {
+    font-size: 1.0rem;
   }
 `;
 

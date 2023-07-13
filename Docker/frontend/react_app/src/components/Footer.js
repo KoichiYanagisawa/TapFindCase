@@ -2,15 +2,16 @@
 import { css } from '@emotion/react';
 
 const footerStyles = css`
-  font-size: 0.8rem;
+  font-size: 10px;
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
+  height: 20px;
   background-color: black;
   color: white;
   text-align: center;
-  padding: 10px 0;
+  padding: 5px 0;
 `;
 
 function Footer() {
