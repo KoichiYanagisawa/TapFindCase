@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import React from 'react';
-import { IoSearchCircleSharp } from 'react-icons/io5'; // BiChevronDownCircleアイコンをインポート
 
 const containerStyles = css`
-  width: 400px;
+  max-width: 400px;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,23 +33,24 @@ const buttonStyles = css`
   }
 `;
 
-const searchIconStyles = css`
-  font-size: 50px; // サイズを50pxに変更
+const getIconStyles = (position) => css`
+  font-size: 50px;
   position: absolute;
-  right: 5px;
+  right: ${position};
   top: 50%;
-  transform: translateY(-50%); // アイコンを垂直方向に中央に配置
+  transform: translateY(-50%);
 `;
 
-function SearchButton({ onClick, disabled }) {
+function CustomButton({ onClick, disabled, text, Icon, iconPosition = '5px' }) {
+  const iconStyles = getIconStyles(iconPosition);
   return (
     <div css={containerStyles}>
       <button css={buttonStyles} onClick={onClick} disabled={disabled}>
-        ケースを探す
-        <IoSearchCircleSharp css={searchIconStyles} />
+        {text}
+        {Icon && <Icon css={iconStyles} />}
       </button>
     </div>
   );
 }
 
-export default SearchButton;
+export default CustomButton;

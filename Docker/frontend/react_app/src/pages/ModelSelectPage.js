@@ -1,19 +1,19 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import 'tailwindcss/tailwind.css';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Dropdown from '../components/Dropdown';
-import SearchButton from '../components/SearchButton';
+import CustomButton from '../components/CustomButton';
 import Footer from '../components/Footer';
+import { IoSearchCircleSharp } from 'react-icons/io5';
 
 const containerStyles = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 20px); // フッターの高さを引く
+  height: calc(100vh - 20px);
   padding: 20px;
   box-sizing: border-box;
   background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('./ts038A4472_TP_V.jpg') no-repeat center center fixed;
@@ -47,13 +47,17 @@ function ModelSelectPage() {
     <>
       <Header />
       <div css={containerStyles}>
-      <Dropdown
-        options={products.map(product => ({ value: product.model, label: product.model }))}
-        value={selectedModelName}
-        onChange={handleModelChange}
-        placeholder="機種を選択してください"
-      />
-      <SearchButton onClick={handleSearchClick} disabled={!selectedModelName} />
+        <Dropdown
+          options={products.map(product => ({ value: product.model, label: product.model }))}
+          value={selectedModelName}
+          onChange={handleModelChange}
+          placeholder="機種を選択してください"
+        />
+        <CustomButton onClick={handleSearchClick}
+                      disabled={!selectedModelName}
+                      text="ケースを探す"
+                      Icon={IoSearchCircleSharp}
+        />
     </div>
     <Footer />
     </>
