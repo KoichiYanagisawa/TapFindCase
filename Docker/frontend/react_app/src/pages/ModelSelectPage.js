@@ -38,7 +38,7 @@ function ModelSelectPage() {
 
   const handleSearchClick = () => {
     if (selectedModelName !== '') {
-      navigate(`/cases/${selectedModelName}`);
+      navigate(`/product/${selectedModelName}`);
     }
   };
 

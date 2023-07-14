@@ -3,7 +3,8 @@ import { css } from '@emotion/react';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // 必要なCSSをインポート
+import { useSelector } from 'react-redux';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -117,9 +118,13 @@ const hideOnDesktop = css`
 
 
 function ProductDetailPage() {
+  const userInfo = useSelector((state) => state.userInfo); // useSelectorフックを使ってStoreからユーザー情報を取得
   const [product, setProduct] = useState(null);
   const [displayImage, setDisplayImage] = useState(null);
   const { id } = useParams();
+  const [isFavorited, setIsFavorited] = useState(false);
+
+
 
   useEffect(() => {
     fetch(`http://localhost:3000/products/detail/${id}`)
@@ -128,7 +133,16 @@ function ProductDetailPage() {
         setProduct(data);
         setDisplayImage(data.images[0]);
       });
-  }, [id]);
+
+    fetch(`http://localhost:3000/api/favorites/${userInfo.id}/${id}`)
+      .then(response => response.json())
+      .then(data => {
+        setIsFavorited(data.is_favorited);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }, [id, userInfo.id]);
 
   if (!product) {
     return <div>Loading...</div>;
@@ -138,6 +152,30 @@ function ProductDetailPage() {
 
   const handleThumbnailClick = (index) => {
     setDisplayImage(product.images[index]);
+  };
+
+  const toggleFavorites = () => {
+    const method = isFavorited ? 'DELETE' : 'POST';
+    const message = isFavorited ? 'お気に入りから削除しました' : 'お気に入りに追加しました';
+
+    fetch(`http://localhost:3000/api/favorites/${userInfo.id}/${product.product.id}`, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ product_id: product.product.id }),
+    })
+    .then(response => {
+      if (response.ok) {
+        setIsFavorited(!isFavorited);
+        alert(message);
+      } else {
+        alert('エラーが発生しました');
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   };
 
   return (
@@ -175,9 +213,9 @@ function ProductDetailPage() {
           <p>最終確認日: {new Date(product.product.checked_at).toLocaleString()}</p>
 
           <CustomButton
-            onClick={() => {}} // 実際にお気に入りに登録する処理をここに書く
+            onClick={() => {toggleFavorites()}} // 実際にお気に入りに登録する処理をここに書く
             disabled={false} // 実際には条件によってtrueにする必要があるかもしれません
-            text="お気に入りに登録"
+            text={isFavorited ? 'お気に入りから削除' : 'お気に入りに登録'}
             Icon={MdFavorite}
             iconPosition='14px'
           />
