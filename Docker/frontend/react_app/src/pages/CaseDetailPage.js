@@ -24,6 +24,11 @@ const containerStyles = css`
   margin-bottom: 20px;
   background-color: #fff;
   color: #000;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 `;
 
 const thumbnailStyles = css`
@@ -31,10 +36,45 @@ const thumbnailStyles = css`
   cursor: pointer;
 `;
 
+const thumbnailContainerStyles = css`
+  flex: 2;
+  order: 2;
+
+  @media (min-width: 768px) {
+    order: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+
 const imageStyles = css`
   width: 100%;
   height: auto;
   border-radius: 8px;
+`;
+
+const imageContainerStyles = css`
+  flex: 6;
+  order: 1;
+
+  @media (min-width: 768px) {
+    order: 2;
+  }
+`;
+
+const detailContainerStyles = css`
+  flex: 4;
+  order: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media (min-width: 768px) {
+    order: 3;
+  }
 `;
 
 const productPrice = css`
@@ -46,6 +86,9 @@ const productPrice = css`
 const productNameStyles = css`
   font-size: 2.5rem;
   font-weight: bold;
+  @media (max-width: 1024px) {
+    font-size: 2rem;
+  }
   @media (max-width: 640px) {
     font-size: 1.5rem;
   }
@@ -54,12 +97,21 @@ const productNameStyles = css`
 `;
 
 const productDetailStyles = css`
-  font-size: 1.8rem;
+  font-size: 1.5rem;
+  @media (max-width: 1024px) {
+    font-size: 1.2rem;
+  }
   @media (max-width: 640px) {
     font-size: 1rem;
   }
   @media (max-width: 320px) {
     font-size: 0.8rem;
+  }
+`;
+
+const hideOnDesktop = css`
+  @media (min-width: 768px) {
+    display: none;
   }
 `;
 
@@ -92,35 +144,44 @@ function ProductDetailPage() {
     <>
       <Header />
       <div css={containerStyles}>
-        <h2 css={productNameStyles}>{product.product.name}</h2>
-        <p css={productDetailStyles}>カラー：{product.product.color}</p>
-        <p css={productDetailStyles}>メーカー：{product.product.maker}</p>
-        <img src={`data:image/jpeg;base64,${displayImage}`} alt={product.product.name} css={imageStyles} />
-
-        <Carousel showStatus={false} showIndicators={false} showThumbs={false}>
-          {product.thumbnails.map((thumbnail, index) => (
-            <div key={index} onClick={() => handleThumbnailClick(index)} css={thumbnailStyles}>
-              <img
-                src={`data:image/jpeg;base64,${thumbnail}`}
-                alt={`thumbnail-${index}`}
-              />
-            </div>
-          ))}
-        </Carousel>
-
-        <p>全ての画像を見る ({imageCount})</p>
-        <div>
-          <span>価格(税込): </span>
-          <span css={productPrice}>{product.product.price}</span>
+        <div css={thumbnailContainerStyles}>
+          <Carousel showStatus={false} showIndicators={false} showThumbs={false}>
+            {product.thumbnails.map((thumbnail, index) => (
+              <div key={index} onClick={() => handleThumbnailClick(index)} css={thumbnailStyles}>
+                <img
+                  src={`data:image/jpeg;base64,${thumbnail}`}
+                  alt={`thumbnail-${index}`}
+                />
+              </div>
+            ))}
+          </Carousel>
+          <p css={hideOnDesktop}>全ての画像を見る ({imageCount})</p>
         </div>
-        <p>最終確認日: {new Date(product.product.checked_at).toLocaleString()}</p>
+
+        <div css={imageContainerStyles}>
+          <img src={`data:image/jpeg;base64,${displayImage}`} alt={product.product.name} css={imageStyles} />
+        </div>
+
+        <div css={detailContainerStyles}>
+          <h2 css={productNameStyles}>{product.product.name}</h2>
+          <p css={productDetailStyles}>カラー：{product.product.color}</p>
+          <p css={productDetailStyles}>メーカー：{product.product.maker}</p>
+
+          <div>
+            <span>価格(税込): </span>
+            <span css={productPrice}>{product.product.price}</span>
+          </div>
+
+          <p>最終確認日: {new Date(product.product.checked_at).toLocaleString()}</p>
+
           <CustomButton
             onClick={() => {}} // 実際にお気に入りに登録する処理をここに書く
             disabled={false} // 実際には条件によってtrueにする必要があるかもしれません
-            text="お気に入りに登録する"
+            text="お気に入りに登録"
             Icon={MdFavorite}
             iconPosition='14px'
           />
+
           <CustomButton
             onClick={() => {
               const newWindow = window.open(product.product.ec_site_url, '_blank');
@@ -130,6 +191,7 @@ function ProductDetailPage() {
             Icon={BsShop}
             iconPosition='14px'
           />
+        </div>
       </div>
       <Footer />
     </>

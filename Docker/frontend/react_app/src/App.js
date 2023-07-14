@@ -13,7 +13,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<ModelSelectPage />} />
-          <Route path="/cases/:model" element={<CaseListPage />} />
+          <Route path="/product/:model" element={<CaseListPage />} />
           <Route path="/product/detail/:id" element={<CaseDetailPage />} />
         </Routes>
       </Router>

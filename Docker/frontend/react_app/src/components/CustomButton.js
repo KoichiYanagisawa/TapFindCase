@@ -8,15 +8,15 @@ const containerStyles = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  @media (max-width: 450px) {
-    width: 100%;
+  @media (max-width: 768px) {
+    width: 250px;
   }
 `;
 
 const buttonStyles = css`
   margin-top: 20px;
   text-align: center;
-  width: 400px;
+  width: 100%;
   height: 60px;
   background-color: black;
   color: white;
@@ -28,7 +28,10 @@ const buttonStyles = css`
     background: #262626;
     cursor: pointer;
   }
-  @media (max-width: 450px) {
+  @media (max-width: 1024px) {
+    font-size: 1.0rem;
+  }
+  @media (max-width: 425px) {
     font-size: 1.0rem;
   }
 `;
