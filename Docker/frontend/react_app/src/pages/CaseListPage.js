@@ -2,6 +2,7 @@
 import { css } from '@emotion/react';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux'; // useSelectorフックをインポート
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -71,6 +72,7 @@ const casesPrice = css`
 `;
 
 function CaseListPage() {
+  const userInfo = useSelector((state) => state.userInfo); // useSelectorフックを使ってStoreからユーザー情報を取得
   const [cases, setCases] = useState([]);
   const { model } = useParams();
   const [page, setPage] = useState(1);
