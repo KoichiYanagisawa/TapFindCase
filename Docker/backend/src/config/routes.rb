@@ -3,10 +3,11 @@ Rails.application.routes.draw do
   root to: 'products#index'
 
   get '/products', to: 'products#index'
-  get '/products/models/:model', to: 'products#show', as: 'product_model'
-  get '/products/detail/:id', to: 'products#detail', as: 'product_detail'
+  get '/products/detail/:id', to: 'products#detail'
+  get '/products/list/:model', to: 'products#modelList'
+  get '/products/list/favorite/:user_id', to: 'products#favoriteList'
 
-  get '/api/users/:uuid', to: 'users#show', as: 'user'
+  get '/api/users/:uuid', to: 'users#show'
 
   get '/api/favorites/user/:user_id', to: 'favorites#index'
   get '/api/favorites/:user_id/:product_id', to: 'favorites#show'

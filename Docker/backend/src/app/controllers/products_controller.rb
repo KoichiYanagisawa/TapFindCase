@@ -4,33 +4,49 @@ class ProductsController < ApplicationController
     render json: @products.as_json(only: [:model])
   end
 
-  def show
+  def modelList
     page = params[:page] || 1
     limit = params[:limit] || 20
 
-    @products = Product.joins(:models, :images)
-                       .where(models: { model: params[:model] })
-                       .select('products.id',
-                               'products.name',
-                               'products.color',
-                               'products.price',
-                               'images.thumbnail_url as thumbnail_url')
-                       .page(page).per(limit)
+    model = Model.find_by(model: params[:model])
+    @products = model.products.joins(:images)
+                     .select('products.id',
+                             'products.name',
+                             'products.color',
+                             'products.price',
+                             'images.thumbnail_url as thumbnail_url')
+                     .page(page).per(limit)
 
     @products.each do |product|
-      # データベースから取得したパスを書き換え
       product.thumbnail_url = product.thumbnail_url.gsub('/root/src', '/root/app/public')
-
-      # パスが配列形式で保存されている場合、最初の画像だけを取り出す
       file_path = product.thumbnail_url.tr('[]\"', '').split(",").first
-
-      # 画像ファイルのパスを生成
       file_path = Rails.root.join(file_path)
-
-      # ファイルを読み込み、Base64でエンコード
       encoded_image = Base64.encode64(File.read(file_path))
+      product.thumbnail_url = encoded_image
+    end
+    render json: @products.as_json(only: [:id, :name, :color, :price, :thumbnail_url])
+  end
 
-      # エンコードした画像を商品情報に追加
+  def favoriteList
+    page = params[:page] || 1
+    limit = params[:limit] || 20
+
+    user = User.find_by(id: params[:user_id])
+    return render json: { error: 'User not found' }, status: :not_found unless user
+
+    @products = user.favorites.joins(:product => :images)
+                    .select('products.id',
+                            'products.name',
+                            'products.color',
+                            'products.price',
+                            'images.thumbnail_url as thumbnail_url')
+                    .page(page).per(limit)
+
+    @products.each do |product|
+      product.thumbnail_url = product.thumbnail_url.gsub('/root/src', '/root/app/public')
+      file_path = product.thumbnail_url.tr('[]\"', '').split(",").first
+      file_path = Rails.root.join(file_path)
+      encoded_image = Base64.encode64(File.read(file_path))
       product.thumbnail_url = encoded_image
     end
     render json: @products.as_json(only: [:id, :name, :color, :price, :thumbnail_url])
