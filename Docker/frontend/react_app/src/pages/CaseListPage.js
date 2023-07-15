@@ -2,9 +2,11 @@
 import { css } from '@emotion/react';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux'; // useSelectorフックをインポート
+import { useSelector } from 'react-redux';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+
+import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
 
 const containerStyles = css`
   display: flex;
@@ -60,9 +62,23 @@ const caseStyles = css`
   }
 `;
 
+const thumbnailContainerStyles = css`
+  position: relative;
+  width: 100%;
+`;
+
 const imageStyles = css`
   width: 100%;
   height: auto;
+`;
+
+const favoriteIconStyles = (isFavorite) => css`
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  color: ${isFavorite ? '#ff0000' : '#000'};
+  font-size: 1.5rem;
+  cursor: pointer;
 `;
 
 const casesPrice = css`
@@ -72,20 +88,21 @@ const casesPrice = css`
 `;
 
 function CaseListPage() {
-  const userInfo = useSelector((state) => state.userInfo); // useSelectorフックを使ってStoreからユーザー情報を取得
+  const userInfo = useSelector((state) => state.userInfo);
   const [cases, setCases] = useState([]);
+  const [favorites, setFavorites] = useState([]); // お気に入り商品のIDを格納する配列を追加
   const { model } = useParams();
   const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true); // 新しい状態を追加
+  const [hasMore, setHasMore] = useState(true);
   const loader = useRef(null);
-  const navigate = useNavigate(); // useNavigateフックのインスタンスを作成
+  const navigate = useNavigate();
 
   const handleScroll = useCallback((entries) => {
     const target = entries[0];
-    if (target.isIntersecting && hasMore) { // hasMoreがtrueの時だけページ番号を増やす
+    if (target.isIntersecting && hasMore) {
       setPage((prevPage) => prevPage + 1);
     }
-  }, [hasMore]); // 依存配列にhasMoreを追加
+  }, [hasMore]);
 
   useEffect(() => {
     const options = {
@@ -99,6 +116,21 @@ function CaseListPage() {
     }
   }, [handleScroll]);
 
+  // お気に入りの情報を初回ロード時に一度だけ取得する
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/favorites/user/${userInfo.id}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setFavorites(data.favorites);
+      })
+      .catch(error => console.error(error));
+  }, [userInfo.id]);
+
   useEffect(() => {
     fetch(`http://localhost:3000/products/models/${model}?page=${page}&limit=20`)
       .then(response => response.json())
@@ -106,10 +138,28 @@ function CaseListPage() {
         if (data.length > 0) {
           setCases(prevCases => [...prevCases, ...data]);
         } else {
-          setHasMore(false); // 新たに取得したデータがない場合、hasMoreをfalseに設定
+          setHasMore(false);
         }
       });
   }, [model, page]);
+
+  const toggleFavorite = (productId) => {
+    if(favorites.includes(productId)) {
+      fetch(`http://localhost:3000/api/favorites/${userInfo.id}/${productId}`, {
+        method: 'DELETE'
+      })
+      .then(() => {
+        setFavorites(prevFavorites => prevFavorites.filter(id => id !== productId));
+      });
+    } else {
+      fetch(`http://localhost:3000/api/favorites/${userInfo.id}/${productId}`, {
+        method: 'POST'
+      })
+      .then(() => {
+        setFavorites(prevFavorites => [...prevFavorites, productId]);
+      });
+    }
+  };
 
 
   return (
@@ -117,18 +167,28 @@ function CaseListPage() {
       <Header />
       <div css={containerStyles}>
         <div css={casesContainerStyles}>
-          {cases.map((caseItem, index) => (
+        {cases.map((caseItem, index) => {
+          const isFavorite = favorites.includes(caseItem.id);
+
+          return (
             <div
               css={caseStyles}
               key={index}
-              onClick={() => navigate(`/product/detail/${caseItem.id}`)} // onClickで商品詳細ページへのリンクを追加
+              onClick={() => navigate(`/product/detail/${caseItem.id}`)}
             >
-              <img src={`data:image/jpeg;base64,${caseItem.thumbnail_url}`} alt={caseItem.name} css={imageStyles} />
+              <div css={thumbnailContainerStyles}>
+                <img src={`data:image/jpeg;base64,${caseItem.thumbnail_url}`} alt={caseItem.name} css={imageStyles} />
+                {isFavorite
+                  ? <MdFavorite css={favoriteIconStyles(isFavorite)} onClick={(e) => { e.stopPropagation(); toggleFavorite(caseItem.id); }} />
+                  : <MdFavoriteBorder css={favoriteIconStyles(isFavorite)} onClick={(e) => { e.stopPropagation(); toggleFavorite(caseItem.id); }} />
+                }
+              </div>
               <h2>{caseItem.name}</h2>
               <p>{caseItem.color}</p>
               <p css={casesPrice}>{caseItem.price}</p>
             </div>
-          ))}
+          );
+        })}
           {hasMore && (
             <div ref={loader}>
               <h2>Loading...</h2>

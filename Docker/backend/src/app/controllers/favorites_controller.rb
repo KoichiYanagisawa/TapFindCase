@@ -1,8 +1,13 @@
 class FavoritesController < ApplicationController
   before_action :set_user
 
+  def index
+    @favorites = @user.favorites.pluck(:product_id)
+    render json: { favorites: @favorites }, status: :ok
+  end
+
   def create
-    @favorite = @user.favorites.create(favorite_params)
+    @favorite = @user.favorites.create(product_id: params[:product_id])
     render json: { id: @favorite.id }, status: :created
   end
 
@@ -29,9 +34,5 @@ class FavoritesController < ApplicationController
 
   def set_user
     @user = User.find_by(id: params[:user_id])
-  end
-
-  def favorite_params
-    params.require(:favorite).permit(:product_id)
   end
 end

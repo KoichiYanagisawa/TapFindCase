@@ -59,6 +59,7 @@ const imageStyles = css`
 const imageContainerStyles = css`
   flex: 6;
   order: 1;
+  position: relative;
 
   @media (min-width: 768px) {
     order: 2;
@@ -75,6 +76,26 @@ const detailContainerStyles = css`
 
   @media (min-width: 768px) {
     order: 3;
+  }
+`;
+
+const favoriteIconStyles = css`
+  position: absolute;
+  right: 15%;
+  bottom: 5%;
+  color: red;
+  font-size: 4.5rem;
+  @media (max-width: 1024px) {
+    font-size: 3.5rem;
+  }
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+  @media (max-width: 640px) {
+    font-size: 2rem;
+  }
+  @media (max-width: 320px) {
+    font-size: 1.5rem;
   }
 `;
 
@@ -156,7 +177,7 @@ function ProductDetailPage() {
 
   const toggleFavorites = () => {
     const method = isFavorited ? 'DELETE' : 'POST';
-    const message = isFavorited ? 'お気に入りから削除しました' : 'お気に入りに追加しました';
+    const message = isFavorited ? 'お気に入りを解除しました' : 'お気に入りに追加しました';
 
     fetch(`http://localhost:3000/api/favorites/${userInfo.id}/${product.product.id}`, {
       method: method,
@@ -198,6 +219,7 @@ function ProductDetailPage() {
 
         <div css={imageContainerStyles}>
           <img src={`data:image/jpeg;base64,${displayImage}`} alt={product.product.name} css={imageStyles} />
+          {isFavorited && <MdFavorite css={favoriteIconStyles} />}
         </div>
 
         <div css={detailContainerStyles}>
@@ -215,8 +237,9 @@ function ProductDetailPage() {
           <CustomButton
             onClick={() => {toggleFavorites()}} // 実際にお気に入りに登録する処理をここに書く
             disabled={false} // 実際には条件によってtrueにする必要があるかもしれません
-            text={isFavorited ? 'お気に入りから削除' : 'お気に入りに登録'}
+            text={isFavorited ? 'お気に入りを解除' : 'お気に入りに登録'}
             Icon={MdFavorite}
+            iconColor={isFavorited ? 'red' : 'white'}
             iconPosition='14px'
           />
 
