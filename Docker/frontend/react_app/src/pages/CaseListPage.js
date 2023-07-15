@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -87,11 +87,11 @@ const casesPrice = css`
   font-weight: bold;
 `;
 
-function CaseListPage() {
+function CaseListPage({apiPath = 'favorite/1'}) {
   const userInfo = useSelector((state) => state.userInfo);
   const [cases, setCases] = useState([]);
   const [favorites, setFavorites] = useState([]); // お気に入り商品のIDを格納する配列を追加
-  const { model } = useParams();
+  // const { model } = useParams();
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const loader = useRef(null);
@@ -116,7 +116,6 @@ function CaseListPage() {
     }
   }, [handleScroll]);
 
-  // お気に入りの情報を初回ロード時に一度だけ取得する
   useEffect(() => {
     fetch(`http://localhost:3000/api/favorites/user/${userInfo.id}`)
       .then(response => {
@@ -132,7 +131,7 @@ function CaseListPage() {
   }, [userInfo.id]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/products/models/${model}?page=${page}&limit=20`)
+    fetch(`http://localhost:3000/products/list/${apiPath}?page=${page}&limit=20`)
       .then(response => response.json())
       .then(data => {
         if (data.length > 0) {
@@ -141,7 +140,7 @@ function CaseListPage() {
           setHasMore(false);
         }
       });
-  }, [model, page]);
+  }, [apiPath, page]);
 
   const toggleFavorite = (productId) => {
     if(favorites.includes(productId)) {
