@@ -36,16 +36,17 @@ const buttonStyles = css`
   }
 `;
 
-const getIconStyles = (position) => css`
+const getIconStyles = (position, iconColor) => css`
   font-size: 50px;
   position: absolute;
   right: ${position};
+  color: ${iconColor};
   top: 50%;
   transform: translateY(-50%);
 `;
 
-function CustomButton({ onClick, disabled, text, Icon, iconPosition = '5px' }) {
-  const iconStyles = getIconStyles(iconPosition);
+function CustomButton({ onClick, disabled, text, Icon, iconColor = '#fff', iconPosition = '5px' }) {
+  const iconStyles = getIconStyles(iconPosition, iconColor);
   return (
     <div css={containerStyles}>
       <button css={buttonStyles} onClick={onClick} disabled={disabled}>
