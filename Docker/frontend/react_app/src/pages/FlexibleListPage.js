@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { usePageTitle } from '../contexts/PageTitle';
 import Header from '../components/Header';
@@ -8,6 +8,7 @@ import Footer from '../components/Footer';
 
 function FlexibleListPage() {
   const params = useParams();
+  const location = useLocation();
   const userInfo = useSelector((state) => state.userInfo);
   const modelType = window.location.pathname.split('/')[1];
   const { setPageTitle } = usePageTitle();
@@ -35,10 +36,15 @@ function FlexibleListPage() {
     }
   }, [modelType, params.model, userInfo.id]);
 
+  useEffect(() => {
+    // Force a component update when the location changes
+    console.log('Location changed:', location);
+  }, [location]);
+
   return (
     <div>
-      <Header />
-      <CaseListPage apiPath={apiPath} />
+      <Header model={params.model} />
+      <CaseListPage key={location.pathname} apiPath={apiPath} />
       <Footer />
     </div>
   );

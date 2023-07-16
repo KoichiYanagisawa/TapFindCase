@@ -54,8 +54,8 @@ function App() {
         <Routes>
           <Route path="/" element={<ModelSelectPage />} />
           <Route path="/product/:model" element={<FlexibleListPage />} />
-          <Route path="/favorite/:model" element={<FlexibleListPage />} />
-          <Route path="/history/:model" element={<FlexibleListPage />} />
+          <Route path="/favorite" element={<FlexibleListPage />} />
+          <Route path="/history" element={<FlexibleListPage />} />
           <Route path="/product/detail/:id" element={<CaseDetailPage />} />
         </Routes>
       </Router>

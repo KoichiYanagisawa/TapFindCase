@@ -96,7 +96,7 @@ const hamburgerContainerStyles = css`
   justify-content: center;
 `;
 
-function Header() {
+function Header({ model}) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { pageTitle } = usePageTitle();
@@ -111,12 +111,12 @@ function Header() {
   };
 
   const handleFavoriteClick = () => {
-    navigate("/favorite/:model");
+    navigate("/favorite");
     setIsMenuOpen(false);
   };
 
   const handleHistoryClick = () => {
-    navigate("/history/:model");
+    navigate("/history");
     setIsMenuOpen(false);
   };
 

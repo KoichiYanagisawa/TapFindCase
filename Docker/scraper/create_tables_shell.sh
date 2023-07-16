@@ -55,7 +55,7 @@ CREATE TABLE favorites (
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
-CREATE TABLE history (
+CREATE TABLE histories (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
     product_id BIGINT NOT NULL,

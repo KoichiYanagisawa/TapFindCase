@@ -128,18 +128,19 @@ function CaseListPage({apiPath}) {
       threshold: 1.0
     };
     const observer = new IntersectionObserver(handleScroll, options);
-    const caseListContainer = document.getElementById('caseListContainer');
-    if (caseListContainer) {
-      observer.observe(caseListContainer);
+
+    const currentLoader = loader.current;
+    if (currentLoader) {
+      observer.observe(currentLoader);
     }
 
     return () => {
-      if (caseListContainer){
-        observer.unobserve(caseListContainer);
+      if (currentLoader){
+        observer.unobserve(currentLoader);
       }
     };
+  }, [handleScroll, loader]);
 
-  }, [handleScroll]);
 
   useEffect(() => {
     fetch(`http://localhost:3000/api/favorites/user/${userInfo.id}`)

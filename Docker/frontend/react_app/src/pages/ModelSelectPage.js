@@ -27,7 +27,9 @@ function ModelSelectPage() {
   const [selectedModelName, setSelectedModelName] = useState('');
   const navigate = useNavigate();
   const { setPageTitle } = usePageTitle();
-  setPageTitle('ーTOP');
+  useEffect(() => {
+    setPageTitle('ーTOP');
+  }, [setPageTitle]);
 
   useEffect(() => {
     fetch('http://localhost:3000')

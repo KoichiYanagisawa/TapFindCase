@@ -10,60 +10,74 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_13_011339) do
-  create_table "favorites", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+ActiveRecord::Schema[7.0].define(version: 2023_07_16_092222) do
+  create_table "favorites", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "product_id", null: false
-    t.index ["product_id"], name: "product_id"
-    t.index ["user_id"], name: "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_favorites_on_product_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
-  create_table "history", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "histories", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "product_id", null: false
-    t.datetime "viewed_at", precision: nil, null: false
-    t.index ["product_id"], name: "product_id"
-    t.index ["user_id"], name: "user_id"
+    t.datetime "viewed_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_histories_on_product_id"
+    t.index ["user_id"], name: "index_histories_on_user_id"
   end
 
-  create_table "images", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "images", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "product_id", null: false
     t.string "image_url", null: false
     t.string "thumbnail_url", null: false
-    t.index ["product_id"], name: "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_images_on_product_id"
   end
 
-  create_table "models", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "models", charset: "utf8mb3", force: :cascade do |t|
     t.string "model", limit: 30, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "product_models", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "product_models", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "product_id", null: false
     t.bigint "model_id", null: false
-    t.index ["model_id"], name: "model_id"
-    t.index ["product_id"], name: "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["model_id"], name: "index_product_models_on_model_id"
+    t.index ["product_id"], name: "index_product_models_on_product_id"
   end
 
-  create_table "products", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "products", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "color", null: false
     t.string "maker", null: false
-    t.string "price", limit: 20, null: false
+    t.string "price", limit: 20
     t.string "ec_site_url", null: false
     t.timestamp "checked_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.index ["ec_site_url"], name: "ec_site_url", unique: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ec_site_url"], name: "index_products_on_ec_site_url", unique: true
   end
 
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "users", charset: "utf8mb3", force: :cascade do |t|
     t.string "cookie_id", null: false
-    t.index ["cookie_id"], name: "cookie_id", unique: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cookie_id"], name: "index_users_on_cookie_id", unique: true
   end
 
-  add_foreign_key "favorites", "products", name: "favorites_ibfk_2"
-  add_foreign_key "favorites", "users", name: "favorites_ibfk_1"
-  add_foreign_key "history", "products", name: "history_ibfk_2"
-  add_foreign_key "history", "users", name: "history_ibfk_1"
-  add_foreign_key "images", "products", name: "images_ibfk_1"
-  add_foreign_key "product_models", "models", name: "product_models_ibfk_2"
-  add_foreign_key "product_models", "products", name: "product_models_ibfk_1"
+  add_foreign_key "favorites", "products"
+  add_foreign_key "favorites", "users"
+  add_foreign_key "histories", "products"
+  add_foreign_key "histories", "users"
+  add_foreign_key "images", "products"
+  add_foreign_key "product_models", "models"
+  add_foreign_key "product_models", "products"
 end

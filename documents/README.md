@@ -67,7 +67,7 @@
 |user_id|BIGINT|NO|FOREIGN KEY|NULL|NO|
 |product_id|BIGINT|NO|FOREIGN KEY|NULL|NO|
 
-**historyテーブル**
+**historiesテーブル**
 
 |カラム名|データ型|NULL|キー|初期値|AUTO INCREMENT|
 |-------|--------|----|---|-----|--------------|
@@ -75,6 +75,18 @@
 |user_id|BIGINT|NO|FOREIGN KEY|NULL|NO|
 |product_id|BIGINT|NO|FOREIGN KEY|NULL|NO|
 |viewed_at|DATETIME|NO||NULL|NO|
+
+**マイグレーションファイル作成コマンドは以下**
+
+```
+rails generate migration CreateProducts name:string color:string maker:string price:char[20] ec_site_url:string:uniq checked_at:timestamp
+rails generate migration CreateImages product:references image_url:string thumbnail_url:string
+rails generate migration CreateModels model:char[30]
+rails generate migration CreateProductModels product:references model:references
+rails generate migration CreateUsers cookie_id:string:uniq
+rails generate migration CreateFavorites user:references product:references
+rails generate migration CreateHistories user:references product:references viewed_at:datetime
+```
 
 ## ステップ3(システム構成図)
 

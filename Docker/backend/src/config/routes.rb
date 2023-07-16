@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   root to: 'products#index'
 
   get '/products', to: 'products#index'
@@ -15,5 +14,5 @@ Rails.application.routes.draw do
   post '/api/favorites/:user_id/:product_id', to: 'favorites#create'
   delete '/api/favorites/:user_id/:product_id', to: 'favorites#destroy'
 
-  post '/api/history', to: 'history#create'
+  post '/api/histories', to: 'histories#create'
 end

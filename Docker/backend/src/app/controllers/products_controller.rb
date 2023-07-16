@@ -52,6 +52,31 @@ class ProductsController < ApplicationController
     render json: @products.as_json(only: [:id, :name, :color, :price, :thumbnail_url])
   end
 
+  def historyList
+    page = params[:page] || 1
+    limit = params[:limit] || 20
+
+    user = User.find_by(id: params[:user_id])
+    return render json: { error: 'User not found' }, status: :not_found unless user
+
+    @products = user.histories.joins(:product => :images)
+                    .select('products.id',
+                            'products.name',
+                            'products.color',
+                            'products.price',
+                            'images.thumbnail_url as thumbnail_url')
+                    .page(page).per(limit)
+
+    @products.each do |product|
+      product.thumbnail_url = product.thumbnail_url.gsub('/root/src', '/root/app/public')
+      file_path = product.thumbnail_url.tr('[]\"', '').split(",").first
+      file_path = Rails.root.join(file_path)
+      encoded_image = Base64.encode64(File.read(file_path))
+      product.thumbnail_url = encoded_image
+    end
+    render json: @products.as_json(only: [:id, :name, :color, :price, :thumbnail_url])
+  end
+
   def detail
     @product = Product.joins(:models, :images).find(params[:id])
     image_urls = []
