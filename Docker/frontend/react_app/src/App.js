@@ -5,11 +5,12 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import {v4 as uuidv4} from 'uuid';
 import Cookies from 'js-cookie';
+import { PageTitleProvider } from './contexts/PageTitle';
 import ModelSelectPage from './pages/ModelSelectPage';
-import CaseListPage from './pages/CaseListPage';
 import CaseDetailPage from './pages/CaseDetailPage';
 import { Global } from '@emotion/react';
 import reset from './styles/reset.css';
+import FlexibleListPage from './pages/FlexibleListPage';
 
 
 function App() {
@@ -48,15 +49,17 @@ function App() {
 
 
   return (
-    <>
-        <Router>
-          <Routes>
-            <Route path="/" element={<ModelSelectPage />} />
-            <Route path="/product/:model" element={<CaseListPage />} />
-            <Route path="/product/detail/:id" element={<CaseDetailPage />} />
-          </Routes>
-        </Router>
-    </>
+    <PageTitleProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<ModelSelectPage />} />
+          <Route path="/product/:model" element={<FlexibleListPage />} />
+          <Route path="/favorite/:model" element={<FlexibleListPage />} />
+          <Route path="/history/:model" element={<FlexibleListPage />} />
+          <Route path="/product/detail/:id" element={<CaseDetailPage />} />
+        </Routes>
+      </Router>
+    </PageTitleProvider>
   );
 }
 

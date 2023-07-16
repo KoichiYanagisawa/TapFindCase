@@ -3,8 +3,6 @@ import { css } from '@emotion/react';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
 
@@ -87,22 +85,41 @@ const casesPrice = css`
   font-weight: bold;
 `;
 
-function CaseListPage({apiPath = 'favorite/1'}) {
+function CaseListPage({apiPath}) {
   const userInfo = useSelector((state) => state.userInfo);
   const [cases, setCases] = useState([]);
-  const [favorites, setFavorites] = useState([]); // お気に入り商品のIDを格納する配列を追加
-  // const { model } = useParams();
+  const [favorites, setFavorites] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(true);
   const loader = useRef(null);
   const navigate = useNavigate();
 
+  const fetchCases = useCallback(() => {
+    if (loading || !hasMore) return;
+    setLoading(true);
+
+    fetch(`http://localhost:3000/products/list/${apiPath}?page=${page}&limit=10`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.length > 0) {
+          setCases(prevCases => [...prevCases, ...data]);
+          setPage(prevPage => prevPage + 1);
+        } else {
+          setHasMore(false);
+        }
+      })
+      .catch(error => console.error(error))
+      .finally(() => setLoading(false));
+  }, [apiPath, page, loading, hasMore]);
+
   const handleScroll = useCallback((entries) => {
     const target = entries[0];
-    if (target.isIntersecting && hasMore) {
-      setPage((prevPage) => prevPage + 1);
+    if (target.isIntersecting) {
+      fetchCases();
     }
-  }, [hasMore]);
+  }, [fetchCases]);
 
   useEffect(() => {
     const options = {
@@ -111,9 +128,17 @@ function CaseListPage({apiPath = 'favorite/1'}) {
       threshold: 1.0
     };
     const observer = new IntersectionObserver(handleScroll, options);
-    if (loader.current) {
-      observer.observe(loader.current);
+    const caseListContainer = document.getElementById('caseListContainer');
+    if (caseListContainer) {
+      observer.observe(caseListContainer);
     }
+
+    return () => {
+      if (caseListContainer){
+        observer.unobserve(caseListContainer);
+      }
+    };
+
   }, [handleScroll]);
 
   useEffect(() => {
@@ -130,17 +155,6 @@ function CaseListPage({apiPath = 'favorite/1'}) {
       .catch(error => console.error(error));
   }, [userInfo.id]);
 
-  useEffect(() => {
-    fetch(`http://localhost:3000/products/list/${apiPath}?page=${page}&limit=20`)
-      .then(response => response.json())
-      .then(data => {
-        if (data.length > 0) {
-          setCases(prevCases => [...prevCases, ...data]);
-        } else {
-          setHasMore(false);
-        }
-      });
-  }, [apiPath, page]);
 
   const toggleFavorite = (productId) => {
     if(favorites.includes(productId)) {
@@ -156,47 +170,50 @@ function CaseListPage({apiPath = 'favorite/1'}) {
       })
       .then(() => {
         setFavorites(prevFavorites => [...prevFavorites, productId]);
-      });
+      })
+      .catch(error => console.error(error));
     }
   };
 
+  useEffect(() => {
+  if (initialLoad) {
+    setInitialLoad(false);
+  }
+}, [initialLoad]);
+
 
   return (
-    <>
-      <Header />
-      <div css={containerStyles}>
-        <div css={casesContainerStyles}>
-        {cases.map((caseItem, index) => {
-          const isFavorite = favorites.includes(caseItem.id);
+    <div css={containerStyles}>
+      <div id="caseListContainer" css={casesContainerStyles}>
+      {cases.map((caseItem) => {
+        const isFavorite = favorites.includes(caseItem.id);
 
-          return (
-            <div
-              css={caseStyles}
-              key={index}
-              onClick={() => navigate(`/product/detail/${caseItem.id}`)}
-            >
-              <div css={thumbnailContainerStyles}>
-                <img src={`data:image/jpeg;base64,${caseItem.thumbnail_url}`} alt={caseItem.name} css={imageStyles} />
-                {isFavorite
-                  ? <MdFavorite css={favoriteIconStyles(isFavorite)} onClick={(e) => { e.stopPropagation(); toggleFavorite(caseItem.id); }} />
-                  : <MdFavoriteBorder css={favoriteIconStyles(isFavorite)} onClick={(e) => { e.stopPropagation(); toggleFavorite(caseItem.id); }} />
-                }
-              </div>
-              <h2>{caseItem.name}</h2>
-              <p>{caseItem.color}</p>
-              <p css={casesPrice}>{caseItem.price}</p>
+        return (
+          <div
+            css={caseStyles}
+            key={caseItem.id}
+            onClick={() => navigate(`/product/detail/${caseItem.id}`)}
+          >
+            <div css={thumbnailContainerStyles}>
+              <img src={`data:image/jpeg;base64,${caseItem.thumbnail_url}`} alt={caseItem.name} css={imageStyles} />
+              {isFavorite
+                ? <MdFavorite css={favoriteIconStyles(isFavorite)} onClick={(e) => { e.stopPropagation(); toggleFavorite(caseItem.id); }} />
+                : <MdFavoriteBorder css={favoriteIconStyles(isFavorite)} onClick={(e) => { e.stopPropagation(); toggleFavorite(caseItem.id); }} />
+              }
             </div>
-          );
-        })}
-          {hasMore && (
-            <div ref={loader}>
-              <h2>Loading...</h2>
-            </div>
-          )}
-        </div>
+            <h2>{caseItem.name}</h2>
+            <p>{caseItem.color}</p>
+            <p css={casesPrice}>{caseItem.price}</p>
+          </div>
+        );
+      })}
+        {hasMore && (
+          <div ref={loader}>
+            <h2>Loading...</h2>
+          </div>
+        )}
       </div>
-      <Footer />
-    </>
+    </div>
   );
 }
 

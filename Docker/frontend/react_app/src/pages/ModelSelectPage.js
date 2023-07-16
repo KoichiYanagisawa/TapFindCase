@@ -2,6 +2,7 @@
 import { css } from '@emotion/react';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { usePageTitle } from '../contexts/PageTitle';
 import Header from '../components/Header';
 import Dropdown from '../components/Dropdown';
 import CustomButton from '../components/CustomButton';
@@ -25,6 +26,8 @@ function ModelSelectPage() {
   const [products, setProducts] = useState([]);
   const [selectedModelName, setSelectedModelName] = useState('');
   const navigate = useNavigate();
+  const { setPageTitle } = usePageTitle();
+  setPageTitle('ーTOP');
 
   useEffect(() => {
     fetch('http://localhost:3000')

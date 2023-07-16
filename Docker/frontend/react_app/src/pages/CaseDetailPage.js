@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Carousel } from 'react-responsive-carousel';
 import { useSelector } from 'react-redux';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { usePageTitle } from '../contexts/PageTitle';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -144,6 +145,8 @@ function ProductDetailPage() {
   const [displayImage, setDisplayImage] = useState(null);
   const { id } = useParams();
   const [isFavorited, setIsFavorited] = useState(false);
+  const { setPageTitle } = usePageTitle();
+  setPageTitle('ー商品詳細');
 
 
 
@@ -163,6 +166,17 @@ function ProductDetailPage() {
       .catch((error) => {
         console.error('Error:', error);
       });
+
+    fetch(`http://localhost:3000/api/history`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ user_id: userInfo.id, product_id: id }),
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   }, [id, userInfo.id]);
 
   if (!product) {

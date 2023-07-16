@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { usePageTitle } from '../contexts/PageTitle';
 
 const headerStyles = css`
   display: flex;
@@ -96,22 +98,40 @@ const hamburgerContainerStyles = css`
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const { pageTitle } = usePageTitle();
 
   const handleMenuClick = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleHomeClick = () => {
+    navigate("/");
+    setIsMenuOpen(false);
+  };
+
+  const handleFavoriteClick = () => {
+    navigate("/favorite/:model");
+    setIsMenuOpen(false);
+  };
+
+  const handleHistoryClick = () => {
+    navigate("/history/:model");
+    setIsMenuOpen(false);
+  };
+
+
   return (
     <div css={headerStyles}>
-      <h1>TapFindCase</h1>
+      <h1>TapFindCase {pageTitle}</h1>
       <div css={hamburgerContainerStyles} onClick={handleMenuClick}>
         <div css={hamburgerStyles({isMenuOpen})} />
       </div>
 
       <div css={menuStyles({isMenuOpen})}>
-        <div css={menuItemStyles} onClick={handleMenuClick}>ホーム画面</div>
-        <div css={menuItemStyles} onClick={handleMenuClick}>履歴</div>
-        <div css={menuItemStyles} onClick={handleMenuClick}>お気に入り</div>
+        <div css={menuItemStyles} onClick={handleHomeClick}>ホーム画面</div>
+        <div css={menuItemStyles} onClick={handleFavoriteClick}>お気に入り</div>
+        <div css={menuItemStyles} onClick={handleHistoryClick}>閲覧履歴</div>
       </div>
     </div>
   );
