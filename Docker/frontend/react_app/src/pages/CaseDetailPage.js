@@ -146,7 +146,9 @@ function ProductDetailPage() {
   const { id } = useParams();
   const [isFavorited, setIsFavorited] = useState(false);
   const { setPageTitle } = usePageTitle();
-  setPageTitle('ー商品詳細');
+  useEffect(() => {
+    setPageTitle('ー商品詳細');
+  }, [setPageTitle]);
 
 
 
@@ -167,16 +169,19 @@ function ProductDetailPage() {
         console.error('Error:', error);
       });
 
-    fetch(`http://localhost:3000/api/history`, {
+    fetch(`http://localhost:3000/api/histories`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ user_id: userInfo.id, product_id: id }),
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+      body: JSON.stringify({ user_id: userInfo.id, product_id: id, viewed_at: new Date() }),
+      })
+      .then(data => {
+        console.log('Success:', id);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }, [id, userInfo.id]);
 
   if (!product) {
