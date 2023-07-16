@@ -65,6 +65,7 @@ class ProductsController < ApplicationController
                             'products.color',
                             'products.price',
                             'images.thumbnail_url as thumbnail_url')
+                    .order('histories.updated_at DESC')
                     .page(page).per(limit)
 
     @products.each do |product|

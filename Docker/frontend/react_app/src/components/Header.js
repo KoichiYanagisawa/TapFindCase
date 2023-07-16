@@ -29,6 +29,10 @@ const headerStyles = css`
   }
 `;
 
+const titleStyles = css`
+  cursor: pointer;
+`;
+
 const hamburgerStyles = props => css`
   width: 30px;
   height: 2px;
@@ -123,7 +127,9 @@ function Header({ model}) {
 
   return (
     <div css={headerStyles}>
-      <h1>TapFindCase {pageTitle}</h1>
+      <h1>
+        <span css={titleStyles} onClick={handleHomeClick}>TapFindCase</span> {pageTitle}
+      </h1>
       <div css={hamburgerContainerStyles} onClick={handleMenuClick}>
         <div css={hamburgerStyles({isMenuOpen})} />
       </div>
