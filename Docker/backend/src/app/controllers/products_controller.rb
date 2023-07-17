@@ -52,30 +52,40 @@ class ProductsController < ApplicationController
     render json: @products.as_json(only: [:id, :name, :color, :price, :thumbnail_url])
   end
 
-  def historyList
+  def modelList
     page = params[:page] || 1
     limit = params[:limit] || 20
 
-    user = User.find_by(id: params[:user_id])
-    return render json: { error: 'User not found' }, status: :not_found unless user
+    model = Model.find_by(model: params[:model])
+    unless model
+      Rails.logger.error('Model not found')
+      return render json: { error: 'Model not found' }, status: :not_found
+    end
 
-    @products = user.histories.joins(:product => :images)
-                    .select('products.id',
-                            'products.name',
-                            'products.color',
-                            'products.price',
-                            'images.thumbnail_url as thumbnail_url')
-                    .order('histories.updated_at DESC')
-                    .page(page).per(limit)
+    @products = model.products.joins(:images)
+                     .select('products.id',
+                             'products.name',
+                             'products.color',
+                             'products.price',
+                             'images.thumbnail_url as thumbnail_url')
+                     .page(page).per(limit)
+
+    valid_products = []
 
     @products.each do |product|
-      product.thumbnail_url = product.thumbnail_url.gsub('/root/src', '/root/app/public')
-      file_path = product.thumbnail_url.tr('[]\"', '').split(",").first
-      file_path = Rails.root.join(file_path)
-      encoded_image = Base64.encode64(File.read(file_path))
-      product.thumbnail_url = encoded_image
+      product.thumbnail_url = product.thumbnail_url.gsub('/root/src', '/root/app/public') if product.thumbnail_url
+      file_path = product.thumbnail_url&.tr('[]\"', '')&.split(",")&.first
+
+      if file_path && File.exist?(file_path)
+        file_path = Rails.root.join(file_path)
+        encoded_image = Base64.encode64(File.read(file_path))
+        product.thumbnail_url = encoded_image
+        valid_products << product
+      else
+        Rails.logger.error("File not found at #{file_path}")
+      end
     end
-    render json: @products.as_json(only: [:id, :name, :color, :price, :thumbnail_url])
+    render json: valid_products.as_json(only: [:id, :name, :color, :price, :thumbnail_url])
   end
 
   def detail

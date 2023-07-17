@@ -100,7 +100,7 @@ function CaseListPage({apiPath}) {
     if (loading || !hasMore) return;
     setLoading(true);
 
-    fetch(`http://localhost:3000/products/list/${apiPath}?page=${page}&limit=10`)
+    fetch(`http://localhost:3000/products/list/${apiPath}?page=${page}&limit=20`)
       .then(response => response.json())
       .then(data => {
         if (data.length > 0) {
