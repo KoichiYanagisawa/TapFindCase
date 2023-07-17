@@ -301,7 +301,8 @@ end
 
 # Scraperのインスタンスを作成し、アイテムを検索
 # url = 'https://kakaku.com/keitai/mobilephone-accessories/itemlist.aspx?pdf_Spec103=24,25,26,28,29,30,31,32,33,34,35,36,37,38'
-url = 'https://kakaku.com/keitai/mobilephone-accessories/itemlist.aspx?pdf_Spec103=34'
+# url = 'https://kakaku.com/keitai/mobilephone-accessories/itemlist.aspx?pdf_Spec103=34'
+url = 'https://kakaku.com/keitai/mobilephone-accessories/itemlist.aspx?pdf_Spec102=1&pdf_Spec103=31,32,34,35,36'
 scraper = Scraper.new
 scraper.search_item(url)
 scraper.get_item_info

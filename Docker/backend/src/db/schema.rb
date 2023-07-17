@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_16_092222) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_17_010357) do
   create_table "favorites", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "product_id", null: false
@@ -59,7 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_16_092222) do
     t.string "color", null: false
     t.string "maker", null: false
     t.string "price", limit: 20
-    t.string "ec_site_url", null: false
+    t.string "ec_site_url", limit: 500, null: false
     t.timestamp "checked_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
