@@ -22,22 +22,14 @@ class ProductsController < ApplicationController
                              'images.thumbnail_url as thumbnail_url')
                      .page(page).per(limit)
 
-    valid_products = []
-
     @products.each do |product|
-      product.thumbnail_url = product.thumbnail_url.gsub('/root/src', '/root/app/public') if product.thumbnail_url
-      file_path = product.thumbnail_url&.tr('[]\"', '')&.split(",")&.first
-
-      if file_path && File.exist?(file_path)
-        file_path = Rails.root.join(file_path)
-        encoded_image = Base64.encode64(File.read(file_path))
-        product.thumbnail_url = encoded_image
-        valid_products << product
-      else
-        Rails.logger.error("File not found at #{file_path}")
+      thumbnail_urls = JSON.parse(product.thumbnail_url)
+      if thumbnail_urls.any?
+        product.thumbnail_url = generate_presigned_url(thumbnail_urls.first)
       end
     end
-    render json: valid_products.as_json(only: [:id, :name, :color, :price, :thumbnail_url])
+
+    render json: @products.as_json(only: [:id, :name, :color, :price, :thumbnail_url])
   end
 
   def favoriteList
@@ -55,22 +47,14 @@ class ProductsController < ApplicationController
                             'images.thumbnail_url as thumbnail_url')
                     .page(page).per(limit)
 
-                    valid_products = []
-
     @products.each do |product|
-      product.thumbnail_url = product.thumbnail_url.gsub('/root/src', '/root/app/public') if product.thumbnail_url
-      file_path = product.thumbnail_url&.tr('[]\"', '')&.split(",")&.first
-
-      if file_path && File.exist?(file_path)
-        file_path = Rails.root.join(file_path)
-        encoded_image = Base64.encode64(File.read(file_path))
-        product.thumbnail_url = encoded_image
-        valid_products << product
-      else
-        Rails.logger.error("File not found at #{file_path}")
+      thumbnail_urls = JSON.parse(product.thumbnail_url)
+      if thumbnail_urls.any?
+        product.thumbnail_url = generate_presigned_url(thumbnail_urls.first)
       end
     end
-    render json: valid_products.as_json(only: [:id, :name, :color, :price, :thumbnail_url])
+
+    render json: @products.as_json(only: [:id, :name, :color, :price, :thumbnail_url])
   end
 
   def historyList
@@ -89,22 +73,14 @@ class ProductsController < ApplicationController
                     .order('histories.updated_at DESC')
                     .page(page).per(limit)
 
-    valid_products = []
-
     @products.each do |product|
-      product.thumbnail_url = product.thumbnail_url.gsub('/root/src', '/root/app/public') if product.thumbnail_url
-      file_path = product.thumbnail_url&.tr('[]\"', '')&.split(",")&.first
-
-      if file_path && File.exist?(file_path)
-        file_path = Rails.root.join(file_path)
-        encoded_image = Base64.encode64(File.read(file_path))
-        product.thumbnail_url = encoded_image
-        valid_products << product
-      else
-        Rails.logger.error("File not found at #{file_path}")
+      thumbnail_urls = JSON.parse(product.thumbnail_url)
+      if thumbnail_urls.any?
+        product.thumbnail_url = generate_presigned_url(thumbnail_urls.first)
       end
     end
-    render json: valid_products.as_json(only: [:id, :name, :color, :price, :thumbnail_url])
+
+    render json: @products.as_json(only: [:id, :name, :color, :price, :thumbnail_url])
   end
 
   def detail
@@ -113,30 +89,19 @@ class ProductsController < ApplicationController
     thumbnail_urls = []
 
     @product.images.each do |image|
-      # 画像URLのパスを書き換え
-      image_paths = image.image_url.gsub('/root/src', '/root/app/public').tr('[]\"', '').split(",")
-
-      # パスが配列形式で保存されている場合、それぞれの画像をエンコード
+      image_paths = JSON.parse(image.image_url)
       image_paths.each do |path|
-        file_path = Rails.root.join(path)
-        # 画像ファイルを読み込み、Base64でエンコード
-        encoded_image = Base64.encode64(File.read(file_path))
-        image_urls << encoded_image
+        presigned_image_url = generate_presigned_url(path)
+        image_urls << presigned_image_url
       end
 
-      # サムネイルURLのパスを書き換え
-      thumbnail_paths = image.thumbnail_url.gsub('/root/src', '/root/app/public').tr('[]\"', '').split(",")
-
-      # パスが配列形式で保存されている場合、それぞれの画像をエンコード
+      thumbnail_paths = JSON.parse(image.thumbnail_url)
       thumbnail_paths.each do |path|
-        file_path = Rails.root.join(path)
-        # 画像ファイルを読み込み、Base64でエンコード
-        encoded_thumbnail = Base64.encode64(File.read(file_path))
-        thumbnail_urls << encoded_thumbnail
+        presigned_thumbnail_url = generate_presigned_url(path)
+        thumbnail_urls << presigned_thumbnail_url
       end
     end
 
-    # JSONに変換してフロントエンドに返す
     render json: {
       product: @product.as_json(only: [:id, :name, :color, :maker, :price, :ec_site_url, :checked_at]),
       images: image_urls,

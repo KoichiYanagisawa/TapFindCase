@@ -227,7 +227,7 @@ function ProductDetailPage() {
             {product.thumbnails.map((thumbnail, index) => (
               <div key={index} onClick={() => handleThumbnailClick(index)} css={thumbnailStyles}>
                 <img
-                  src={`data:image/jpeg;base64,${thumbnail}`}
+                  src={thumbnail}
                   alt={`thumbnail-${index}`}
                 />
               </div>
@@ -237,7 +237,7 @@ function ProductDetailPage() {
         </div>
 
         <div css={imageContainerStyles}>
-          <img src={`data:image/jpeg;base64,${displayImage}`} alt={product.product.name} css={imageStyles} />
+          <img src={displayImage} alt={product.product.name} css={imageStyles} />
           {isFavorited && <MdFavorite css={favoriteIconStyles} />}
         </div>
 
@@ -254,8 +254,8 @@ function ProductDetailPage() {
           <p>最終確認日: {new Date(product.product.checked_at).toLocaleString()}</p>
 
           <CustomButton
-            onClick={() => {toggleFavorites()}} // 実際にお気に入りに登録する処理をここに書く
-            disabled={false} // 実際には条件によってtrueにする必要があるかもしれません
+            onClick={() => {toggleFavorites()}}
+            disabled={false}
             text={isFavorited ? 'お気に入りを解除' : 'お気に入りに登録'}
             Icon={MdFavorite}
             iconColor={isFavorited ? 'red' : 'white'}

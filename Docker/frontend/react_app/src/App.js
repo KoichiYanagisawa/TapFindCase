@@ -21,16 +21,13 @@ function App() {
   useEffect(() => {
     let userId = Cookies.get('userId');
 
-    // Cookieがなければuuidを生成してCookieに保存する
     if (!userId) {
       userId = uuidv4();
       Cookies.set('userId', userId);
     }
 
-    // ユーザーIDをRails APIに送信してユーザー情報を取得する
     axios.get(`http://localhost:3000/api/users/${userId}`)
       .then((response) => {
-        // ユーザー情報をReduxのStoreに保存する
         dispatch({
           type: 'SET_USER_INFO',
           payload: response.data

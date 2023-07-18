@@ -8,6 +8,8 @@ services:
     volumes:
       - ./scraper/src:/root/src
     command: /bin/bash
+    environment:
+      TZ: 'Asia/Tokyo'
   db:
     image: mysql:8.0-debian
     container_name: mysql
@@ -41,6 +43,7 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: 'Asia/Tokyo'
   frontend:
     build: ./frontend/
     container_name: frontend

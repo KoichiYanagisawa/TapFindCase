@@ -54,3 +54,6 @@ gem 'rack-cors'
 
 # ページングを実装するために追加する
 gem 'kaminari'
+
+# AWS S3を使うために追加する
+gem 'aws-sdk-s3', require: false

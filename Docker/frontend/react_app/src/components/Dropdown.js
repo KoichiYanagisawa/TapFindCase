@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import React, { useState } from 'react';
-import { FaCircleChevronDown } from 'react-icons/fa6'; // BiChevronDownCircleアイコンをインポート
+import { FaCircleChevronDown } from 'react-icons/fa6';
 
 const dropdownContainerStyles = css`
   position: relative;
@@ -88,7 +88,7 @@ function Dropdown({ options, value, onChange, placeholder }) {
     <div css={dropdownContainerStyles}>
       <div css={dropdownHeaderStyles} onClick={handleToggleDropdown}>
         {value || placeholder}
-        <FaCircleChevronDown css={dropdownIconStyles} /> {/* アイコンを追加 */}
+        <FaCircleChevronDown css={dropdownIconStyles} />
       </div>
       {isOpen && (
         <div css={dropdownListStyles}>

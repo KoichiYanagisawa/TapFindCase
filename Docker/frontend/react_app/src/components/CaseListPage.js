@@ -196,7 +196,7 @@ function CaseListPage({apiPath}) {
             onClick={() => navigate(`/product/detail/${caseItem.id}`)}
           >
             <div css={thumbnailContainerStyles}>
-              <img src={`data:image/jpeg;base64,${caseItem.thumbnail_url}`} alt={caseItem.name} css={imageStyles} />
+              <img src={caseItem.thumbnail_url} alt={caseItem.name} css={imageStyles} />
               {isFavorite
                 ? <MdFavorite css={favoriteIconStyles(isFavorite)} onClick={(e) => { e.stopPropagation(); toggleFavorite(caseItem.id); }} />
                 : <MdFavoriteBorder css={favoriteIconStyles(isFavorite)} onClick={(e) => { e.stopPropagation(); toggleFavorite(caseItem.id); }} />
