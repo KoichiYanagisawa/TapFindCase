@@ -1,24 +1,72 @@
 # frozen_string_literal: true
 
-require_relative './db_manager'
+require 'aws-sdk-s3'
+require 'dotenv/load'
+
 require_relative './image_scraper'
 
 class InfoScraper
+
   def initialize
     @image_scraper = ImageScraper.new
+    @s3 = Aws::S3::Resource.new(
+      region: ENV['AWS_REGION'],
+      access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+      secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+    )
+    @bucket = @s3.bucket(ENV['AWS_S3_BUCKET_NAME'])
   end
-  def get_item_info(wait, driver, urls)
-    urls.each_with_index do |url, index|
-      retry_on_error do
-        puts "現在の処理: #{index + 1}/#{urls.length}"
-        driver.navigate.to(url)
-        sleep(1)
-        item_info = extract_item_info(wait, driver)
-        item_info[:models] = extract_models(wait, driver)
-        item_info[:image_url], item_info[:thumbnail_url] = @image_scraper.get_item_images(wait, driver, driver.current_url)
-        DbManager.store_data_to_db(item_info)
+
+  def get_item_info(wait, driver)
+    s3_client = Aws::S3::Client.new
+
+    @bucket.objects(prefix: 'products_detail_urls/').each do |obj_summary|
+      obj = @bucket.object(obj_summary.key)
+
+      # タグを取得
+      resp = s3_client.get_object_tagging({
+        bucket: @bucket.name,
+        key: obj.key
+      })
+      next if resp.tag_set.any? { |tag| tag.key == 'processing' && tag.value == 'true' }
+
+      # タグを設定
+      resp.tag_set << { key: 'processing', value: 'true' }
+      s3_client.put_object_tagging({
+        bucket: @bucket.name,
+        key: obj.key,
+        tagging: { tag_set: resp.tag_set }
+      })
+
+      item_infos = []
+      urls = get_urls_from_s3(obj)
+      urls.each_with_index do |url, index|
+        retry_on_error do
+          puts "現在の処理: #{index + 1}/#{urls.length}"
+          driver.navigate.to(url)
+          sleep(1)
+          item_info = extract_item_info(wait, driver)
+          item_info[:models] = extract_models(wait, driver)
+          item_info[:image_url], item_info[:thumbnail_url] = @image_scraper.get_item_images(wait, driver, driver.current_url)
+          item_infos << item_info
+        end
       end
+      obj.delete
+      save_item_infos_to_s3(obj.key, item_infos)
     end
+  end
+
+  def get_urls_from_s3(s3_object)
+    urls = []
+    s3_object.get.body.read.split("\n").each do |url|
+      urls << url
+    end
+    urls
+  end
+
+  def save_item_infos_to_s3(object_key, item_infos)
+    file_name = object_key.split('/').last
+    @bucket.object("store_data_to_db/#{file_name}").put(body: JSON.generate(item_infos))
   end
 
   def extract_item_info(wait, driver)

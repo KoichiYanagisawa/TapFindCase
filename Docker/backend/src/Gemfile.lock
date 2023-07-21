@@ -67,12 +67,15 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
     aws-eventstream (1.2.0)
-    aws-partitions (1.787.0)
+    aws-partitions (1.790.0)
     aws-sdk-core (3.178.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.651.0)
       aws-sigv4 (~> 1.5)
       jmespath (~> 1, >= 1.6.1)
+    aws-sdk-dynamodb (1.92.0)
+      aws-sdk-core (~> 3, >= 3.177.0)
+      aws-sigv4 (~> 1.1)
     aws-sdk-kms (1.71.0)
       aws-sdk-core (~> 3, >= 3.177.0)
       aws-sigv4 (~> 1.1)
@@ -101,8 +104,8 @@ GEM
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     io-console (0.6.0)
-    irb (1.7.1)
-      reline (>= 0.3.0)
+    irb (1.7.4)
+      reline (>= 0.3.6)
     jmespath (1.6.2)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
@@ -128,8 +131,7 @@ GEM
     method_source (1.0.0)
     mini_mime (1.1.2)
     minitest (5.18.1)
-    msgpack (1.7.1)
-    mysql2 (0.5.5)
+    msgpack (1.7.2)
     net-imap (0.3.6)
       date
       net-protocol
@@ -140,7 +142,7 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.9)
-    nokogiri (1.15.2-x86_64-linux)
+    nokogiri (1.15.3-x86_64-linux)
       racc (~> 1.4)
     puma (5.6.6)
       nio4r (~> 2.0)
@@ -179,7 +181,7 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
-    reline (0.3.5)
+    reline (0.3.6)
       io-console (~> 0.5)
     thor (1.2.2)
     timeout (0.4.0)
@@ -194,12 +196,12 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  aws-sdk-dynamodb (~> 1.92.0)
   aws-sdk-s3
   bootsnap
   debug
   dotenv-rails
   kaminari
-  mysql2 (~> 0.5)
   puma (~> 5.0)
   rack-cors
   rails (~> 7.0.6)

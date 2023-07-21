@@ -80,25 +80,25 @@ const detailContainerStyles = css`
   }
 `;
 
-const favoriteIconStyles = css`
-  position: absolute;
-  right: 15%;
-  bottom: 5%;
-  color: red;
-  font-size: 4.5rem;
-  @media (max-width: 1024px) {
-    font-size: 3.5rem;
-  }
-  @media (max-width: 768px) {
-    font-size: 2.5rem;
-  }
-  @media (max-width: 640px) {
-    font-size: 2rem;
-  }
-  @media (max-width: 320px) {
-    font-size: 1.5rem;
-  }
-`;
+// const favoriteIconStyles = css`
+//   position: absolute;
+//   right: 15%;
+//   bottom: 5%;
+//   color: red;
+//   font-size: 4.5rem;
+//   @media (max-width: 1024px) {
+//     font-size: 3.5rem;
+//   }
+//   @media (max-width: 768px) {
+//     font-size: 2.5rem;
+//   }
+//   @media (max-width: 640px) {
+//     font-size: 2rem;
+//   }
+//   @media (max-width: 320px) {
+//     font-size: 1.5rem;
+//   }
+// `;
 
 const productPrice = css`
   color: #ff0000;
@@ -142,8 +142,9 @@ const hideOnDesktop = css`
 function ProductDetailPage() {
   const userInfo = useSelector((state) => state.userInfo); // useSelectorフックを使ってStoreからユーザー情報を取得
   const [product, setProduct] = useState(null);
+  const [imageCount, setImageCount] = useState(0);
   const [displayImage, setDisplayImage] = useState(null);
-  const { id } = useParams();
+  const { caseName } = useParams();
   const [isFavorited, setIsFavorited] = useState(false);
   const { setPageTitle } = usePageTitle();
   useEffect(() => {
@@ -153,14 +154,16 @@ function ProductDetailPage() {
 
 
   useEffect(() => {
-    fetch(`http://localhost:3000/products/detail/${id}`)
+    fetch(`http://localhost:3000/products/detail/${encodeURIComponent(caseName)}`)
       .then(response => response.json())
       .then(data => {
-        setProduct(data);
-        setDisplayImage(data.images[0]);
+        setProduct(data.product);
+        console.log(data.product);
+        setDisplayImage(data.product.image_urls[0]);
+        setImageCount(data.product.thumbnail_urls.length);
       });
 
-    fetch(`http://localhost:3000/api/favorites/${userInfo.id}/${id}`)
+    fetch(`http://localhost:3000/api/favorites/${userInfo.id}/${caseName}`)
       .then(response => response.json())
       .then(data => {
         setIsFavorited(data.is_favorited);
@@ -174,36 +177,34 @@ function ProductDetailPage() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ user_id: userInfo.id, product_id: id, viewed_at: new Date() }),
+      body: JSON.stringify({ user_id: userInfo.id, name: caseName, viewed_at: new Date() }),
       })
       .then(data => {
-        console.log('Success:', id);
+        console.log('Success:', caseName);
       })
       .catch((error) => {
         console.error('Error:', error);
       });
-  }, [id, userInfo.id]);
+  }, [caseName, userInfo.id]);
 
   if (!product) {
     return <div>Loading...</div>;
   }
 
-  const imageCount = product.thumbnails.length;
-
   const handleThumbnailClick = (index) => {
-    setDisplayImage(product.images[index]);
+    setDisplayImage(product.image_urls[index]);
   };
 
   const toggleFavorites = () => {
     const method = isFavorited ? 'DELETE' : 'POST';
     const message = isFavorited ? 'お気に入りを解除しました' : 'お気に入りに追加しました';
 
-    fetch(`http://localhost:3000/api/favorites/${userInfo.id}/${product.product.id}`, {
+    fetch(`http://localhost:3000/api/favorites/${userInfo.id}/${product.name}`, {
       method: method,
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ product_id: product.product.id }),
+      body: JSON.stringify({ product_id: product.name }),
     })
     .then(response => {
       if (response.ok) {
@@ -224,7 +225,7 @@ function ProductDetailPage() {
       <div css={containerStyles}>
         <div css={thumbnailContainerStyles}>
           <Carousel showStatus={false} showIndicators={false} showThumbs={false}>
-            {product.thumbnails.map((thumbnail, index) => (
+            {product && product.thumbnail_urls.map((thumbnail, index) => (
               <div key={index} onClick={() => handleThumbnailClick(index)} css={thumbnailStyles}>
                 <img
                   src={thumbnail}
@@ -237,21 +238,21 @@ function ProductDetailPage() {
         </div>
 
         <div css={imageContainerStyles}>
-          <img src={displayImage} alt={product.product.name} css={imageStyles} />
-          {isFavorited && <MdFavorite css={favoriteIconStyles} />}
+          <img src={displayImage} alt={product.name} css={imageStyles} />
+          {/* {isFavorited && <MdFavorite css={favoriteIconStyles} />} */}
         </div>
 
         <div css={detailContainerStyles}>
-          <h2 css={productNameStyles}>{product.product.name}</h2>
-          <p css={productDetailStyles}>カラー：{product.product.color}</p>
-          <p css={productDetailStyles}>メーカー：{product.product.maker}</p>
+          <h2 css={productNameStyles}>{product.name}</h2>
+          <p css={productDetailStyles}>カラー：{product.color}</p>
+          <p css={productDetailStyles}>メーカー：{product.maker}</p>
 
           <div>
             <span>価格(税込): </span>
-            <span css={productPrice}>{product.product.price}</span>
+            <span css={productPrice}>{product.price}</span>
           </div>
 
-          <p>最終確認日: {new Date(product.product.checked_at).toLocaleString()}</p>
+          <p>最終確認日: {new Date(product.checked_at).toLocaleString()}</p>
 
           <CustomButton
             onClick={() => {toggleFavorites()}}
@@ -264,7 +265,7 @@ function ProductDetailPage() {
 
           <CustomButton
             onClick={() => {
-              const newWindow = window.open(product.product.ec_site_url, '_blank');
+              const newWindow = window.open(product.ec_site_url, '_blank');
               if (newWindow) newWindow.opener = null;
             }}
             text="ショップに行く"

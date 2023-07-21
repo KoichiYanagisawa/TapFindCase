@@ -53,7 +53,7 @@ function App() {
           <Route path="/product/:model" element={<FlexibleListPage />} />
           <Route path="/favorite" element={<FlexibleListPage />} />
           <Route path="/history" element={<FlexibleListPage />} />
-          <Route path="/product/detail/:id" element={<CaseDetailPage />} />
+          <Route path="/product/detail/:caseName" element={<CaseDetailPage />} />
         </Routes>
       </Router>
     </PageTitleProvider>

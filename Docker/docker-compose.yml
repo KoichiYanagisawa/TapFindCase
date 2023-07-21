@@ -10,6 +10,33 @@ services:
     command: /bin/bash
     environment:
       TZ: 'Asia/Tokyo'
+  url_scraper:
+    build: ./url_scraper/
+    container_name: url_scraper
+    platform: linux/x86_64
+    # tty: true
+    volumes:
+      - ./url_scraper/src:/root/src
+    environment:
+      TZ: 'Asia/Tokyo'
+  info_scraper:
+    build: ./info_scraper/
+    container_name: info_scraper
+    platform: linux/x86_64
+    # tty: true
+    volumes:
+      - ./info_scraper/src:/root/src
+    environment:
+      TZ: 'Asia/Tokyo'
+  dbmanager_scraper:
+    build: ./dbmanager_scraper/
+    container_name: dbmanager_scraper
+    platform: linux/x86_64
+    tty: true
+    volumes:
+      - ./dbmanager_scraper/src:/root/src
+    environment:
+      TZ: 'Asia/Tokyo'
   db:
     image: mysql:8.0-debian
     container_name: mysql
@@ -32,8 +59,6 @@ services:
     tty: true
     volumes:
       - ./backend/src:/root/app
-      - ./scraper/src/images:/root/app/public/images
-      - ./scraper/src/thumbnails:/root/app/public/thumbnails
     ports:
       - 3000:3000
     depends_on:

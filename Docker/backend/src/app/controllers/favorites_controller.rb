@@ -2,19 +2,19 @@ class FavoritesController < ApplicationController
   before_action :set_user
 
   def index
-    @favorites = @user.favorites.pluck(:product_id)
+    @favorites = Favorite.find_all_by_user(user_id: @user['PK'])
     render json: { favorites: @favorites }, status: :ok
   end
 
   def create
-    @favorite = @user.favorites.create(product_id: params[:product_id])
-    render json: { id: @favorite.id }, status: :created
+    @favorite = Favorite.create(user_id: @user['PK'], product_id: params[:product_id])
+    render json: { product_id: @favorite['product_id'] }, status: :created
   end
 
   def destroy
-    @favorite = @user.favorites.find_by(product_id: params[:product_id])
+    @favorite = Favorite.find_by(user_id: @user['PK'], product_id: params[:product_id])
     if @favorite
-      @favorite.destroy
+      Favorite.destroy(user_id: @user['PK'], product_id: params[:product_id])
       render json: { message: 'Successfully removed from favorites.' }, status: :ok
     else
       render json: { error: 'Not found.' }, status: :not_found
@@ -22,7 +22,7 @@ class FavoritesController < ApplicationController
   end
 
   def show
-    @favorite = @user.favorites.find_by(product_id: params[:product_id])
+    @favorite = Favorite.find_by_user_and_case(user_id: @user['PK'], case_name: params[:case_name])
     if @favorite
       render json: { is_favorited: true }, status: :ok
     else
@@ -33,6 +33,9 @@ class FavoritesController < ApplicationController
   private
 
   def set_user
-    @user = User.find_by(id: params[:user_id])
+    @user = User.find_by(params[:user_id])
+    unless @user
+      render json: { error: 'User not found.' }, status: :not_found
+    end
   end
 end
