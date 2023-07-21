@@ -89,10 +89,11 @@ function CaseListPage({apiPath}) {
   const userInfo = useSelector((state) => state.userInfo);
   const [cases, setCases] = useState([]);
   const [favorites, setFavorites] = useState([]);
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true);
+  const [lastKey, setLastKey] = useState(null);
   const loader = useRef(null);
   const navigate = useNavigate();
 
@@ -100,19 +101,23 @@ function CaseListPage({apiPath}) {
     if (loading || !hasMore) return;
     setLoading(true);
 
-    fetch(`http://localhost:3000/products/list/${apiPath}?page=${page}&limit=20`)
-      .then(response => response.json())
-      .then(data => {
-        if (data.length > 0) {
-          setCases(prevCases => [...prevCases, ...data]);
-          setPage(prevPage => prevPage + 1);
-        } else {
-          setHasMore(false);
-        }
-      })
-      .catch(error => console.error(error))
-      .finally(() => setLoading(false));
-  }, [apiPath, page, loading, hasMore]);
+    let url = `http://localhost:3000/products/list/${apiPath}?limit=20`;
+    if (lastKey) url += `&last_evaluated_key=${encodeURIComponent(JSON.stringify(lastKey))}`;
+
+    fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      if (data.products.length > 0) {
+        setCases(prevCases => [...prevCases, ...data.products]);
+        setLastKey(data.last_evaluated_key);
+      }
+      if(data.products.length < 20 || !data.last_evaluated_key){
+        setHasMore(false);
+      }
+    })
+    .catch(error => console.error(error))
+    .finally(() => setLoading(false));
+  }, [apiPath, loading, hasMore, lastKey]);
 
   const handleScroll = useCallback((entries) => {
     const target = entries[0];
@@ -156,21 +161,20 @@ function CaseListPage({apiPath}) {
       .catch(error => console.error(error));
   }, [userInfo.id]);
 
-
-  const toggleFavorite = (productId) => {
-    if(favorites.includes(productId)) {
-      fetch(`http://localhost:3000/api/favorites/${userInfo.id}/${productId}`, {
+  const toggleFavorite = (productName) => {
+    if(favorites.includes(productName)) {
+      fetch(`http://localhost:3000/api/favorites/${userInfo.id}/${productName}`, {
         method: 'DELETE'
       })
       .then(() => {
-        setFavorites(prevFavorites => prevFavorites.filter(id => id !== productId));
+        setFavorites(prevFavorites => prevFavorites.filter(name => name !== productName));
       });
     } else {
-      fetch(`http://localhost:3000/api/favorites/${userInfo.id}/${productId}`, {
+      fetch(`http://localhost:3000/api/favorites/${userInfo.id}/${productName}`, {
         method: 'POST'
       })
       .then(() => {
-        setFavorites(prevFavorites => [...prevFavorites, productId]);
+        setFavorites(prevFavorites => [...prevFavorites, productName]);
       })
       .catch(error => console.error(error));
     }
@@ -182,24 +186,23 @@ function CaseListPage({apiPath}) {
   }
 }, [initialLoad]);
 
-
   return (
     <div css={containerStyles}>
       <div id="caseListContainer" css={casesContainerStyles}>
       {cases.map((caseItem) => {
-        const isFavorite = favorites.includes(caseItem.id);
+        const isFavorite = favorites.includes(caseItem.name);
 
         return (
           <div
             css={caseStyles}
-            key={caseItem.id}
-            onClick={() => navigate(`/product/detail/${caseItem.id}`)}
+            key={caseItem.name}
+            onClick={() => navigate(`/product/detail/${caseItem.name}`)}
           >
             <div css={thumbnailContainerStyles}>
               <img src={caseItem.thumbnail_url} alt={caseItem.name} css={imageStyles} />
               {isFavorite
-                ? <MdFavorite css={favoriteIconStyles(isFavorite)} onClick={(e) => { e.stopPropagation(); toggleFavorite(caseItem.id); }} />
-                : <MdFavoriteBorder css={favoriteIconStyles(isFavorite)} onClick={(e) => { e.stopPropagation(); toggleFavorite(caseItem.id); }} />
+                ? <MdFavorite css={favoriteIconStyles(isFavorite)} onClick={(e) => { e.stopPropagation(); toggleFavorite(caseItem.name); }} />
+                : <MdFavoriteBorder css={favoriteIconStyles(isFavorite)} onClick={(e) => { e.stopPropagation(); toggleFavorite(caseItem.name); }} />
               }
             </div>
             <h2>{caseItem.name}</h2>

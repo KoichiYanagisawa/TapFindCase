@@ -36,11 +36,6 @@ function FlexibleListPage() {
     }
   }, [modelType, params.model, userInfo.id]);
 
-  useEffect(() => {
-    // Force a component update when the location changes
-    console.log('Location changed:', location);
-  }, [location]);
-
   return (
     <div>
       <Header model={params.model} />
