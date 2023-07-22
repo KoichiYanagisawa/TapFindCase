@@ -1,22 +1,12 @@
 version: "3.7"
 services:
-  scraper:
-    build: ./scraper/
-    container_name: scraper
-    platform: linux/x86_64
-    tty: true
-    volumes:
-      - ./scraper/src:/root/src
-    command: /bin/bash
-    environment:
-      TZ: 'Asia/Tokyo'
   url_scraper:
     build: ./url_scraper/
     container_name: url_scraper
     platform: linux/x86_64
     # tty: true
-    volumes:
-      - ./url_scraper/src:/root/src
+    # volumes:
+    #   - ./url_scraper/src:/root/src
     environment:
       TZ: 'Asia/Tokyo'
   info_scraper:
@@ -24,34 +14,19 @@ services:
     container_name: info_scraper
     platform: linux/x86_64
     # tty: true
-    volumes:
-      - ./info_scraper/src:/root/src
+    # volumes:
+    #   - ./info_scraper/src:/root/src
     environment:
       TZ: 'Asia/Tokyo'
   dbmanager_scraper:
     build: ./dbmanager_scraper/
     container_name: dbmanager_scraper
     platform: linux/x86_64
-    tty: true
-    volumes:
-      - ./dbmanager_scraper/src:/root/src
+    # tty: true
+    # volumes:
+    #   - ./dbmanager_scraper/src:/root/src
     environment:
       TZ: 'Asia/Tokyo'
-  db:
-    image: mysql:8.0-debian
-    container_name: mysql
-    platform: linux/x86_64
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      TZ: 'Asia/Tokyo'
-    ports:
-      - 3306:3306
-    volumes:
-      - ./db/mysql:/var/lib/mysql
   backend:
     build: ./backend/
     container_name: backend
@@ -61,13 +36,7 @@ services:
       - ./backend/src:/root/app
     ports:
       - 3000:3000
-    depends_on:
-      - db
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       TZ: 'Asia/Tokyo'
   frontend:
     build: ./frontend/

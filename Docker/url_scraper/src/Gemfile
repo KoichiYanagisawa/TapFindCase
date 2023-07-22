@@ -7,12 +7,6 @@ gem 'selenium-webdriver', '~> 4.10'
 # seleniumでchromium browserを動かすために必要
 gem 'webdrivers', '~> 5.2'
 
-# データベースを操作
-gem 'activerecord', '~> 7.0.6'
-
-# mysqlを使う
-gem 'mysql2', '~> 0.5.5'
-
 # .envを読み込むために必要
 gem 'dotenv', '~> 2.7.6'
 
