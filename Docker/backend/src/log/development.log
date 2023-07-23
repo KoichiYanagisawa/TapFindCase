@@ -1,0 +1,473 @@
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:09:48 +0900
+Started GET "/api/users/9772a8b3-83e9-495c-b909-79ca75ac9df5" for 172.21.0.1 at 2023-07-24 02:09:48 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Processing by UsersController#show as HTML
+  Parameters: {"uuid"=>"9772a8b3-83e9-495c-b909-79ca75ac9df5"}
+Completed 200 OK in 399ms (Views: 1.2ms | Allocations: 131053)
+
+
+Started GET "/" for 172.21.0.1 at 2023-07-24 02:09:50 +0900
+Processing by ProductsController#index as */*
+Completed 500 Internal Server Error in 16ms (Allocations: 489)
+
+
+  
+LoadError (cannot load such file -- /root/app/app/services/dynamo_db_client):
+  
+app/models/product.rb:3:in `require_relative'
+app/models/product.rb:3:in `<main>'
+app/controllers/products_controller.rb:5:in `index'
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:09:50 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:09:52 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:09:56 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:10:04 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:10:20 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:10:54 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:11:23 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/api/users/9772a8b3-83e9-495c-b909-79ca75ac9df5" for 172.21.0.1 at 2023-07-24 02:11:23 +0900
+Processing by UsersController#show as HTML
+  Parameters: {"uuid"=>"9772a8b3-83e9-495c-b909-79ca75ac9df5"}
+Completed 200 OK in 278ms (Views: 0.5ms | Allocations: 1489)
+
+
+Started GET "/" for 172.21.0.1 at 2023-07-24 02:11:23 +0900
+Processing by ProductsController#index as */*
+Completed 500 Internal Server Error in 30ms (Allocations: 1041)
+
+
+  
+LoadError (cannot load such file -- /root/app/app/services/dynamo_db_client):
+  
+app/models/product.rb:3:in `require_relative'
+app/models/product.rb:3:in `<main>'
+app/controllers/products_controller.rb:5:in `index'
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:11:24 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:11:26 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/" for 172.21.0.1 at 2023-07-24 02:11:28 +0900
+Processing by ProductsController#index as HTML
+Completed 500 Internal Server Error in 4ms (Allocations: 163)
+
+
+  
+LoadError (cannot load such file -- /root/app/app/services/dynamo_db_client):
+  
+app/models/product.rb:3:in `require_relative'
+app/models/product.rb:3:in `<main>'
+app/controllers/products_controller.rb:5:in `index'
+Started GET "/favicon.ico" for 172.21.0.1 at 2023-07-24 02:11:28 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:11:31 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:11:40 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:11:57 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/" for 172.21.0.1 at 2023-07-24 02:12:02 +0900
+Processing by ProductsController#index as HTML
+Completed 200 OK in 534ms (Views: 0.6ms | Allocations: 104123)
+
+
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:12:08 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/api/users/9772a8b3-83e9-495c-b909-79ca75ac9df5" for 172.21.0.1 at 2023-07-24 02:12:08 +0900
+Processing by UsersController#show as HTML
+  Parameters: {"uuid"=>"9772a8b3-83e9-495c-b909-79ca75ac9df5"}
+Completed 200 OK in 129ms (Views: 0.2ms | Allocations: 1468)
+
+
+Started GET "/" for 172.21.0.1 at 2023-07-24 02:12:08 +0900
+Processing by ProductsController#index as */*
+Completed 200 OK in 403ms (Views: 0.3ms | Allocations: 101816)
+
+
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:12:09 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:12:11 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/api/favorites/user/00d13b74-763e-42b7-80ff-287d69e6d744" for 172.21.0.1 at 2023-07-24 02:12:12 +0900
+Started GET "/products/list/iPhone%207?limit=20" for 172.21.0.1 at 2023-07-24 02:12:12 +0900
+Processing by FavoritesController#index as */*
+  Parameters: {"user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744"}
+Processing by ProductsController#modelList as */*
+  Parameters: {"limit"=>"20", "model"=>"iPhone 7"}
+Completed 200 OK in 66ms (Views: 0.3ms | Allocations: 6472)
+
+
+Completed 200 OK in 179ms (Views: 1.9ms | Allocations: 27828)
+
+
+Started GET "/products/list/iPhone%207?limit=20&last_evaluated_key=[FILTERED]" for 172.21.0.1 at 2023-07-24 02:12:13 +0900
+Processing by ProductsController#modelList as */*
+  Parameters: {"limit"=>"20", "last_evaluated_key"=>"[FILTERED]", "model"=>"iPhone 7"}
+Completed 200 OK in 64ms (Views: 1.9ms | Allocations: 23582)
+
+
+Started GET "/products/list/iPhone%207?limit=20&last_evaluated_key=[FILTERED]" for 172.21.0.1 at 2023-07-24 02:12:13 +0900
+Processing by ProductsController#modelList as */*
+  Parameters: {"limit"=>"20", "last_evaluated_key"=>"[FILTERED]", "model"=>"iPhone 7"}
+Completed 200 OK in 53ms (Views: 2.0ms | Allocations: 23497)
+
+
+Started GET "/" for 172.21.0.1 at 2023-07-24 02:12:14 +0900
+Processing by ProductsController#index as */*
+Completed 200 OK in 364ms (Views: 0.3ms | Allocations: 101816)
+
+
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:12:15 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/api/favorites/user/00d13b74-763e-42b7-80ff-287d69e6d744" for 172.21.0.1 at 2023-07-24 02:12:16 +0900
+Started GET "/products/list/iPhone%20SE(%E7%AC%AC2%E4%B8%96%E4%BB%A3)?limit=20" for 172.21.0.1 at 2023-07-24 02:12:16 +0900
+Processing by FavoritesController#index as */*
+  Parameters: {"user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744"}
+Processing by ProductsController#modelList as */*
+  Parameters: {"limit"=>"20", "model"=>"iPhone SE(第2世代)"}
+Completed 200 OK in 76ms (Views: 1.3ms | Allocations: 24686)
+
+
+Completed 200 OK in 79ms (Views: 0.1ms | Allocations: 26122)
+
+
+Started GET "/products/list/iPhone%20SE(%E7%AC%AC2%E4%B8%96%E4%BB%A3)?limit=20&last_evaluated_key=[FILTERED]" for 172.21.0.1 at 2023-07-24 02:12:17 +0900
+Processing by ProductsController#modelList as */*
+  Parameters: {"limit"=>"20", "last_evaluated_key"=>"[FILTERED]", "model"=>"iPhone SE(第2世代)"}
+Completed 200 OK in 46ms (Views: 1.3ms | Allocations: 23505)
+
+
+Started GET "/" for 172.21.0.1 at 2023-07-24 02:12:18 +0900
+Processing by ProductsController#index as */*
+Completed 200 OK in 285ms (Views: 0.3ms | Allocations: 101793)
+
+
+Started GET "/api/favorites/user/00d13b74-763e-42b7-80ff-287d69e6d744" for 172.21.0.1 at 2023-07-24 02:12:21 +0900
+Started GET "/products/list/favorite/00d13b74-763e-42b7-80ff-287d69e6d744?limit=20" for 172.21.0.1 at 2023-07-24 02:12:21 +0900
+Processing by FavoritesController#index as */*
+  Parameters: {"user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744"}
+Processing by ProductsController#favoriteList as */*
+  Parameters: {"limit"=>"20", "user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744"}
+Completed 200 OK in 53ms (Views: 0.5ms | Allocations: 6203)
+
+
+Completed 200 OK in 170ms (Views: 2.2ms | Allocations: 14297)
+
+
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:12:23 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/products/list/history/00d13b74-763e-42b7-80ff-287d69e6d744?limit=20" for 172.21.0.1 at 2023-07-24 02:12:24 +0900
+Started GET "/api/favorites/user/00d13b74-763e-42b7-80ff-287d69e6d744" for 172.21.0.1 at 2023-07-24 02:12:24 +0900
+Processing by ProductsController#historyList as */*
+  Parameters: {"limit"=>"20", "user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744"}
+Processing by FavoritesController#index as */*
+  Parameters: {"user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744"}
+Completed 200 OK in 57ms (Views: 0.2ms | Allocations: 4891)
+
+
+ソート前:#products
+[{"model"=>"iPhone SE(第2世代)", "checked_at"=>"2023-07-23T13:39:59+00:00", "thumbnail_urls"=>["thumbnails/K0001440047_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKRTCR5/ref=asc_df_B09TKRTCR51690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKRTCR5_K0001440047_d9a&creative=9567&creativeASIN=B09TKRTCR5&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,173", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKRTCR5/ref=asc_df_B09TKRTCR51690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKRTCR5_K0001440047_d9a&creative=9567&creativeASIN=B09TKRTCR5&linkCode=df0&me=AN1VRQENFRJN5#iPhone SE(第2世代)", "name"=>"PM-A22SPLFY2BU", "color"=>"ブルー", "image_urls"=>["images/K0001440047_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001440047_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171224Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=a311067931b44d6c8215a1abc09b07df36665f3de5f60477ab32791e21befe4b", "viewed_at"=>"2023-07-23T13:59:58.236Z"}, {"model"=>"iPhone SE(第3世代)", "checked_at"=>"2023-07-23T13:46:15+00:00", "thumbnail_urls"=>["thumbnails/K0001440056_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTWXN8/ref=asc_df_B09TKTWXN81690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTWXN8_K0001440056_5fb&creative=9567&creativeASIN=B09TKTWXN8&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,536", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTWXN8/ref=asc_df_B09TKTWXN81690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTWXN8_K0001440056_5fb&creative=9567&creativeASIN=B09TKTWXN8&linkCode=df0&me=AN1VRQENFRJN5#iPhone SE(第3世代)", "name"=>"PM-A22SPLFYJ3NV", "color"=>"ネイビー", "image_urls"=>["images/K0001440056_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001440056_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171224Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=180b6a00e9c0031eee60c4f1a24791c79b433b9f2606b0b27c51a1c0814369ad", "viewed_at"=>"2023-07-23T13:59:53.720Z"}, {"model"=>"iPhone SE(第2世代)", "checked_at"=>"2023-07-22T16:44:25+00:00", "thumbnail_urls"=>["thumbnails/K0001434524_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTXR4T/ref=asc_df_B09TKTXR4T1689957000000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTXR4T_K0001434524_9c5&creative=9567&creativeASIN=B09TKTXR4T&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,282", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTXR4T/ref=asc_df_B09TKTXR4T1689957000000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTXR4T_K0001434524_9c5&creative=9567&creativeASIN=B09TKTXR4T&linkCode=df0&me=AN1VRQENFRJN5#iPhone SE(第2世代)", "name"=>"PM-A22SHVCCSMBK", "color"=>"ブラック", "image_urls"=>["images/K0001434524_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434524_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171224Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=50360ced1880a966f358218c99f996e30f66c4df405d82b8f340e5a7b9a0fadf", "viewed_at"=>"2023-07-23T13:59:37.818Z"}, {"model"=>"iPhone 7", "checked_at"=>"2023-07-23T13:39:32+00:00", "thumbnail_urls"=>["thumbnails/K0001434522_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKVKHZ7?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKVKHZ7_K0001434522_e61&me=AN1VRQENFRJN5&linkCode=ogi&th=1&psc=1", "price"=>"¥966", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKVKHZ7?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKVKHZ7_K0001434522_e61&me=AN1VRQENFRJN5&linkCode=ogi&th=1&psc=1#iPhone 7", "name"=>"PM-A22SHVCCSBK", "color"=>"ブラック", "image_urls"=>["images/K0001434522_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434522_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171224Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=090a1d3f9d451cd473022b905123da495bcc731fa24321adc7dc2eda6f757015", "viewed_at"=>"2023-07-23T13:59:25.685Z"}, {"checked_at"=>"2023-07-20T11:08:41+09:00", "model"=>"iPhone SE(第2世代)", "thumbnail_urls"=>["thumbnails/K0001434751_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=36997&pid=884213555&vc_url=https://online.nojima.co.jp/commodity/1/4549550243681/?utm_source=kakakucom&utm_medium=affiliate", "price"=>"¥981", "PK"=>"PRODUCT#http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=36997&pid=884213555&vc_url=https://online.nojima.co.jp/commodity/1/4549550243681/?utm_source=kakakucom&utm_medium=affiliate#iPhone SE(第2世代)", "name"=>"PM-A22SHVBCR", "color"=>"クリア", "image_urls"=>["images/K0001434751_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434751_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171224Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=1b64dcb04464d789fc3987ed2ab1e1206e50ce5314e63fdd34252bc15576ee5d", "viewed_at"=>"2023-07-23T13:58:52.517Z"}, {"checked_at"=>"2023-07-20T11:08:53+09:00", "model"=>"iPhone SE(第3世代)", "thumbnail_urls"=>["thumbnails/K0001441337_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTK5CT/ref=asc_df_B09TKTK5CT1689697800000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTK5CT_K0001441337_18c&creative=9567&creativeASIN=B09TKTK5CT&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,927", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTK5CT/ref=asc_df_B09TKTK5CT1689697800000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTK5CT_K0001441337_18c&creative=9567&creativeASIN=B09TKTK5CT&linkCode=df0&me=AN1VRQENFRJN5#iPhone SE(第3世代)", "name"=>"PM-A22STS3BK", "color"=>"ブラック", "image_urls"=>["images/K0001441337_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001441337_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171224Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=fa125e782b8567aedef5ff2feae1f3d4929c884bb5b6bcb1243b4ef7a915756f", "viewed_at"=>"2023-07-23T11:58:26.108Z"}, {"checked_at"=>"2023-07-23T13:46:02+00:00", "model"=>"iPhone SE(第3世代)", "thumbnail_urls"=>["thumbnails/K0001441332_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://www.ec-current.com/shop/g/g4549550244138", "price"=>"¥1,251", "PK"=>"PRODUCT#https://www.ec-current.com/shop/g/g4549550244138#iPhone SE(第3世代)", "name"=>"PM-A22STSGCAT", "color"=>"黒ネコ", "image_urls"=>["images/K0001441332_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001441332_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171224Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=414a6143015fd8d1e3b42156254e214cfb97023134ef809338c281916dccb7a6", "viewed_at"=>"2023-07-23T11:58:20.040Z"}, {"checked_at"=>"2023-07-23T13:39:46+00:00", "model"=>"iPhone 8", "thumbnail_urls"=>["thumbnails/K0001434758_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"http://www.yodobashi.com/ec/product/100000001006983723?kad1=1&xfr=kad&utm_source=kakaku&utm_medium=cpc&utm_term=PM-A22SPLFUJPND [iPhone SE（第3世代）/SE（第2世代）/8/7 4.7インチ用 ケース カバー レザー 手帳 マグネット フラップ 耐衝撃 軽量 薄型 ワイヤレス充電可 ストラップホール付 花柄 ディープピンク]", "price"=>"¥1,000", "PK"=>"PRODUCT#http://www.yodobashi.com/ec/product/100000001006983723?kad1=1&xfr=kad&utm_source=kakaku&utm_medium=cpc&utm_term=PM-A22SPLFUJPND [iPhone SE（第3世代）/SE（第2世代）/8/7 4.7インチ用 ケース カバー レザー 手帳 マグネット フラップ 耐衝撃 軽量 薄型 ワイヤレス充電可 ストラップホール付 花柄 ディープピンク]#iPhone 8", "name"=>"PM-A22SPLFUJPND", "color"=>"ディープピンク", "image_urls"=>["images/K0001434758_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434758_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171224Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=27c1db7b68ab1cf11eea501a455ed574566ec8d2a583e1f8a06050668811b4d6", "viewed_at"=>"2023-07-23T11:56:48.321Z"}, {"model"=>"iPhone 8", "checked_at"=>"2023-07-23T13:39:39+00:00", "thumbnail_urls"=>["thumbnails/K0001434757_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKSXNC3/ref=asc_df_B09TKSXNC31690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKSXNC3_K0001434757_1a2&creative=9567&creativeASIN=B09TKSXNC3&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥918", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKSXNC3/ref=asc_df_B09TKSXNC31690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKSXNC3_K0001434757_1a2&creative=9567&creativeASIN=B09TKSXNC3&linkCode=df0&me=AN1VRQENFRJN5#iPhone 8", "name"=>"PM-A22SPLFUJNV", "color"=>"ネイビー", "image_urls"=>["images/K0001434757_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434757_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171224Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=7a0f52104814058e34485c47054c1df167fcfa4adacb1c90cb314ddfefcaaae4", "viewed_at"=>"2023-07-23T11:56:46.434Z"}, {"checked_at"=>"2023-07-23T13:46:12+00:00", "model"=>"iPhone 8", "thumbnail_urls"=>["thumbnails/K0001434523_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://www.askul.co.jp/stn?mode=affiliate&tool=214&frameURL=/p/KK10111/&sc_e=cp_p_as_ka_ps_c_p", "price"=>"¥1,462", "PK"=>"PRODUCT#https://www.askul.co.jp/stn?mode=affiliate&tool=214&frameURL=/p/KK10111/&sc_e=cp_p_as_ka_ps_c_p#iPhone 8", "name"=>"PM-A22SHVCCSMIV", "color"=>"アイボリー", "image_urls"=>["images/K0001434523_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434523_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171224Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=545196c05f3ff3adddcccbdb721a1122be036ec2f771856dfd42d14091ebfb69", "viewed_at"=>"2023-07-23T11:55:18.829Z"}, {"checked_at"=>"2023-07-20T11:08:52+09:00", "model"=>"iPhone 8", "thumbnail_urls"=>["thumbnails/K0001434527_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTQJ22/ref=asc_df_B09TKTQJ221689697800000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTQJ22_K0001434527_a38&creative=9567&creativeASIN=B09TKTQJ22&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,489", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTQJ22/ref=asc_df_B09TKTQJ221689697800000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTQJ22_K0001434527_a38&creative=9567&creativeASIN=B09TKTQJ22&linkCode=df0&me=AN1VRQENFRJN5#iPhone 8", "name"=>"PM-A22SHV360LMC", "color"=>"マットクリア", "image_urls"=>["images/K0001434527_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434527_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171224Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=f0e96f50c65a9bda7315fd9b929ac2d2716e92509591cd4af62011b583db6fa4", "viewed_at"=>"2023-07-23T11:55:13.279Z"}, {"model"=>"iPhone 8", "checked_at"=>"2023-07-23T13:39:46+00:00", "thumbnail_urls"=>["thumbnails/K0001434521_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKW3D51/ref=asc_df_B09TKW3D511690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKW3D51_K0001434521_912&creative=9567&creativeASIN=B09TKW3D51&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,027", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKW3D51/ref=asc_df_B09TKW3D511690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKW3D51_K0001434521_912&creative=9567&creativeASIN=B09TKW3D51&linkCode=df0&me=AN1VRQENFRJN5#iPhone 8", "name"=>"PM-A22SHVCG1CR", "color"=>"クリア", "image_urls"=>["images/K0001434521_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434521_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171224Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=438487732c5f312df8ecaa1bf18b3380fdb241261d57d2d95acdd2aa8302c4e8", "viewed_at"=>"2023-07-22T00:21:12.556Z"}, {"model"=>"iPhone SE(第2世代)", "checked_at"=>"2023-07-23T13:39:46+00:00", "thumbnail_urls"=>["thumbnails/K0001451428_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKVBHSG/ref=asc_df_B09TKVBHSG1690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKVBHSG_K0001451428_e73&creative=9567&creativeASIN=B09TKVBHSG&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,036", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKVBHSG/ref=asc_df_B09TKVBHSG1690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKVBHSG_K0001451428_e73&creative=9567&creativeASIN=B09TKVBHSG&linkCode=df0&me=AN1VRQENFRJN5#iPhone SE(第2世代)", "name"=>"PM-A22STSLFCGY", "color"=>"グレー", "image_urls"=>["images/K0001451428_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001451428_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171224Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=143f4f8a492309bbd08795bc8ced3aaf8f39c5cc421cbd19f43f6cf4dbbe859b", "viewed_at"=>"2023-07-21T13:51:05.762Z"}, {"checked_at"=>"2023-07-20T11:08:43+09:00", "model"=>"iPhone 7", "thumbnail_urls"=>["thumbnails/K0001441338_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKRKDR4/ref=asc_df_B09TKRKDR41689697800000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKRKDR4_K0001441338_9d8&creative=9567&creativeASIN=B09TKRKDR4&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥944", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKRKDR4/ref=asc_df_B09TKRKDR41689697800000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKRKDR4_K0001441338_9d8&creative=9567&creativeASIN=B09TKRKDR4&linkCode=df0&me=AN1VRQENFRJN5#iPhone 7", "name"=>"PM-A22SSC2BK", "color"=>"ブラック", "image_urls"=>["images/K0001441338_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001441338_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171224Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=201bdd053591fe8448299df20fb7d508a701eeccb3f35211a51a47f529834c65", "viewed_at"=>"2023-07-21T13:50:56.595Z"}]
+Completed 200 OK in 638ms (Views: 1.7ms | Allocations: 56351)
+
+
+Started POST "/api/histories" for 172.21.0.1 at 2023-07-24 02:12:26 +0900
+Started GET "/api/favorites/00d13b74-763e-42b7-80ff-287d69e6d744/PM-A22SPLFY2BU" for 172.21.0.1 at 2023-07-24 02:12:26 +0900
+Started GET "/products/detail/PM-A22SPLFY2BU" for 172.21.0.1 at 2023-07-24 02:12:26 +0900
+Processing by HistoriesController#create as */*
+  Parameters: {"user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744", "name"=>"PM-A22SPLFY2BU", "viewed_at"=>"2023-07-23T17:12:26.212Z", "history"=>{"user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744", "name"=>"PM-A22SPLFY2BU", "viewed_at"=>"2023-07-23T17:12:26.212Z"}}
+Processing by FavoritesController#show as */*
+  Parameters: {"user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744", "case_name"=>"PM-A22SPLFY2BU"}
+Processing by ProductsController#detail as */*
+  Parameters: {"name"=>"PM-A22SPLFY2BU"}
+Completed 200 OK in 56ms (Views: 0.3ms | Allocations: 6688)
+
+
+Completed 204 No Content in 78ms (Allocations: 8447)
+
+
+Completed 200 OK in 380ms (Views: 0.9ms | Allocations: 15338)
+
+
+Started GET "/api/favorites/user/00d13b74-763e-42b7-80ff-287d69e6d744" for 172.21.0.1 at 2023-07-24 02:12:27 +0900
+Started GET "/products/list/history/00d13b74-763e-42b7-80ff-287d69e6d744?limit=20" for 172.21.0.1 at 2023-07-24 02:12:27 +0900
+Processing by FavoritesController#index as */*
+  Parameters: {"user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744"}
+Processing by ProductsController#historyList as */*
+  Parameters: {"limit"=>"20", "user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744"}
+Completed 200 OK in 53ms (Views: 0.2ms | Allocations: 6884)
+
+
+ソート前:#products
+[{"model"=>"iPhone SE(第2世代)", "checked_at"=>"2023-07-23T13:39:59+00:00", "thumbnail_urls"=>["thumbnails/K0001440047_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKRTCR5/ref=asc_df_B09TKRTCR51690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKRTCR5_K0001440047_d9a&creative=9567&creativeASIN=B09TKRTCR5&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,173", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKRTCR5/ref=asc_df_B09TKRTCR51690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKRTCR5_K0001440047_d9a&creative=9567&creativeASIN=B09TKRTCR5&linkCode=df0&me=AN1VRQENFRJN5#iPhone SE(第2世代)", "name"=>"PM-A22SPLFY2BU", "color"=>"ブルー", "image_urls"=>["images/K0001440047_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001440047_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171228Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=2ad170bd9296d0cd7f024a3810189b5696f12d022843bc253aaf30c93093b601", "viewed_at"=>"2023-07-23T17:12:26.212Z"}, {"model"=>"iPhone SE(第3世代)", "checked_at"=>"2023-07-23T13:46:15+00:00", "thumbnail_urls"=>["thumbnails/K0001440056_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTWXN8/ref=asc_df_B09TKTWXN81690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTWXN8_K0001440056_5fb&creative=9567&creativeASIN=B09TKTWXN8&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,536", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTWXN8/ref=asc_df_B09TKTWXN81690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTWXN8_K0001440056_5fb&creative=9567&creativeASIN=B09TKTWXN8&linkCode=df0&me=AN1VRQENFRJN5#iPhone SE(第3世代)", "name"=>"PM-A22SPLFYJ3NV", "color"=>"ネイビー", "image_urls"=>["images/K0001440056_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001440056_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171228Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=71f7342eaef18198cce0f4a5bfa4e1db4fb4675baf625661dcebfc12bcf5c089", "viewed_at"=>"2023-07-23T13:59:53.720Z"}, {"model"=>"iPhone SE(第2世代)", "checked_at"=>"2023-07-22T16:44:25+00:00", "thumbnail_urls"=>["thumbnails/K0001434524_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTXR4T/ref=asc_df_B09TKTXR4T1689957000000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTXR4T_K0001434524_9c5&creative=9567&creativeASIN=B09TKTXR4T&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,282", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTXR4T/ref=asc_df_B09TKTXR4T1689957000000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTXR4T_K0001434524_9c5&creative=9567&creativeASIN=B09TKTXR4T&linkCode=df0&me=AN1VRQENFRJN5#iPhone SE(第2世代)", "name"=>"PM-A22SHVCCSMBK", "color"=>"ブラック", "image_urls"=>["images/K0001434524_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434524_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171227Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=60d83b771f0cefdedcc5922e293f341d9d2d4f9b19a8e401952c51e01861321a", "viewed_at"=>"2023-07-23T13:59:37.818Z"}, {"model"=>"iPhone 7", "checked_at"=>"2023-07-23T13:39:32+00:00", "thumbnail_urls"=>["thumbnails/K0001434522_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKVKHZ7?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKVKHZ7_K0001434522_e61&me=AN1VRQENFRJN5&linkCode=ogi&th=1&psc=1", "price"=>"¥966", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKVKHZ7?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKVKHZ7_K0001434522_e61&me=AN1VRQENFRJN5&linkCode=ogi&th=1&psc=1#iPhone 7", "name"=>"PM-A22SHVCCSBK", "color"=>"ブラック", "image_urls"=>["images/K0001434522_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434522_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171227Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=90fb56d6d3d7fea79d2e19c0bc9da70a519858bdb6501c2c4dbb81c992f68af9", "viewed_at"=>"2023-07-23T13:59:25.685Z"}, {"checked_at"=>"2023-07-20T11:08:41+09:00", "model"=>"iPhone SE(第2世代)", "thumbnail_urls"=>["thumbnails/K0001434751_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=36997&pid=884213555&vc_url=https://online.nojima.co.jp/commodity/1/4549550243681/?utm_source=kakakucom&utm_medium=affiliate", "price"=>"¥981", "PK"=>"PRODUCT#http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=36997&pid=884213555&vc_url=https://online.nojima.co.jp/commodity/1/4549550243681/?utm_source=kakakucom&utm_medium=affiliate#iPhone SE(第2世代)", "name"=>"PM-A22SHVBCR", "color"=>"クリア", "image_urls"=>["images/K0001434751_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434751_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171227Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=99a1544643e83fc4ff3e0efa812cf9df2d20d5ba85030c5705779c1163e613bf", "viewed_at"=>"2023-07-23T13:58:52.517Z"}, {"checked_at"=>"2023-07-20T11:08:53+09:00", "model"=>"iPhone SE(第3世代)", "thumbnail_urls"=>["thumbnails/K0001441337_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTK5CT/ref=asc_df_B09TKTK5CT1689697800000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTK5CT_K0001441337_18c&creative=9567&creativeASIN=B09TKTK5CT&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,927", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTK5CT/ref=asc_df_B09TKTK5CT1689697800000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTK5CT_K0001441337_18c&creative=9567&creativeASIN=B09TKTK5CT&linkCode=df0&me=AN1VRQENFRJN5#iPhone SE(第3世代)", "name"=>"PM-A22STS3BK", "color"=>"ブラック", "image_urls"=>["images/K0001441337_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001441337_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171228Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=c1bd4fd8b188e9759aac85f1461aa9d008788fb58e178f7514a56688cf30f658", "viewed_at"=>"2023-07-23T11:58:26.108Z"}, {"checked_at"=>"2023-07-23T13:46:02+00:00", "model"=>"iPhone SE(第3世代)", "thumbnail_urls"=>["thumbnails/K0001441332_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://www.ec-current.com/shop/g/g4549550244138", "price"=>"¥1,251", "PK"=>"PRODUCT#https://www.ec-current.com/shop/g/g4549550244138#iPhone SE(第3世代)", "name"=>"PM-A22STSGCAT", "color"=>"黒ネコ", "image_urls"=>["images/K0001441332_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001441332_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171228Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=bc7a2d28f680796b4388233fb404b90d000af396651959d5c008488b8ea89480", "viewed_at"=>"2023-07-23T11:58:20.040Z"}, {"checked_at"=>"2023-07-23T13:39:46+00:00", "model"=>"iPhone 8", "thumbnail_urls"=>["thumbnails/K0001434758_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"http://www.yodobashi.com/ec/product/100000001006983723?kad1=1&xfr=kad&utm_source=kakaku&utm_medium=cpc&utm_term=PM-A22SPLFUJPND [iPhone SE（第3世代）/SE（第2世代）/8/7 4.7インチ用 ケース カバー レザー 手帳 マグネット フラップ 耐衝撃 軽量 薄型 ワイヤレス充電可 ストラップホール付 花柄 ディープピンク]", "price"=>"¥1,000", "PK"=>"PRODUCT#http://www.yodobashi.com/ec/product/100000001006983723?kad1=1&xfr=kad&utm_source=kakaku&utm_medium=cpc&utm_term=PM-A22SPLFUJPND [iPhone SE（第3世代）/SE（第2世代）/8/7 4.7インチ用 ケース カバー レザー 手帳 マグネット フラップ 耐衝撃 軽量 薄型 ワイヤレス充電可 ストラップホール付 花柄 ディープピンク]#iPhone 8", "name"=>"PM-A22SPLFUJPND", "color"=>"ディープピンク", "image_urls"=>["images/K0001434758_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434758_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171227Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=e6c30b759d31b9a0c5f735890efcb39993f4b81998106e00cc886003a8106f7e", "viewed_at"=>"2023-07-23T11:56:48.321Z"}, {"model"=>"iPhone 8", "checked_at"=>"2023-07-23T13:39:39+00:00", "thumbnail_urls"=>["thumbnails/K0001434757_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKSXNC3/ref=asc_df_B09TKSXNC31690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKSXNC3_K0001434757_1a2&creative=9567&creativeASIN=B09TKSXNC3&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥918", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKSXNC3/ref=asc_df_B09TKSXNC31690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKSXNC3_K0001434757_1a2&creative=9567&creativeASIN=B09TKSXNC3&linkCode=df0&me=AN1VRQENFRJN5#iPhone 8", "name"=>"PM-A22SPLFUJNV", "color"=>"ネイビー", "image_urls"=>["images/K0001434757_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434757_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171227Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=02a6f7302c0083a130bbf6605d92efd48b66c9e4b6393ffcd989463c691f5423", "viewed_at"=>"2023-07-23T11:56:46.434Z"}, {"checked_at"=>"2023-07-23T13:46:12+00:00", "model"=>"iPhone 8", "thumbnail_urls"=>["thumbnails/K0001434523_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://www.askul.co.jp/stn?mode=affiliate&tool=214&frameURL=/p/KK10111/&sc_e=cp_p_as_ka_ps_c_p", "price"=>"¥1,462", "PK"=>"PRODUCT#https://www.askul.co.jp/stn?mode=affiliate&tool=214&frameURL=/p/KK10111/&sc_e=cp_p_as_ka_ps_c_p#iPhone 8", "name"=>"PM-A22SHVCCSMIV", "color"=>"アイボリー", "image_urls"=>["images/K0001434523_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434523_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171227Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=b59178bc54e798995015f5f9ca55a52e1fa37c86a3d134e5b7ec744d3b081f9e", "viewed_at"=>"2023-07-23T11:55:18.829Z"}, {"checked_at"=>"2023-07-20T11:08:52+09:00", "model"=>"iPhone 8", "thumbnail_urls"=>["thumbnails/K0001434527_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTQJ22/ref=asc_df_B09TKTQJ221689697800000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTQJ22_K0001434527_a38&creative=9567&creativeASIN=B09TKTQJ22&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,489", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTQJ22/ref=asc_df_B09TKTQJ221689697800000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTQJ22_K0001434527_a38&creative=9567&creativeASIN=B09TKTQJ22&linkCode=df0&me=AN1VRQENFRJN5#iPhone 8", "name"=>"PM-A22SHV360LMC", "color"=>"マットクリア", "image_urls"=>["images/K0001434527_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434527_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171227Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=0f1f0ed768dff5c9a44273fe7d20d991a4478db04724e6261423eb2596c3b4c6", "viewed_at"=>"2023-07-23T11:55:13.279Z"}, {"model"=>"iPhone 8", "checked_at"=>"2023-07-23T13:39:46+00:00", "thumbnail_urls"=>["thumbnails/K0001434521_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKW3D51/ref=asc_df_B09TKW3D511690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKW3D51_K0001434521_912&creative=9567&creativeASIN=B09TKW3D51&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,027", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKW3D51/ref=asc_df_B09TKW3D511690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKW3D51_K0001434521_912&creative=9567&creativeASIN=B09TKW3D51&linkCode=df0&me=AN1VRQENFRJN5#iPhone 8", "name"=>"PM-A22SHVCG1CR", "color"=>"クリア", "image_urls"=>["images/K0001434521_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434521_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171227Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=a3070a1522e6636c122760dd67093fdc137dc3122a4bae83299ac4e650b1c495", "viewed_at"=>"2023-07-22T00:21:12.556Z"}, {"model"=>"iPhone SE(第2世代)", "checked_at"=>"2023-07-23T13:39:46+00:00", "thumbnail_urls"=>["thumbnails/K0001451428_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKVBHSG/ref=asc_df_B09TKVBHSG1690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKVBHSG_K0001451428_e73&creative=9567&creativeASIN=B09TKVBHSG&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,036", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKVBHSG/ref=asc_df_B09TKVBHSG1690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKVBHSG_K0001451428_e73&creative=9567&creativeASIN=B09TKVBHSG&linkCode=df0&me=AN1VRQENFRJN5#iPhone SE(第2世代)", "name"=>"PM-A22STSLFCGY", "color"=>"グレー", "image_urls"=>["images/K0001451428_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001451428_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171228Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=28393bf7abce2a82d70e57ab3399d6f68239fb146a7bd41aa302cfd67f35ae71", "viewed_at"=>"2023-07-21T13:51:05.762Z"}, {"checked_at"=>"2023-07-20T11:08:43+09:00", "model"=>"iPhone 7", "thumbnail_urls"=>["thumbnails/K0001441338_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKRKDR4/ref=asc_df_B09TKRKDR41689697800000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKRKDR4_K0001441338_9d8&creative=9567&creativeASIN=B09TKRKDR4&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥944", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKRKDR4/ref=asc_df_B09TKRKDR41689697800000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKRKDR4_K0001441338_9d8&creative=9567&creativeASIN=B09TKRKDR4&linkCode=df0&me=AN1VRQENFRJN5#iPhone 7", "name"=>"PM-A22SSC2BK", "color"=>"ブラック", "image_urls"=>["images/K0001441338_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001441338_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LUCAZESUE%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T171228Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=f9abbc19ee1454015f71e9cd01a9747dfff388c67af31822d34afd0fa8be3499", "viewed_at"=>"2023-07-21T13:50:56.595Z"}]
+Completed 200 OK in 569ms (Views: 1.1ms | Allocations: 55424)
+
+
+Started GET "/api/favorites/user/00d13b74-763e-42b7-80ff-287d69e6d744" for 172.21.0.1 at 2023-07-24 02:12:29 +0900
+Started GET "/products/list/favorite/00d13b74-763e-42b7-80ff-287d69e6d744?limit=20" for 172.21.0.1 at 2023-07-24 02:12:29 +0900
+Processing by FavoritesController#index as */*
+  Parameters: {"user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744"}
+Processing by ProductsController#favoriteList as */*
+  Parameters: {"limit"=>"20", "user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744"}
+Completed 200 OK in 61ms (Views: 0.2ms | Allocations: 6192)
+
+
+Completed 200 OK in 141ms (Views: 1.0ms | Allocations: 14280)
+
+
+Started GET "/" for 172.21.0.1 at 2023-07-24 02:12:30 +0900
+Processing by ProductsController#index as */*
+Completed 200 OK in 286ms (Views: 0.2ms | Allocations: 101794)
+
+
+Started GET "/api/favorites/user/00d13b74-763e-42b7-80ff-287d69e6d744" for 172.21.0.1 at 2023-07-24 02:12:33 +0900
+Started GET "/products/list/iPhone%20SE(%E7%AC%AC3%E4%B8%96%E4%BB%A3)?limit=20" for 172.21.0.1 at 2023-07-24 02:12:33 +0900
+Processing by FavoritesController#index as */*
+  Parameters: {"user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744"}
+Processing by ProductsController#modelList as */*
+  Parameters: {"limit"=>"20", "model"=>"iPhone SE(第3世代)"}
+Completed 200 OK in 54ms (Views: 0.2ms | Allocations: 5078)
+
+
+Completed 200 OK in 71ms (Views: 1.4ms | Allocations: 25274)
+
+
+Started GET "/products/list/iPhone%20SE(%E7%AC%AC3%E4%B8%96%E4%BB%A3)?limit=20&last_evaluated_key=[FILTERED]" for 172.21.0.1 at 2023-07-24 02:12:33 +0900
+Processing by ProductsController#modelList as */*
+  Parameters: {"limit"=>"20", "last_evaluated_key"=>"[FILTERED]", "model"=>"iPhone SE(第3世代)"}
+Completed 200 OK in 71ms (Views: 1.0ms | Allocations: 23532)
+
+
+Started GET "/api/favorites/user/00d13b74-763e-42b7-80ff-287d69e6d744" for 172.21.0.1 at 2023-07-24 02:12:36 +0900
+Started GET "/products/list/iPhone%20SE(%E7%AC%AC3%E4%B8%96%E4%BB%A3)?limit=20" for 172.21.0.1 at 2023-07-24 02:12:36 +0900
+Processing by FavoritesController#index as */*
+  Parameters: {"user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744"}
+Processing by ProductsController#modelList as */*
+  Parameters: {"limit"=>"20", "model"=>"iPhone SE(第3世代)"}
+Completed 200 OK in 53ms (Views: 0.4ms | Allocations: 5073)
+
+
+Completed 200 OK in 72ms (Views: 1.4ms | Allocations: 25519)
+
+
+Started GET "/products/list/iPhone%20SE(%E7%AC%AC3%E4%B8%96%E4%BB%A3)?limit=20&last_evaluated_key=[FILTERED]" for 172.21.0.1 at 2023-07-24 02:12:36 +0900
+Processing by ProductsController#modelList as */*
+  Parameters: {"limit"=>"20", "last_evaluated_key"=>"[FILTERED]", "model"=>"iPhone SE(第3世代)"}
+Completed 200 OK in 72ms (Views: 1.6ms | Allocations: 23532)
+
+
+Started GET "/api/users/9772a8b3-83e9-495c-b909-79ca75ac9df5" for 172.21.0.1 at 2023-07-24 02:22:09 +0900
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:22:09 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Processing by UsersController#show as HTML
+  Parameters: {"uuid"=>"9772a8b3-83e9-495c-b909-79ca75ac9df5"}
+Completed 200 OK in 232ms (Views: 0.6ms | Allocations: 130887)
+
+
+Started GET "/" for 172.21.0.1 at 2023-07-24 02:22:10 +0900
+Processing by ProductsController#index as */*
+Completed 200 OK in 360ms (Views: 0.6ms | Allocations: 103093)
+
+
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:22:11 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 02:22:13 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/api/favorites/user/00d13b74-763e-42b7-80ff-287d69e6d744" for 172.21.0.1 at 2023-07-24 02:22:13 +0900
+Started GET "/products/list/iPhone%208?limit=20" for 172.21.0.1 at 2023-07-24 02:22:13 +0900
+Processing by FavoritesController#index as */*
+  Parameters: {"user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744"}
+Processing by ProductsController#modelList as */*
+  Parameters: {"limit"=>"20", "model"=>"iPhone 8"}
+Completed 200 OK in 68ms (Views: 0.2ms | Allocations: 6556)
+
+
+Completed 200 OK in 158ms (Views: 1.7ms | Allocations: 27530)
+
+
+Started GET "/products/list/iPhone%208?limit=20&last_evaluated_key=[FILTERED]" for 172.21.0.1 at 2023-07-24 02:22:14 +0900
+Processing by ProductsController#modelList as */*
+  Parameters: {"limit"=>"20", "last_evaluated_key"=>"[FILTERED]", "model"=>"iPhone 8"}
+Completed 200 OK in 75ms (Views: 1.8ms | Allocations: 23506)
+
+
+Started GET "/products/list/iPhone%208?limit=20&last_evaluated_key=[FILTERED]" for 172.21.0.1 at 2023-07-24 02:22:14 +0900
+Processing by ProductsController#modelList as */*
+  Parameters: {"limit"=>"20", "last_evaluated_key"=>"[FILTERED]", "model"=>"iPhone 8"}
+Completed 200 OK in 45ms (Views: 1.3ms | Allocations: 23475)
+
+
+Started GET "/api/favorites/user/00d13b74-763e-42b7-80ff-287d69e6d744" for 172.21.0.1 at 2023-07-24 02:22:15 +0900
+Started GET "/products/list/favorite/00d13b74-763e-42b7-80ff-287d69e6d744?limit=20" for 172.21.0.1 at 2023-07-24 02:22:15 +0900
+Processing by FavoritesController#index as */*
+  Parameters: {"user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744"}
+Processing by ProductsController#favoriteList as */*
+  Parameters: {"limit"=>"20", "user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744"}
+Completed 200 OK in 59ms (Views: 0.5ms | Allocations: 6686)
+
+
+Completed 200 OK in 142ms (Views: 0.9ms | Allocations: 14250)
+
+
+Started GET "/api/users/9772a8b3-83e9-495c-b909-79ca75ac9df5" for 172.21.0.1 at 2023-07-24 03:18:14 +0900
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 03:18:14 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Processing by UsersController#show as HTML
+  Parameters: {"uuid"=>"9772a8b3-83e9-495c-b909-79ca75ac9df5"}
+Completed 200 OK in 355ms (Views: 1.1ms | Allocations: 130887)
+
+
+Started GET "/" for 172.21.0.1 at 2023-07-24 03:18:15 +0900
+Processing by ProductsController#index as */*
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 03:18:15 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Completed 200 OK in 298ms (Views: 0.5ms | Allocations: 129068)
+
+
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 03:18:18 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/api/users/9772a8b3-83e9-495c-b909-79ca75ac9df5" for 172.21.0.1 at 2023-07-24 03:18:18 +0900
+Processing by UsersController#show as HTML
+  Parameters: {"uuid"=>"9772a8b3-83e9-495c-b909-79ca75ac9df5"}
+Completed 200 OK in 29ms (Views: 0.2ms | Allocations: 1270)
+
+
+Started GET "/" for 172.21.0.1 at 2023-07-24 03:18:18 +0900
+Processing by ProductsController#index as */*
+Completed 200 OK in 316ms (Views: 0.2ms | Allocations: 101792)
+
+
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 03:18:19 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/products/list/iPhone%207?limit=20" for 172.21.0.1 at 2023-07-24 03:18:21 +0900
+Started GET "/api/favorites/user/00d13b74-763e-42b7-80ff-287d69e6d744" for 172.21.0.1 at 2023-07-24 03:18:21 +0900
+Processing by ProductsController#modelList as */*
+  Parameters: {"limit"=>"20", "model"=>"iPhone 7"}
+Processing by FavoritesController#index as */*
+  Parameters: {"user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744"}
+Completed 200 OK in 83ms (Views: 2.0ms | Allocations: 25212)
+
+
+Started GET "/products/list/iPhone%207?limit=20&last_evaluated_key=[FILTERED]" for 172.21.0.1 at 2023-07-24 03:18:21 +0900
+Processing by ProductsController#modelList as */*
+  Parameters: {"limit"=>"20", "last_evaluated_key"=>"[FILTERED]", "model"=>"iPhone 7"}
+Completed 200 OK in 145ms (Views: 0.2ms | Allocations: 29162)
+
+
+Completed 200 OK in 80ms (Views: 1.7ms | Allocations: 24386)
+
+
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 03:18:21 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/products/list/iPhone%207?limit=20&last_evaluated_key=[FILTERED]" for 172.21.0.1 at 2023-07-24 03:18:21 +0900
+Processing by ProductsController#modelList as */*
+  Parameters: {"limit"=>"20", "last_evaluated_key"=>"[FILTERED]", "model"=>"iPhone 7"}
+Completed 200 OK in 45ms (Views: 0.9ms | Allocations: 23449)
+
+
+Started GET "/api/favorites/user/00d13b74-763e-42b7-80ff-287d69e6d744" for 172.21.0.1 at 2023-07-24 03:18:24 +0900
+Started GET "/products/list/favorite/00d13b74-763e-42b7-80ff-287d69e6d744?limit=20" for 172.21.0.1 at 2023-07-24 03:18:24 +0900
+Processing by FavoritesController#index as */*
+  Parameters: {"user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744"}
+Processing by ProductsController#favoriteList as */*
+  Parameters: {"limit"=>"20", "user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744"}
+Completed 200 OK in 47ms (Views: 0.2ms | Allocations: 6464)
+
+
+Completed 200 OK in 167ms (Views: 1.0ms | Allocations: 14247)
+
+
+Started GET "/ws" for 172.21.0.1 at 2023-07-24 03:18:25 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/api/favorites/user/00d13b74-763e-42b7-80ff-287d69e6d744" for 172.21.0.1 at 2023-07-24 03:18:25 +0900
+Started GET "/products/list/history/00d13b74-763e-42b7-80ff-287d69e6d744?limit=20" for 172.21.0.1 at 2023-07-24 03:18:25 +0900
+Processing by FavoritesController#index as */*
+  Parameters: {"user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744"}
+Processing by ProductsController#historyList as */*
+  Parameters: {"limit"=>"20", "user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744"}
+Completed 200 OK in 49ms (Views: 0.6ms | Allocations: 6865)
+
+
+ソート前:#products
+[{"model"=>"iPhone SE(第2世代)", "checked_at"=>"2023-07-23T18:15:42+00:00", "thumbnail_urls"=>["thumbnails/K0001440047_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKRTCR5/ref=asc_df_B09TKRTCR51690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKRTCR5_K0001440047_d9a&creative=9567&creativeASIN=B09TKRTCR5&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,173", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKRTCR5/ref=asc_df_B09TKRTCR51690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKRTCR5_K0001440047_d9a&creative=9567&creativeASIN=B09TKRTCR5&linkCode=df0&me=AN1VRQENFRJN5#iPhone SE(第2世代)", "name"=>"PM-A22SPLFY2BU", "color"=>"ブルー", "image_urls"=>["images/K0001440047_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001440047_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LX4OP5ZZL%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T181826Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=e34e543f37ade3b9edd8c663d0e0c830bbb6a101f40580fa74003fe97b8a15a7", "viewed_at"=>"2023-07-23T17:12:26.212Z"}, {"model"=>"iPhone SE(第3世代)", "checked_at"=>"2023-07-23T13:46:15+00:00", "thumbnail_urls"=>["thumbnails/K0001440056_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTWXN8/ref=asc_df_B09TKTWXN81690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTWXN8_K0001440056_5fb&creative=9567&creativeASIN=B09TKTWXN8&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,536", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTWXN8/ref=asc_df_B09TKTWXN81690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTWXN8_K0001440056_5fb&creative=9567&creativeASIN=B09TKTWXN8&linkCode=df0&me=AN1VRQENFRJN5#iPhone SE(第3世代)", "name"=>"PM-A22SPLFYJ3NV", "color"=>"ネイビー", "image_urls"=>["images/K0001440056_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001440056_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LX4OP5ZZL%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T181826Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=4164a916a0a54f11ab7a9f164c780ba037b8b79bbf1afc33c48ae8269419b3a4", "viewed_at"=>"2023-07-23T13:59:53.720Z"}, {"model"=>"iPhone SE(第2世代)", "checked_at"=>"2023-07-22T16:44:25+00:00", "thumbnail_urls"=>["thumbnails/K0001434524_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTXR4T/ref=asc_df_B09TKTXR4T1689957000000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTXR4T_K0001434524_9c5&creative=9567&creativeASIN=B09TKTXR4T&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,282", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTXR4T/ref=asc_df_B09TKTXR4T1689957000000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTXR4T_K0001434524_9c5&creative=9567&creativeASIN=B09TKTXR4T&linkCode=df0&me=AN1VRQENFRJN5#iPhone SE(第2世代)", "name"=>"PM-A22SHVCCSMBK", "color"=>"ブラック", "image_urls"=>["images/K0001434524_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434524_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LX4OP5ZZL%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T181825Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=02f6cd568b2b67063728e727524d563d4331525aea7aaadce517fbe9a361f913", "viewed_at"=>"2023-07-23T13:59:37.818Z"}, {"model"=>"iPhone 7", "checked_at"=>"2023-07-23T18:15:16+00:00", "thumbnail_urls"=>["thumbnails/K0001434522_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKVKHZ7?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKVKHZ7_K0001434522_e61&me=AN1VRQENFRJN5&linkCode=ogi&th=1&psc=1", "price"=>"¥966", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKVKHZ7?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKVKHZ7_K0001434522_e61&me=AN1VRQENFRJN5&linkCode=ogi&th=1&psc=1#iPhone 7", "name"=>"PM-A22SHVCCSBK", "color"=>"ブラック", "image_urls"=>["images/K0001434522_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434522_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LX4OP5ZZL%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T181825Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=4dde78e2339b3ecd488d3644af29d102ab292701087e9bbe80fdb8014706ec81", "viewed_at"=>"2023-07-23T13:59:25.685Z"}, {"checked_at"=>"2023-07-20T11:08:41+09:00", "model"=>"iPhone SE(第2世代)", "thumbnail_urls"=>["thumbnails/K0001434751_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=36997&pid=884213555&vc_url=https://online.nojima.co.jp/commodity/1/4549550243681/?utm_source=kakakucom&utm_medium=affiliate", "price"=>"¥981", "PK"=>"PRODUCT#http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=36997&pid=884213555&vc_url=https://online.nojima.co.jp/commodity/1/4549550243681/?utm_source=kakakucom&utm_medium=affiliate#iPhone SE(第2世代)", "name"=>"PM-A22SHVBCR", "color"=>"クリア", "image_urls"=>["images/K0001434751_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434751_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LX4OP5ZZL%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T181825Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=86053d2f9057fe6ef096dfbbc2381394f48c2558390e10d23f9ce737f4c9c5f3", "viewed_at"=>"2023-07-23T13:58:52.517Z"}, {"checked_at"=>"2023-07-20T11:08:53+09:00", "model"=>"iPhone SE(第3世代)", "thumbnail_urls"=>["thumbnails/K0001441337_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTK5CT/ref=asc_df_B09TKTK5CT1689697800000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTK5CT_K0001441337_18c&creative=9567&creativeASIN=B09TKTK5CT&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,927", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTK5CT/ref=asc_df_B09TKTK5CT1689697800000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTK5CT_K0001441337_18c&creative=9567&creativeASIN=B09TKTK5CT&linkCode=df0&me=AN1VRQENFRJN5#iPhone SE(第3世代)", "name"=>"PM-A22STS3BK", "color"=>"ブラック", "image_urls"=>["images/K0001441337_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001441337_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LX4OP5ZZL%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T181826Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=7b6725e2a1693d1501f113b14d36039f9b2184e241d79fb14fa38002473e7b9f", "viewed_at"=>"2023-07-23T11:58:26.108Z"}, {"checked_at"=>"2023-07-23T13:46:02+00:00", "model"=>"iPhone SE(第3世代)", "thumbnail_urls"=>["thumbnails/K0001441332_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://www.ec-current.com/shop/g/g4549550244138", "price"=>"¥1,251", "PK"=>"PRODUCT#https://www.ec-current.com/shop/g/g4549550244138#iPhone SE(第3世代)", "name"=>"PM-A22STSGCAT", "color"=>"黒ネコ", "image_urls"=>["images/K0001441332_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001441332_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LX4OP5ZZL%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T181826Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=7f3881ab403899871ac80e56105e4a1688778ed3fb5af3afe46c85361602a448", "viewed_at"=>"2023-07-23T11:58:20.040Z"}, {"checked_at"=>"2023-07-23T18:15:29+00:00", "model"=>"iPhone 8", "thumbnail_urls"=>["thumbnails/K0001434758_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"http://www.yodobashi.com/ec/product/100000001006983723?kad1=1&xfr=kad&utm_source=kakaku&utm_medium=cpc&utm_term=PM-A22SPLFUJPND [iPhone SE（第3世代）/SE（第2世代）/8/7 4.7インチ用 ケース カバー レザー 手帳 マグネット フラップ 耐衝撃 軽量 薄型 ワイヤレス充電可 ストラップホール付 花柄 ディープピンク]", "price"=>"¥1,000", "PK"=>"PRODUCT#http://www.yodobashi.com/ec/product/100000001006983723?kad1=1&xfr=kad&utm_source=kakaku&utm_medium=cpc&utm_term=PM-A22SPLFUJPND [iPhone SE（第3世代）/SE（第2世代）/8/7 4.7インチ用 ケース カバー レザー 手帳 マグネット フラップ 耐衝撃 軽量 薄型 ワイヤレス充電可 ストラップホール付 花柄 ディープピンク]#iPhone 8", "name"=>"PM-A22SPLFUJPND", "color"=>"ディープピンク", "image_urls"=>["images/K0001434758_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434758_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LX4OP5ZZL%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T181825Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=6e0a1fa55723462e37041a9c3d3bf4b68ddd0ccccf7e194319de80d51f65b2de", "viewed_at"=>"2023-07-23T11:56:48.321Z"}, {"model"=>"iPhone 8", "checked_at"=>"2023-07-23T18:15:23+00:00", "thumbnail_urls"=>["thumbnails/K0001434757_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKSXNC3/ref=asc_df_B09TKSXNC31690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKSXNC3_K0001434757_1a2&creative=9567&creativeASIN=B09TKSXNC3&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥918", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKSXNC3/ref=asc_df_B09TKSXNC31690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKSXNC3_K0001434757_1a2&creative=9567&creativeASIN=B09TKSXNC3&linkCode=df0&me=AN1VRQENFRJN5#iPhone 8", "name"=>"PM-A22SPLFUJNV", "color"=>"ネイビー", "image_urls"=>["images/K0001434757_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434757_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LX4OP5ZZL%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T181825Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=733b484c220dc6389081ad1ba0ea52a0af769e548cda6232e39393e87a3c3a91", "viewed_at"=>"2023-07-23T11:56:46.434Z"}, {"checked_at"=>"2023-07-23T13:46:12+00:00", "model"=>"iPhone 8", "thumbnail_urls"=>["thumbnails/K0001434523_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://www.askul.co.jp/stn?mode=affiliate&tool=214&frameURL=/p/KK10111/&sc_e=cp_p_as_ka_ps_c_p", "price"=>"¥1,462", "PK"=>"PRODUCT#https://www.askul.co.jp/stn?mode=affiliate&tool=214&frameURL=/p/KK10111/&sc_e=cp_p_as_ka_ps_c_p#iPhone 8", "name"=>"PM-A22SHVCCSMIV", "color"=>"アイボリー", "image_urls"=>["images/K0001434523_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434523_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LX4OP5ZZL%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T181825Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=50778f85afa71dfc28273a35c436098b0bb2d21188038c192fde36801ea8048f", "viewed_at"=>"2023-07-23T11:55:18.829Z"}, {"checked_at"=>"2023-07-20T11:08:52+09:00", "model"=>"iPhone 8", "thumbnail_urls"=>["thumbnails/K0001434527_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTQJ22/ref=asc_df_B09TKTQJ221689697800000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTQJ22_K0001434527_a38&creative=9567&creativeASIN=B09TKTQJ22&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,489", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKTQJ22/ref=asc_df_B09TKTQJ221689697800000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKTQJ22_K0001434527_a38&creative=9567&creativeASIN=B09TKTQJ22&linkCode=df0&me=AN1VRQENFRJN5#iPhone 8", "name"=>"PM-A22SHV360LMC", "color"=>"マットクリア", "image_urls"=>["images/K0001434527_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434527_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LX4OP5ZZL%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T181825Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=ea7cbaf05d76abcb54214239b61e3c6cc89b808ccdef2af5cf23620f70a0f827", "viewed_at"=>"2023-07-23T11:55:13.279Z"}, {"model"=>"iPhone 8", "checked_at"=>"2023-07-23T18:15:29+00:00", "thumbnail_urls"=>["thumbnails/K0001434521_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKW3D51/ref=asc_df_B09TKW3D511690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKW3D51_K0001434521_912&creative=9567&creativeASIN=B09TKW3D51&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,027", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKW3D51/ref=asc_df_B09TKW3D511690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKW3D51_K0001434521_912&creative=9567&creativeASIN=B09TKW3D51&linkCode=df0&me=AN1VRQENFRJN5#iPhone 8", "name"=>"PM-A22SHVCG1CR", "color"=>"クリア", "image_urls"=>["images/K0001434521_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001434521_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LX4OP5ZZL%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T181825Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=8596775c5b11bba984afa64703a577e3a92a1c50d93267a4151223e6c4190e75", "viewed_at"=>"2023-07-22T00:21:12.556Z"}, {"model"=>"iPhone SE(第2世代)", "checked_at"=>"2023-07-23T18:15:29+00:00", "thumbnail_urls"=>["thumbnails/K0001451428_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKVBHSG/ref=asc_df_B09TKVBHSG1690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKVBHSG_K0001451428_e73&creative=9567&creativeASIN=B09TKVBHSG&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥1,036", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKVBHSG/ref=asc_df_B09TKVBHSG1690043400000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKVBHSG_K0001451428_e73&creative=9567&creativeASIN=B09TKVBHSG&linkCode=df0&me=AN1VRQENFRJN5#iPhone SE(第2世代)", "name"=>"PM-A22STSLFCGY", "color"=>"グレー", "image_urls"=>["images/K0001451428_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001451428_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LX4OP5ZZL%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T181826Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=28b0dd79e6723dd52ab6d069b1d64786b4e580af7b9ad159b2dddd00a1a6565a", "viewed_at"=>"2023-07-21T13:51:05.762Z"}, {"checked_at"=>"2023-07-20T11:08:43+09:00", "model"=>"iPhone 7", "thumbnail_urls"=>["thumbnails/K0001441338_thumbnail_0.jpg"], "maker"=>"エレコム", "SK"=>"DETAILS", "ec_site_url"=>"https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKRKDR4/ref=asc_df_B09TKRKDR41689697800000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKRKDR4_K0001441338_9d8&creative=9567&creativeASIN=B09TKRKDR4&linkCode=df0&me=AN1VRQENFRJN5", "price"=>"¥944", "PK"=>"PRODUCT#https://kakaku.com/pt/ard.asp?url=https://www.amazon.co.jp/dp/B09TKRKDR4/ref=asc_df_B09TKRKDR41689697800000?tag=kakaku-subtag-22&ascsubtag=kakaku-pc-keitai-22_B09TKRKDR4_K0001441338_9d8&creative=9567&creativeASIN=B09TKRKDR4&linkCode=df0&me=AN1VRQENFRJN5#iPhone 7", "name"=>"PM-A22SSC2BK", "color"=>"ブラック", "image_urls"=>["images/K0001441338_large_0.jpg"], "thumbnail_url"=>"https://tapfindcase-scraping-bucket.s3.ap-northeast-1.amazonaws.com/thumbnails/K0001441338_thumbnail_0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT6IY5M3LX4OP5ZZL%2F20230723%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20230723T181826Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=5b62a1ba801604fae4cd529bb8b246e0752cd3c967933c696e0181d8e7de236a", "viewed_at"=>"2023-07-21T13:50:56.595Z"}]
+Completed 200 OK in 541ms (Views: 0.8ms | Allocations: 55337)
+
+
+Started POST "/api/histories" for 172.21.0.1 at 2023-07-24 03:18:28 +0900
+Started GET "/products/detail/PM-A22SHVCCSMBK" for 172.21.0.1 at 2023-07-24 03:18:28 +0900
+Processing by HistoriesController#create as */*
+  Parameters: {"user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744", "name"=>"PM-A22SHVCCSMBK", "viewed_at"=>"2023-07-23T18:18:28.952Z", "history"=>{"user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744", "name"=>"PM-A22SHVCCSMBK", "viewed_at"=>"2023-07-23T18:18:28.952Z"}}
+Started GET "/api/favorites/00d13b74-763e-42b7-80ff-287d69e6d744/PM-A22SHVCCSMBK" for 172.21.0.1 at 2023-07-24 03:18:29 +0900
+Processing by ProductsController#detail as */*
+  Parameters: {"name"=>"PM-A22SHVCCSMBK"}
+Processing by FavoritesController#show as */*
+  Parameters: {"user_id"=>"00d13b74-763e-42b7-80ff-287d69e6d744", "case_name"=>"PM-A22SHVCCSMBK"}
+Completed 200 OK in 60ms (Views: 0.3ms | Allocations: 11967)
+
+
+Completed 204 No Content in 97ms (Allocations: 15631)
+
+
+Completed 200 OK in 131ms (Views: 0.2ms | Allocations: 15223)
+
+

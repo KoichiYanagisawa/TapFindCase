@@ -44,6 +44,8 @@ Rails.application.configure do
   # Tell Active Support which deprecation messages to disallow.
   config.active_support.disallowed_deprecation_warnings = []
 
+  # CloudWatchのログを使うので、ログをファイルに出力しないようにする
+  config.logger = ActiveSupport::Logger.new(nil)
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
@@ -53,4 +55,7 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # AWSに接続するための設定
+  config.hosts << "4mupm0vsa6.execute-api.ap-northeast-1.amazonaws.com"
 end

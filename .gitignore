@@ -1,4 +1,8 @@
 # .envファイルを除外
-.env
+**/.env
 
-.DS_Store
+**/.DS_Store
+
+**/node_modules
+
+**/ruby-layer.zip

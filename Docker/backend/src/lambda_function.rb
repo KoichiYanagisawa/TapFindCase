@@ -7,16 +7,17 @@ require 'base64'
 require './config/environment.rb'
 
 def lambda_handler(event:, context:)
-  app = Rack::Builder.new do
-    map "/" do
-      run Rails.application
-    end
-  end
+  # app = Rack::Builder.new do
+  #   map "/" do
+  #     run Rails.application
+  #   end
+  # end
+  app = Rails.application
 
   body = event['body'] ? Base64.decode64(event['body']) : ''
   headers = event['headers'].map { |k, v| ['HTTP_' + k.upcase.gsub('-', '_'), v] }.to_h
 
-  request = Rack::Request.new(
+  env = {
     'rack.version' => Rack::VERSION,
     'rack.input' => StringIO.new(body),
     'rack.errors' => $stderr,
@@ -25,15 +26,17 @@ def lambda_handler(event:, context:)
     'rack.run_once' => false,
     'rack.url_scheme' => 'http',
     'REQUEST_METHOD' => event['httpMethod'],
-    'QUERY_STRING' => event['queryStringParameters']&.map{ |k, v| "#{k}=#{v}" }&.join("&"),
+    'QUERY_STRING' => event['queryStringParameters'].nil? ? '' : event['queryStringParameters'].map{ |k, v| "#{k}=#{v}" }.join("&"),
     'SERVER_NAME' => 'localhost',
     'SERVER_PORT' => '80',
-    'PATH_INFO' => event['path'],
+    'PATH_INFO' => event['path'] || '/',
     'rack.session' => {},
     'rack.session.options' => { :expire_after => 2592000 },
-  ).merge(headers)
+  }
 
-  status, headers, body = app.call(request.env)
+  env.merge!(headers)
+
+  status, headers, body = app.call(env)
 
   # Remove headers not supported by API Gateway
   %w[status connection server x-runtime x-powered-by].each do |header|
