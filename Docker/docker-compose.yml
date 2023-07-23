@@ -38,6 +38,17 @@ services:
       - 3000:3000
     environment:
       TZ: 'Asia/Tokyo'
+  backend_amazonlinux2:
+    build: ./backend_amazonlinux2/
+    container_name: backend_amazonlinux2
+    platform: linux/x86_64
+    tty: true
+    volumes:
+      - ./backend_amazonlinux2/src:/root/app
+    ports:
+      - 3000:3000
+    environment:
+      TZ: 'Asia/Tokyo'
   frontend:
     build: ./frontend/
     container_name: frontend

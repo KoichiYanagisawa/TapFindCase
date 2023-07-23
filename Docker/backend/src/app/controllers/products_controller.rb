@@ -9,7 +9,7 @@ class ProductsController < ApplicationController
   def detail
     @product = Product.find_by_name(params[:name])
 
-    @bucket = Aws::S3::Resource.new.bucket(ENV['AWS_S3_BUCKET_NAME'])
+    @bucket = Aws::S3::Resource.new.bucket(ENV['MY_AWS_S3_BUCKET_NAME'])
     @product = Product.find_by_name(params[:name])
 
     if @product["thumbnail_urls"]
@@ -38,11 +38,11 @@ class ProductsController < ApplicationController
 
   def modelList
     Aws.config.update({
-      region: ENV['AWS_REGION'],
-      credentials: Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
+      region: ENV['MY_AWS_REGION'],
+      credentials: Aws::Credentials.new(ENV['MY_AWS_ACCESS_KEY_ID'], ENV['MY_AWS_SECRET_ACCESS_KEY'])
     })
 
-    @bucket = Aws::S3::Resource.new.bucket(ENV['AWS_S3_BUCKET_NAME'])
+    @bucket = Aws::S3::Resource.new.bucket(ENV['MY_AWS_S3_BUCKET_NAME'])
 
     last_evaluated_key = params[:last_evaluated_key].present? ? JSON.parse(params[:last_evaluated_key]) : nil
     limit = params[:limit] || 20
@@ -67,11 +67,11 @@ class ProductsController < ApplicationController
 
   def favoriteList
     Aws.config.update({
-      region: ENV['AWS_REGION'],
-      credentials: Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
+      region: ENV['MY_AWS_REGION'],
+      credentials: Aws::Credentials.new(ENV['MY_AWS_ACCESS_KEY_ID'], ENV['MY_AWS_SECRET_ACCESS_KEY'])
     })
 
-    @bucket = Aws::S3::Resource.new.bucket(ENV['AWS_S3_BUCKET_NAME'])
+    @bucket = Aws::S3::Resource.new.bucket(ENV['MY_AWS_S3_BUCKET_NAME'])
 
     last_evaluated_key = params[:last_evaluated_key].present? ? JSON.parse(params[:last_evaluated_key]) : nil
     limit = params[:limit] || 20
@@ -98,11 +98,11 @@ class ProductsController < ApplicationController
 
   def historyList
     Aws.config.update({
-      region: ENV['AWS_REGION'],
-      credentials: Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
+      region: ENV['MY_AWS_REGION'],
+      credentials: Aws::Credentials.new(ENV['MY_AWS_ACCESS_KEY_ID'], ENV['MY_AWS_SECRET_ACCESS_KEY'])
     })
 
-    @bucket = Aws::S3::Resource.new.bucket(ENV['AWS_S3_BUCKET_NAME'])
+    @bucket = Aws::S3::Resource.new.bucket(ENV['MY_AWS_S3_BUCKET_NAME'])
 
     last_evaluated_key = params[:last_evaluated_key].present? ? JSON.parse(params[:last_evaluated_key]) : nil
     limit = params[:limit] || 20
