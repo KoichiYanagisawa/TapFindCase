@@ -1,0 +1,18 @@
+current directory: /root/app/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.16.0/ext/bootsnap
+/usr/local/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /root/app/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.16.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20230723-25-afa3on sitelibdir\=./.gem.20230723-25-afa3on clean
+
+current directory: /root/app/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.16.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20230723-25-afa3on sitelibdir\=./.gem.20230723-25-afa3on
+compiling bootsnap.c
+linking shared-object bootsnap/bootsnap.so
+
+current directory: /root/app/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.16.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20230723-25-afa3on sitelibdir\=./.gem.20230723-25-afa3on install
+/usr/bin/install -c -m 0755 bootsnap.so ./.gem.20230723-25-afa3on/bootsnap
+
+current directory: /root/app/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.16.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20230723-25-afa3on sitelibdir\=./.gem.20230723-25-afa3on clean
