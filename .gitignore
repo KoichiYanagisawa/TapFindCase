@@ -3,10 +3,12 @@
 
 **/.DS_Store
 
+# Dockerコンテナ毎に作成されるディレクトリを以下に記載
 **/node_modules
-
-**/ruby-layer.zip
-
 **/bundle
 
+# Serverless Frameworkで作成されるディレクトリを以下に記載
+**/ruby-layer.zip
 **/.serverless
+
+
