@@ -15,7 +15,6 @@ provider:
 package:
   include:
     - vendor/bundle/**
-
 functions:
   app:
     handler: lambda_function.lambda_handler
