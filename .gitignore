@@ -2,3 +2,9 @@
 **/.env
 
 **/.DS_Store
+
+**/node_modules
+
+**/ruby-layer.zip
+
+**/bundle
