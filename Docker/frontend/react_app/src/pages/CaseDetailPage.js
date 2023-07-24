@@ -154,7 +154,7 @@ function ProductDetailPage() {
 
 
   useEffect(() => {
-    fetch(`http://localhost:3000/products/detail/${encodeURIComponent(caseName)}`)
+    fetch(`${process.env.REACT_APP_API_URL}/products/detail/${encodeURIComponent(caseName)}`)
       .then(response => response.json())
       .then(data => {
         setProduct(data.product);
@@ -163,7 +163,7 @@ function ProductDetailPage() {
         setImageCount(data.product.thumbnail_urls.length);
       });
 
-    fetch(`http://localhost:3000/api/favorites/${userInfo.id}/${caseName}`)
+    fetch(`${process.env.REACT_APP_API_URL}/api/favorites/${userInfo.id}/${caseName}`)
       .then(response => response.json())
       .then(data => {
         setIsFavorited(data.is_favorited);
@@ -172,7 +172,7 @@ function ProductDetailPage() {
         console.error('Error:', error);
       });
 
-    fetch(`http://localhost:3000/api/histories`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/histories`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -199,7 +199,7 @@ function ProductDetailPage() {
     const method = isFavorited ? 'DELETE' : 'POST';
     const message = isFavorited ? 'お気に入りを解除しました' : 'お気に入りに追加しました';
 
-    fetch(`http://localhost:3000/api/favorites/${userInfo.id}/${product.name}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/favorites/${userInfo.id}/${product.name}`, {
       method: method,
       headers: {
         'Content-Type': 'application/json',

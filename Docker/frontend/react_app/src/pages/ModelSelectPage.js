@@ -32,7 +32,7 @@ function ModelSelectPage() {
   }, [setPageTitle]);
 
   useEffect(() => {
-    fetch('http://localhost:3000')
+    fetch(`${process.env.REACT_APP_API_URL}`)
       .then(response => response.json())
       .then(data => setProducts(data));
   }, []);

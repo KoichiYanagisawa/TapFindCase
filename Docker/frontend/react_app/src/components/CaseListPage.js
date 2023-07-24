@@ -101,7 +101,7 @@ function CaseListPage({apiPath}) {
     if (loading || !hasMore) return;
     setLoading(true);
 
-    let url = `http://localhost:3000/products/list/${apiPath}?limit=20`;
+    let url = `${process.env.REACT_APP_API_URL}/products/list/${apiPath}?limit=20`;
     if (lastKey) url += `&last_evaluated_key=${encodeURIComponent(JSON.stringify(lastKey))}`;
 
     fetch(url)
@@ -148,7 +148,7 @@ function CaseListPage({apiPath}) {
 
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/favorites/user/${userInfo.id}`)
+    fetch(`${process.env.REACT_APP_API_URL}/api/favorites/user/${userInfo.id}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -163,14 +163,14 @@ function CaseListPage({apiPath}) {
 
   const toggleFavorite = (productName) => {
     if(favorites.includes(productName)) {
-      fetch(`http://localhost:3000/api/favorites/${userInfo.id}/${productName}`, {
+      fetch(`${process.env.REACT_APP_API_URL}/api/favorites/${userInfo.id}/${productName}`, {
         method: 'DELETE'
       })
       .then(() => {
         setFavorites(prevFavorites => prevFavorites.filter(name => name !== productName));
       });
     } else {
-      fetch(`http://localhost:3000/api/favorites/${userInfo.id}/${productName}`, {
+      fetch(`${process.env.REACT_APP_API_URL}/api/favorites/${userInfo.id}/${productName}`, {
         method: 'POST'
       })
       .then(() => {
