@@ -10,6 +10,11 @@ provider:
     MY_AWS_ACCESS_KEY_ID: ${ssm:/backend/dev/aws_access_key_id}
     MY_AWS_SECRET_ACCESS_KEY: ${ssm:/backend/dev/aws_secret_access_key}
     AWS_S3_BUCKET_NAME: ${ssm:/backend/dev/aws_s3_bucket_name}
+    RAILS_LOG_TO_STDOUT: true
+
+package:
+  include:
+    - vendor/bundle/**
 
 functions:
   app:

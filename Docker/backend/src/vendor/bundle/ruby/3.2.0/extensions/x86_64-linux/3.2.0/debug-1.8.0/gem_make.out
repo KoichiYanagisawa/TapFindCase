@@ -1,0 +1,19 @@
+current directory: /root/app/vendor/bundle/ruby/3.2.0/gems/debug-1.8.0/ext/debug
+/root/.rbenv/versions/3.2.2/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /root/app/vendor/bundle/ruby/3.2.0/gems/debug-1.8.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20230724-97-yz5nik sitelibdir\=./.gem.20230724-97-yz5nik clean
+
+current directory: /root/app/vendor/bundle/ruby/3.2.0/gems/debug-1.8.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20230724-97-yz5nik sitelibdir\=./.gem.20230724-97-yz5nik
+compiling debug.c
+compiling iseq_collector.c
+linking shared-object debug/debug.so
+
+current directory: /root/app/vendor/bundle/ruby/3.2.0/gems/debug-1.8.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20230724-97-yz5nik sitelibdir\=./.gem.20230724-97-yz5nik install
+/usr/bin/install -c -m 0755 debug.so ./.gem.20230724-97-yz5nik/debug
+
+current directory: /root/app/vendor/bundle/ruby/3.2.0/gems/debug-1.8.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20230724-97-yz5nik sitelibdir\=./.gem.20230724-97-yz5nik clean
