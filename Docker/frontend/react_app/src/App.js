@@ -26,7 +26,7 @@ function App() {
       Cookies.set('userId', userId);
     }
 
-    axios.get(`http://localhost:3000/api/users/${userId}`)
+    axios.get(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
       .then((response) => {
         dispatch({
           type: 'SET_USER_INFO',
