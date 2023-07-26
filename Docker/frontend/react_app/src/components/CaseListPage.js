@@ -195,7 +195,7 @@ function CaseListPage({apiPath}) {
         return (
           <div
             css={caseStyles}
-            key={caseItem.name}
+            key={caseItem.PK}
             onClick={() => navigate(`/product/detail/${caseItem.name}`)}
           >
             <div css={thumbnailContainerStyles}>

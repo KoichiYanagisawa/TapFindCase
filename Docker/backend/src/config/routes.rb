@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root to: 'products#index'
 
   get '/products', to: 'products#index'
-  get '/products/detail/:name', to: 'products#detail'
+  get '/products/detail/:name', to: 'products#detail', name: /.*/
   get '/products/list/:model', to: 'products#modelList'
   get '/products/list/favorite/:user_id', to: 'products#favoriteList'
   get '/products/list/history/:user_id', to: 'products#historyList'

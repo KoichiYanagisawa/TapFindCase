@@ -125,13 +125,8 @@ class ProductsController < ApplicationController
       product_detail
     end
 
-
-    Rails.logger.info("ソート前:#products")
-
     sorted_products = products.sort_by { |product| -DateTime.parse(product['viewed_at']).to_i }
 
-    Rails.logger.info(sorted_products)
-  
     render json: {
       products: sorted_products.as_json(only: ['PK', 'name', 'color', 'price', 'thumbnail_url']),
       last_evaluated_key: response[:last_evaluated_key]
