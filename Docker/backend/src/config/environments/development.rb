@@ -57,5 +57,5 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   # AWSに接続するための設定
-  config.hosts << "4mupm0vsa6.execute-api.ap-northeast-1.amazonaws.com"
+  config.hosts << "4pr1q53lx1.execute-api.ap-northeast-1.amazonaws.com"
 end

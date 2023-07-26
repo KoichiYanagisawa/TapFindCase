@@ -20,5 +20,16 @@ functions:
   app:
     handler: lambda_function.lambda_handler
     events:
-      - http: ANY /
-      - http: 'ANY /{proxy+}'
+      - http:
+          path: /{proxy+}
+          method: any
+          cors:
+            origin: '*' # ここを適切なオリジンに設定
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false

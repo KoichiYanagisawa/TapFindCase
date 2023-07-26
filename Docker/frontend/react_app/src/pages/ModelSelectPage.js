@@ -32,9 +32,13 @@ function ModelSelectPage() {
   }, [setPageTitle]);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}`)
+    fetch(`${process.env.REACT_APP_API_URL}/products`)
       .then(response => response.json())
-      .then(data => setProducts(data));
+      .then(data => setProducts(data))
+      .catch((error) => {
+        // ここでエラーをキャッチしてログに出力
+        console.error('Failed to fetch data:', error);
+      });
   }, []);
 
   const handleModelChange = (value) => {
