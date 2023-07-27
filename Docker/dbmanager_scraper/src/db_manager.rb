@@ -29,32 +29,30 @@ class DbManager
 
       obj = @bucket.object(obj_summary.key)
       resp = s3_client.get_object_tagging({
-        bucket: @bucket.name,
-        key: obj.key
-      })
+                                            bucket: @bucket.name,
+                                            key: obj.key
+                                          })
       next if resp.tag_set.any? { |tag| tag.key == 'processing' && tag.value == 'true' }
 
       resp.tag_set << { key: 'processing', value: 'true' }
       s3_client.put_object_tagging({
-        bucket: @bucket.name,
-        key: obj.key,
-        tagging: { tag_set: resp.tag_set }
-      })
+                                     bucket: @bucket.name,
+                                     key: obj.key,
+                                     tagging: { tag_set: resp.tag_set }
+                                   })
 
       item_infos = JSON.parse(obj.get.body.read, symbolize_names: true)
       item_infos.each do |item_info|
-        begin
-          update_or_create_products(item_info)
-        rescue => e
-          if retry_count < @MAX_RETRY_COUNT
-            retry_count += 1
-            puts "Error occurred, retrying... (#{retry_count}/#{@MAX_RETRY_COUNT})"
-            retry
-          else
-            puts "DBへのデータ保存中にエラーが発生しました。このデータはスキップします Error message: #{e.message}"
-            puts e.backtrace.join("\n")
-            break
-          end
+        update_or_create_products(item_info)
+      rescue StandardError => e
+        if retry_count < @MAX_RETRY_COUNT
+          retry_count += 1
+          puts "Error occurred, retrying... (#{retry_count}/#{@MAX_RETRY_COUNT})"
+          retry
+        else
+          puts "DBへのデータ保存中にエラーが発生しました。このデータはスキップします Error message: #{e.message}"
+          puts e.backtrace.join("\n")
+          break
         end
       end
 
@@ -64,40 +62,42 @@ class DbManager
 
   def update_or_create_products(item_info)
     item_info[:models].each do |model|
-      pk = "PRODUCT##{item_info[:ec_site_url]}##{model}"
-      sk = "DETAILS"
+      pk = "PRODUCT##{item_info[:name]}##{model}"
+      sk = 'DETAILS'
 
-      @dynamodb.update_item({
-        table_name: "TapFindCase",
-        key: {
-          "PK": pk,
-          "SK": sk
-        },
-        update_expression: "SET #name = if_not_exists(#name, :name), #maker = if_not_exists(#maker, :maker), #color = if_not_exists(#color, :color), #price = :price, #ec_site_url = :ec_site_url, #checked_at = :checked_at, #model = :model, #image_urls = :image_urls, #thumbnail_urls = :thumbnail_urls",
-        expression_attribute_names: {
-          "#name": "name",
-          "#maker": "maker",
-          "#color": "color",
-          "#price": "price",
-          "#ec_site_url": "ec_site_url",
-          "#checked_at": "checked_at",
-          "#model": "model",
-          "#image_urls": "image_urls",
-          "#thumbnail_urls": "thumbnail_urls"
-        },
-        expression_attribute_values: {
-          ":name": item_info[:name],
-          ":maker": item_info[:maker],
-          ":color": item_info[:color],
-          ":price": item_info[:price].to_s,
-          ":ec_site_url": item_info[:ec_site_url],
-          ":checked_at": Time.now.iso8601,
-          ":model": model,
-          ":image_urls": item_info[:image_url],
-          ":thumbnail_urls": item_info[:thumbnail_url]
-        },
-        return_values_on_condition_check_failure: "ALL_OLD"
-      })
+      @dynamodb.update_item(
+        {
+          table_name: 'TapFindCase',
+          key: {
+            "PK": pk,
+            "SK": sk
+          },
+          update_expression: 'SET #name = :name, #maker = :maker, #color = :color, #price = :price, #ec_site_url = :ec_site_url, #checked_at = :checked_at, #model = :model, #image_urls = :image_urls, #thumbnail_urls = :thumbnail_urls',
+          expression_attribute_names: {
+            "#name": 'name',
+            "#maker": 'maker',
+            "#color": 'color',
+            "#price": 'price',
+            "#ec_site_url": 'ec_site_url',
+            "#checked_at": 'checked_at',
+            "#model": 'model',
+            "#image_urls": 'image_urls',
+            "#thumbnail_urls": 'thumbnail_urls'
+          },
+          expression_attribute_values: {
+            ":name": item_info[:name],
+            ":maker": item_info[:maker],
+            ":color": item_info[:color],
+            ":price": item_info[:price].to_s,
+            ":ec_site_url": item_info[:ec_site_url],
+            ":checked_at": Time.now.iso8601,
+            ":model": model,
+            ":image_urls": item_info[:image_url],
+            ":thumbnail_urls": item_info[:thumbnail_url]
+          },
+          return_values_on_condition_check_failure: 'ALL_OLD'
+        }
+      )
     end
     puts "Successfully saved data to DynamoDB for item: #{item_info[:name]}"
   end

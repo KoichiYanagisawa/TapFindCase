@@ -37,7 +37,7 @@ class ImageScraper
   end
 
   def get_item_id(url)
-    url.match(/https:\/\/kakaku\.com\/item\/(K\d+)\//)[1]
+    url.match(%r{https://kakaku\.com/item/(K\d+)/})[1]
   end
 
   def generate_image_list_url(item_id)
@@ -63,7 +63,7 @@ class ImageScraper
     uri = URI(image_url)
     object_key = nil
 
-    Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+    Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
       request = Net::HTTP::Get.new uri
       http.request request do |response|
         if response.is_a?(Net::HTTPSuccess)

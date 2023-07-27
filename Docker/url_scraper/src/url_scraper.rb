@@ -6,8 +6,7 @@ require 'aws-sdk-s3'
 require 'dotenv/load'
 
 class URLScraper
-
-attr_reader :urls
+  attr_reader :urls
 
   def initialize
     @urls = Set.new
@@ -42,10 +41,10 @@ attr_reader :urls
       puts '検索が3回失敗しました'
     end
 
-    if @urls.any?
-      upload_to_s3
-      @urls.clear
-    end
+    return unless @urls.any?
+
+    upload_to_s3
+    @urls.clear
   end
 
   def get_urls(wait, driver, xpath)
