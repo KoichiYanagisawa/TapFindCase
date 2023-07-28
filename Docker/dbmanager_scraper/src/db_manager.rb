@@ -4,6 +4,7 @@ require 'dotenv/load'
 require 'aws-sdk-s3'
 require 'aws-sdk-dynamodb'
 require 'json'
+require 'aws-sdk-secretsmanager'
 
 class DbManager
   def initialize

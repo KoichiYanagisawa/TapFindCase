@@ -2,6 +2,7 @@
 
 require 'aws-sdk-s3'
 require 'dotenv/load'
+require 'aws-sdk-secretsmanager'
 
 require_relative './image_scraper'
 
