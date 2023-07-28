@@ -11,3 +11,5 @@ cloudformationの権限を付与した別のIAMユーザーに切り替えた
 IAMユーザーの権限を絞って動作するか確認
 
 cloudformationの権限を搾りすぎたため緩和
+
+環境変数をserverless.ymlにセットしないで、GitHubのSecretsから取得できないかテスト。
