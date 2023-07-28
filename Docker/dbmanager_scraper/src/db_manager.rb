@@ -23,7 +23,11 @@ class DbManager
   end
 
   def store_data_to_s3
-    s3_client = Aws::S3::Client.new
+    s3_client = Aws::S3::Client.new(
+      region: ENV['MY_AWS_REGION'],
+      access_key_id: ENV['MY_AWS_ACCESS_KEY_ID'],
+      secret_access_key: ENV['MY_AWS_SECRET_ACCESS_KEY']
+    )
     @bucket.objects(prefix: 'store_data_to_db/').each do |obj_summary|
       retry_count = 0
       puts "処理中のオブジェクト: #{obj_summary.key}"
