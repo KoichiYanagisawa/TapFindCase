@@ -20,22 +20,17 @@ jobs:
         with:
           node-version: "18"
 
-      - name: Cache Node.js modules #node_modulesをキャッシュする
-        uses: actions/cache@v3
-        with:
-          path: Docker/frontend/react_app/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      # - name: Cache Node.js modules #node_modulesをキャッシュする
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: Docker/frontend/react_app/node_modules
+      #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-node-
 
       - name: Install Dependencies #依存関係をインストールする
         working-directory: Docker/frontend/react_app
         run: npm ci
-
-      - name: Debug REACT_APP_API_URL
-        run: echo $REACT_APP_API_URL
-        env:
-          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
 
       - name: Build project #プロジェクトをビルドする
         working-directory: Docker/frontend/react_app
