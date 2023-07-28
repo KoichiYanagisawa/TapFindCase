@@ -38,8 +38,8 @@ class ProductsController < ApplicationController
 
   def modelList
     Aws.config.update({
-                        region: ENV['AWS_REGION'],
-                        credentials: Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
+                        region: ENV['MY_AWS_REGION'],
+                        credentials: Aws::Credentials.new(ENV['MY_AWS_ACCESS_KEY_ID'], ENV['MY_AWS_SECRET_ACCESS_KEY'])
                       })
 
     @bucket = Aws::S3::Resource.new.bucket(ENV['BACKEND_AWS_S3_BUCKET'])
@@ -65,8 +65,8 @@ class ProductsController < ApplicationController
 
   def favoriteList
     Aws.config.update({
-                        region: ENV['AWS_REGION'],
-                        credentials: Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
+                        region: ENV['MY_AWS_REGION'],
+                        credentials: Aws::Credentials.new(ENV['MY_AWS_ACCESS_KEY_ID'], ENV['MY_AWS_SECRET_ACCESS_KEY'])
                       })
 
     @bucket = Aws::S3::Resource.new.bucket(ENV['BACKEND_AWS_S3_BUCKET'])
@@ -95,8 +95,8 @@ class ProductsController < ApplicationController
 
   def historyList
     Aws.config.update({
-                        region: ENV['AWS_REGION'],
-                        credentials: Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
+                        region: ENV['MY_AWS_REGION'],
+                        credentials: Aws::Credentials.new(ENV['MY_AWS_ACCESS_KEY_ID'], ENV['MY_AWS_SECRET_ACCESS_KEY'])
                       })
 
     @bucket = Aws::S3::Resource.new.bucket(ENV['BACKEND_AWS_S3_BUCKET'])
