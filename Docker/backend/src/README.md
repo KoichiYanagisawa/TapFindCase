@@ -5,3 +5,5 @@ IAMユーザーにssmのゲットパラメーターを付与した
 環境変数の取得元がAWSからGitHubのsecretsになっているかもしれないので確認用
 
 GitHubのSecretsからAWSのアクセスキーを入手して、AWSのSystemManagerから別のアクセスキーを入手するという無駄を排除
+
+cloudformationの権限を付与した別のIAMユーザーに切り替えた
