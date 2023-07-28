@@ -13,3 +13,5 @@ IAMユーザーの権限を絞って動作するか確認
 cloudformationの権限を搾りすぎたため緩和
 
 環境変数をserverless.ymlにセットしないで、GitHubのSecretsから取得できないかテスト。
+
+serverless.ymlでは環境変数を必ずセットしなければならなかった。
