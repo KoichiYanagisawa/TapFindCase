@@ -18,7 +18,11 @@ class InfoScraper
   end
 
   def get_item_info(wait, driver)
-    s3_client = Aws::S3::Client.new
+    s3_client = Aws::S3::Client.new(
+      region: ENV['MY_AWS_REGION'],
+      access_key_id: ENV['MY_AWS_ACCESS_KEY_ID'],
+      secret_access_key: ENV['MY_AWS_SECRET_ACCESS_KEY']
+    )
 
     @bucket.objects(prefix: 'products_detail_urls/').each do |obj_summary|
       obj = @bucket.object(obj_summary.key)
