@@ -8,7 +8,7 @@ services:
     # volumes:
     #   - ./url_scraper/src:/root/src
     environment:
-      TZ: 'Asia/Tokyo'
+      TZ: "Asia/Tokyo"
   info_scraper:
     build: ./info_scraper/
     container_name: info_scraper
@@ -17,7 +17,7 @@ services:
     # volumes:
     #   - ./info_scraper/src:/root/src
     environment:
-      TZ: 'Asia/Tokyo'
+      TZ: "Asia/Tokyo"
   dbmanager_scraper:
     build: ./dbmanager_scraper/
     container_name: dbmanager_scraper
@@ -26,7 +26,7 @@ services:
     # volumes:
     #   - ./dbmanager_scraper/src:/root/src
     environment:
-      TZ: 'Asia/Tokyo'
+      TZ: "Asia/Tokyo"
   backend:
     build: ./backend/
     container_name: backend
@@ -37,7 +37,7 @@ services:
     ports:
       - 3000:3000
     environment:
-      TZ: 'Asia/Tokyo'
+      TZ: "Asia/Tokyo"
   frontend:
     build: ./frontend/
     container_name: frontend
