@@ -1,9 +1,11 @@
 name: Build and Deploy to S3
 
 on:
-  push:
+  pull_request:
+    branches:
+      - main
     paths:
-      - "Docker/frontend/react_app/**" #Docker/frontend/react_app配下のファイルが更新されたら実行
+      - "Docker/frontend/react_app/**" #mainブランチにマージした時、Docker/frontend/react_app配下のファイルが更新されたら実行
 
 jobs:
   build-and-deploy:
