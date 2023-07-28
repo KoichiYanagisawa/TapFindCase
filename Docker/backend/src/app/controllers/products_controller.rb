@@ -9,19 +9,29 @@ class ProductsController < ApplicationController
   def detail
     @product = Product.find_by_name(params[:name])
 
-    @bucket = Aws::S3::Resource.new.bucket(ENV['BACKEND_AWS_S3_BUCKET'])
-    @product = Product.find_by_name(params[:name])
+    unless @product
+      render json: { error: 'Product not found' }, status: :not_found
+      return
+    end
 
-    if @product['thumbnail_urls']
+    @bucket = Aws::S3::Resource.new.bucket(ENV['BACKEND_AWS_S3_BUCKET'])
+
+    if @product['thumbnail_urls']&.any?
       @product['thumbnail_urls'] = @product['thumbnail_urls'].map do |url|
         @bucket.object(url).presigned_url(:get, expires_in: 3600)
       end
+    else
+      render json: { error: 'Product image not found' }, status: :not_found
+      return
     end
 
-    if @product['image_urls']
+    if @product['image_urls']&.any?
       @product['image_urls'] = @product['image_urls'].map do |url|
         @bucket.object(url).presigned_url(:get, expires_in: 3600)
       end
+    else
+      render json: { error: 'Product image not found' }, status: :not_found
+      return
     end
 
     render json: {
@@ -52,11 +62,16 @@ class ProductsController < ApplicationController
 
     products = response[:products].map do |product|
       product = product.dup
-      if product['thumbnail_urls']
-        product['thumbnail_url'] = @bucket.object(product['thumbnail_urls'].first).presigned_url(:get, expires_in: 3600)
+      next unless product['thumbnail_urls']&.any? && !product['thumbnail_urls'].first.blank?
+
+      begin
+        product['thumbnail_url'] =
+          @bucket.object(product['thumbnail_urls'].first).presigned_url(:get, expires_in: 3600)
+      rescue ArgumentError
+        next
       end
       product
-    end
+    end.compact
     render json: {
       products: products.as_json(only: %w[PK name color price thumbnail_url]),
       last_evaluated_key: response[:last_evaluated_key]
