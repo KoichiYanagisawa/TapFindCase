@@ -4,6 +4,7 @@ require 'set'
 require 'tempfile'
 require 'aws-sdk-s3'
 require 'dotenv/load'
+require 'aws-sdk-secretsmanager'
 
 class URLScraper
   attr_reader :urls

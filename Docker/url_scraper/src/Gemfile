@@ -12,3 +12,6 @@ gem 'dotenv', '~> 2.7.6'
 
 # AWSのS3を使うために必要
 gem 'aws-sdk-s3', '~> 1.130.0'
+
+# AWSのSecrets Managerを使うために必要
+gem 'aws-sdk-secretsmanager', '~> 1.81.0'
