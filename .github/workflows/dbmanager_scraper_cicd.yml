@@ -31,5 +31,5 @@ jobs:
         run: |
           cd Docker
           docker-compose --project-name tapfindcase build dbmanager_scraper
-          docker tag tapfindcase-dbmanager_scraper:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker tag tapfindcase_dbmanager_scraper:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG

@@ -9,3 +9,6 @@ gem 'aws-sdk-dynamodb', '~> 1.92.0'
 
 # .envを読み込むために必要
 gem 'dotenv', '~> 2.7.6'
+
+# AWSのSecrets Managerを使うために必要
+gem 'aws-sdk-secretsmanager', '~> 1.81.0'

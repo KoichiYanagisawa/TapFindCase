@@ -3,6 +3,7 @@
 require 'dotenv/load'
 require 'aws-sdk-s3'
 require 'net/http'
+require 'aws-sdk-secretsmanager'
 
 class ImageScraper
   def get_item_images(wait, driver, url)
