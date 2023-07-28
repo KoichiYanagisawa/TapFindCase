@@ -7,3 +7,5 @@ IAMユーザーにssmのゲットパラメーターを付与した
 GitHubのSecretsからAWSのアクセスキーを入手して、AWSのSystemManagerから別のアクセスキーを入手するという無駄を排除
 
 cloudformationの権限を付与した別のIAMユーザーに切り替えた
+
+IAMユーザーの権限を絞って動作するか確認
