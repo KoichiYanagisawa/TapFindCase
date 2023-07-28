@@ -15,3 +15,5 @@ cloudformationの権限を搾りすぎたため緩和
 環境変数をserverless.ymlにセットしないで、GitHubのSecretsから取得できないかテスト。
 
 serverless.ymlでは環境変数を必ずセットしなければならなかった。
+
+様々な場所に環境変数を用意していたので可能な限り一箇所にした。
