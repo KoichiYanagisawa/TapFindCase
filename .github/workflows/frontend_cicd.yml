@@ -32,11 +32,16 @@ jobs:
         working-directory: Docker/frontend/react_app
         run: npm ci
 
-      - name: Build project #プロジェクトをビルドする
-        working-directory: Docker/frontend/react_app
+      - name: Debug REACT_APP_API_URL
+        run: echo $REACT_APP_API_URL
         env:
           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+
+      - name: Build project #プロジェクトをビルドする
+        working-directory: Docker/frontend/react_app
         run: npm run build
+        env:
+          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
 
       - name: Configure AWS credentials #AWSの認証情報を設定する
         uses: aws-actions/configure-aws-credentials@v1

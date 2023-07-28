@@ -13,3 +13,5 @@ REACT_APP_API_URLが読み込まれなくなった原因調査中。
 GitHubSecretsに環境変数をセットし忘れていた。
 
 環境変数が読み込めない。cicdのymlを修正。
+
+一度デプロイする。
