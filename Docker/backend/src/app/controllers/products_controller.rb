@@ -64,15 +64,7 @@ class ProductsController < ApplicationController
     response = Product.find_by('user_id', params[:user_id], 'user_id_index', 'FAVORITE', last_evaluated_key, limit)
     return render json: { error: 'Item not found' }, status: :not_found unless response[:products]
 
-    products = response[:products].map do |product|
-      product_detail = Product.find_by_name(product['name'])
-
-      if product_detail['thumbnail_urls']
-        product_detail['thumbnail_url'] =
-          @bucket.object(product_detail['thumbnail_urls'].first).presigned_url(:get, expires_in: 3600)
-      end
-      product_detail
-    end
+    products = generate_thumbnail_urls(response)
 
     render json: {
       products: products.as_json(only: %w[PK name color price thumbnail_url]),
@@ -87,20 +79,7 @@ class ProductsController < ApplicationController
     response = Product.find_by('user_id', params[:user_id], 'user_id_index', 'HISTORY', last_evaluated_key, limit)
     return render json: { error: 'Item not found' }, status: :not_found unless response[:products]
 
-    products = response[:products].map do |product|
-      product_detail = Product.find_by_name(product['name'])
-
-      if product_detail['thumbnail_urls']
-        product_detail['thumbnail_url'] =
-          @bucket.object(product_detail['thumbnail_urls'].first).presigned_url(:get, expires_in: 3600)
-      end
-
-      viewed_at = product['viewed_at']
-      product_detail['viewed_at'] = viewed_at
-
-      product_detail
-    end
-
+    products = generate_thumbnail_urls(response, true)
     sorted_products = products.sort_by { |product| -DateTime.parse(product['viewed_at']).to_i }
 
     render json: {
@@ -111,23 +90,18 @@ class ProductsController < ApplicationController
 
   private
 
-  def generate_thumbnail_urls(response, detail_required = false)
-    response[:products].filter_map do |product|
-      product = product.dup
-      next unless product['thumbnail_urls']&.any? && product['thumbnail_urls'].first.present?
+  def generate_thumbnail_urls(response, viewed_at_required = false)
+    products = response[:products].map do |product|
+      product_detail = Product.find_by_name(product['name'])
 
-      begin
-        product['thumbnail_url'] = @bucket.object(product['thumbnail_urls'].first).presigned_url(:get, expires_in: 3600)
-      rescue ArgumentError
-        next
+      if product_detail['thumbnail_urls']
+        product_detail['thumbnail_url'] =
+          @bucket.object(product_detail['thumbnail_urls'].first).presigned_url(:get, expires_in: 3600)
       end
-
-      if detail_required
-        product_detail = Product.find_by_name(product['name'])
-        product['viewed_at'] = product_detail['viewed_at'] if product_detail['viewed_at'].present?
+      if viewed_at_required
+        product_detail['viewed_at'] = product['viewed_at']
       end
-
-      product
+      product_detail
     end
   end
 
