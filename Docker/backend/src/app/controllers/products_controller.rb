@@ -1,6 +1,16 @@
 require 'aws-sdk-s3'
 
 class ProductsController < ApplicationController
+  before_action :initialize_s3_client, only: %i[detail model_list favorite_list history_list]
+
+  def initialize_s3_client
+    Aws.config.update({
+                        region: ENV.fetch('MY_AWS_REGION', nil),
+                        credentials: Aws::Credentials.new(ENV.fetch('MY_AWS_ACCESS_KEY_ID', nil), ENV.fetch('MY_AWS_SECRET_ACCESS_KEY', nil))
+                      })
+
+    @bucket = Aws::S3::Resource.new.bucket(ENV.fetch('BACKEND_AWS_S3_BUCKET', nil))
+  end
   def index
     @products = Product.all_unique_models
     render json: @products
@@ -8,30 +18,37 @@ class ProductsController < ApplicationController
 
   def detail
     @product = Product.find_by_name(params[:name])
+    return render json: { error: 'Product not found' }, status: :not_found unless @product
 
-    unless @product
-      render json: { error: 'Product not found' }, status: :not_found
-      return
-    end
+    # generate_presigned_url(@product, [:thumbnail_urls, :image_urls])
 
-    @bucket = Aws::S3::Resource.new.bucket(ENV.fetch('BACKEND_AWS_S3_BUCKET', nil))
+    # unless @product
+    #   render json: { error: 'Product not found' }, status: :not_found
+    #   return
+    # end
 
-    if @product['thumbnail_urls']&.any?
-      @product['thumbnail_urls'] = @product['thumbnail_urls'].map do |url|
-        @bucket.object(url).presigned_url(:get, expires_in: 3600)
-      end
-    else
-      render json: { error: 'Product image not found' }, status: :not_found
-      return
-    end
+    # @bucket = Aws::S3::Resource.new.bucket(ENV.fetch('BACKEND_AWS_S3_BUCKET', nil))
 
-    if @product['image_urls']&.any?
-      @product['image_urls'] = @product['image_urls'].map do |url|
-        @bucket.object(url).presigned_url(:get, expires_in: 3600)
-      end
-    else
-      render json: { error: 'Product image not found' }, status: :not_found
-      return
+    # if @product['thumbnail_urls']&.any?
+    #   @product['thumbnail_urls'] = @product['thumbnail_urls'].map do |url|
+    #     @bucket.object(url).presigned_url(:get, expires_in: 3600)
+    #   end
+    # else
+    #   render json: { error: 'Product image not found' }, status: :not_found
+    #   return
+    # end
+
+    # if @product['image_urls']&.any?
+    #   @product['image_urls'] = @product['image_urls'].map do |url|
+    #     @bucket.object(url).presigned_url(:get, expires_in: 3600)
+    #   end
+    # else
+      # render json: { error: 'Product image not found' }, status: :not_found
+      # return
+
+      render json: {
+        product: @product.as_json(only: %w[name color price maker ec_site_url thumbnail_urls image_urls checked_at])
+      }
     end
 
     render json: {
@@ -46,7 +63,7 @@ class ProductsController < ApplicationController
     }
   end
 
-  def modelList
+  def model_list
     Aws.config.update({
                         region: ENV.fetch('MY_AWS_REGION', nil),
                         credentials: Aws::Credentials.new(ENV.fetch('MY_AWS_ACCESS_KEY_ID', nil), ENV.fetch('MY_AWS_SECRET_ACCESS_KEY', nil))
@@ -78,7 +95,7 @@ class ProductsController < ApplicationController
     }
   end
 
-  def favoriteList
+  def favorite_list
     Aws.config.update({
                         region: ENV.fetch('MY_AWS_REGION', nil),
                         credentials: Aws::Credentials.new(ENV.fetch('MY_AWS_ACCESS_KEY_ID', nil), ENV.fetch('MY_AWS_SECRET_ACCESS_KEY', nil))
@@ -108,7 +125,7 @@ class ProductsController < ApplicationController
     }
   end
 
-  def historyList
+  def history_list
     Aws.config.update({
                         region: ENV.fetch('MY_AWS_REGION', nil),
                         credentials: Aws::Credentials.new(ENV.fetch('MY_AWS_ACCESS_KEY_ID', nil), ENV.fetch('MY_AWS_SECRET_ACCESS_KEY', nil))
@@ -142,5 +159,40 @@ class ProductsController < ApplicationController
       products: sorted_products.as_json(only: %w[PK name color price thumbnail_url]),
       last_evaluated_key: response[:last_evaluated_key]
     }
+  end
+
+  private
+
+  def generate_thumbnail_urls(response, detail_required = false)
+    response[:products].filter_map do |product|
+      product = product.dup
+      next unless product['thumbnail_urls']&.any? && product['thumbnail_urls'].first.present?
+
+      begin
+        product['thumbnail_url'] = @bucket.object(product['thumbnail_urls'].first).presigned_url(:get, expires_in: 3600)
+      rescue ArgumentError
+        next
+      end
+
+      if detail_required
+        product_detail = Product.find_by_name(product['name'])
+        product['viewed_at'] = product_detail['viewed_at'] if product_detail['viewed_at'].present?
+      end
+
+      product
+    end
+  end
+
+  def generate_presigned_url(product, url_types)
+    url_types.each do |type|
+      if product[type]&.any?
+        product[type] = product[type].map do |url|
+          @bucket.object(url).presigned_url(:get, expires_in: 3600)
+        end
+      else
+        render json: { error: 'Product image not found' }, status: :not_found
+        return
+      end
+    end
   end
 end

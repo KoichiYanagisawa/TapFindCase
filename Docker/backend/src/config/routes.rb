@@ -3,9 +3,9 @@ Rails.application.routes.draw do
 
   get '/products', to: 'products#index'
   get '/products/detail/:name', to: 'products#detail', name: /.*/
-  get '/products/list/:model', to: 'products#modelList'
-  get '/products/list/favorite/:user_id', to: 'products#favoriteList'
-  get '/products/list/history/:user_id', to: 'products#historyList'
+  get '/products/list/:model', to: 'products#model_list'
+  get '/products/list/favorite/:user_id', to: 'products#favorite_list'
+  get '/products/list/history/:user_id', to: 'products#history_list'
 
   get '/api/users/:uuid', to: 'users#show'
 

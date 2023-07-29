@@ -31,14 +31,14 @@ class Product
     dynamodb.scan(table_name: 'TapFindCase').items.pluck('model').uniq.compact.map { |model| { model: } }
   end
 
-  def self.find_by(field, value, index, sk, last_evaluated_key = nil, limit = 20)
+  def self.find_by(field, value, index, sort_key, last_evaluated_key = nil, limit = 20)
     options = {
       table_name: 'TapFindCase',
       index_name: index,
       key_condition_expression: "#{field} = :val",
       filter_expression: 'SK = :SK',
       expression_attribute_values: {
-        ':SK' => sk,
+        ':SK' => sort_key,
         ':val' => value
       },
       limit:
