@@ -50,7 +50,7 @@ def remove_unsupported_headers(headers)
   headers
 end
 
-def lambda_handler(event:, _context:)
+def lambda_handler(event:, context:)
   app = Rails.application
   headers = event['headers'].transform_keys { |k| "HTTP_#{k.upcase.tr('-', '_')}" }
   body = event['body'].is_a?(String) ? event['body'] : event['body'].to_json
