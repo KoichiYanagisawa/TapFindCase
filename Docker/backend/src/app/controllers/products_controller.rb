@@ -91,13 +91,13 @@ class ProductsController < ApplicationController
   private
 
   def generate_thumbnail_urls(response, viewed_at_required: false)
-    response[:products].map do |product|
+    response[:products].filter_map do |product|
       product_detail = Product.query_by_product_name(product['name'])
 
-      if product_detail['thumbnail_urls']
-        product_detail['thumbnail_url'] =
-          @bucket.object(product_detail['thumbnail_urls'].first).presigned_url(:get, expires_in: 3600)
-      end
+      next unless product_detail['thumbnail_urls']&.any?
+
+      product_detail['thumbnail_url'] =
+        @bucket.object(product_detail['thumbnail_urls'].first).presigned_url(:get, expires_in: 3600)
       product_detail['viewed_at'] = product['viewed_at'] if viewed_at_required
       product_detail
     end
@@ -110,7 +110,7 @@ class ProductsController < ApplicationController
           @bucket.object(url).presigned_url(:get, expires_in: 3600)
         end
       else
-        return 'Product image not found'
+        return nil
       end
     end
     true
