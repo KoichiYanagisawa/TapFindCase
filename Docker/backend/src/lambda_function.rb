@@ -50,6 +50,7 @@ def remove_unsupported_headers(headers)
   headers
 end
 
+# rubocop:disable Lint/UnusedMethodArgument
 def lambda_handler(event:, context:)
   app = Rails.application
   headers = event['headers'].transform_keys { |k| "HTTP_#{k.upcase.tr('-', '_')}" }
@@ -86,3 +87,4 @@ rescue StandardError => e
     body: { error: 'Internal Server Error' }.to_json
   }
 end
+# rubocop:enable Lint/UnusedMethodArgument
