@@ -20,7 +20,7 @@ class ProductsController < ApplicationController
     @product = Product.find_by_name(params[:name])
     return render json: { error: 'Product not found' }, status: :not_found unless @product
 
-    # generate_presigned_url(@product, [:thumbnail_urls, :image_urls])
+    generate_presigned_url(@product, [:thumbnail_urls, :image_urls])
 
     # unless @product
     #   render json: { error: 'Product not found' }, status: :not_found
@@ -90,7 +90,7 @@ class ProductsController < ApplicationController
     #   product
     # end
 
-    products
+    products = generate_thumbnail_urls(response)
     render json: {
       products: products.as_json(only: %w[PK name color price thumbnail_url]),
       last_evaluated_key: response[:last_evaluated_key]
