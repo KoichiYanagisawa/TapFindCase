@@ -46,30 +46,30 @@ class ProductsController < ApplicationController
       # render json: { error: 'Product image not found' }, status: :not_found
       # return
 
-      render json: {
-        product: @product.as_json(only: %w[name color price maker ec_site_url thumbnail_urls image_urls checked_at])
-      }
-    end
-
     render json: {
-      product: @product.as_json(only: %w[name
-                                         color
-                                         price
-                                         maker
-                                         ec_site_url
-                                         thumbnail_urls
-                                         image_urls
-                                         checked_at])
+      product: @product.as_json(only: %w[name color price maker ec_site_url thumbnail_urls image_urls checked_at])
     }
   end
 
-  def model_list
-    Aws.config.update({
-                        region: ENV.fetch('MY_AWS_REGION', nil),
-                        credentials: Aws::Credentials.new(ENV.fetch('MY_AWS_ACCESS_KEY_ID', nil), ENV.fetch('MY_AWS_SECRET_ACCESS_KEY', nil))
-                      })
+  #   render json: {
+  #     product: @product.as_json(only: %w[name
+  #                                        color
+  #                                        price
+  #                                        maker
+  #                                        ec_site_url
+  #                                        thumbnail_urls
+  #                                        image_urls
+  #                                        checked_at])
+  #   }
+  # end
 
-    @bucket = Aws::S3::Resource.new.bucket(ENV.fetch('BACKEND_AWS_S3_BUCKET', nil))
+  def model_list
+    # Aws.config.update({
+    #                     region: ENV.fetch('MY_AWS_REGION', nil),
+    #                     credentials: Aws::Credentials.new(ENV.fetch('MY_AWS_ACCESS_KEY_ID', nil), ENV.fetch('MY_AWS_SECRET_ACCESS_KEY', nil))
+    #                   })
+
+    # @bucket = Aws::S3::Resource.new.bucket(ENV.fetch('BACKEND_AWS_S3_BUCKET', nil))
 
     last_evaluated_key = params[:last_evaluated_key].present? ? JSON.parse(params[:last_evaluated_key]) : nil
     limit = params[:limit] || 20
@@ -77,18 +77,20 @@ class ProductsController < ApplicationController
     response = Product.find_by('model', params[:model], 'model_index', 'DETAILS', last_evaluated_key, limit)
     return render json: { error: 'Model not found' }, status: :not_found unless response[:products]
 
-    products = response[:products].filter_map do |product|
-      product = product.dup
-      next unless product['thumbnail_urls']&.any? && product['thumbnail_urls'].first.present?
+    # products = response[:products].filter_map do |product|
+    #   product = product.dup
+    #   next unless product['thumbnail_urls']&.any? && product['thumbnail_urls'].first.present?
 
-      begin
-        product['thumbnail_url'] =
-          @bucket.object(product['thumbnail_urls'].first).presigned_url(:get, expires_in: 3600)
-      rescue ArgumentError
-        next
-      end
-      product
-    end
+    #   begin
+    #     product['thumbnail_url'] =
+    #       @bucket.object(product['thumbnail_urls'].first).presigned_url(:get, expires_in: 3600)
+    #   rescue ArgumentError
+    #     next
+    #   end
+    #   product
+    # end
+
+    products
     render json: {
       products: products.as_json(only: %w[PK name color price thumbnail_url]),
       last_evaluated_key: response[:last_evaluated_key]
