@@ -5,9 +5,9 @@ class User
 
   def self.dynamodb
     @dynamodb ||= Aws::DynamoDB::Client.new(
-      region: ENV['MY_AWS_REGION'],
-      access_key_id: ENV['MY_AWS_ACCESS_KEY_ID'],
-      secret_access_key: ENV['MY_AWS_SECRET_ACCESS_KEY']
+      region: ENV.fetch('MY_AWS_REGION', nil),
+      access_key_id: ENV.fetch('MY_AWS_ACCESS_KEY_ID', nil),
+      secret_access_key: ENV.fetch('MY_AWS_SECRET_ACCESS_KEY', nil)
     )
     raise 'Failed to initialize DynamoDB client' unless @dynamodb
 
@@ -20,10 +20,10 @@ class User
 
   def self.find_by(id)
     response = dynamodb.get_item({
-                                   table_name: table_name,
+                                   table_name:,
                                    key: {
-                                     "PK": id,
-                                     "SK": 'USER'
+                                     PK: id,
+                                     SK: 'USER'
                                    }
                                  })
     response.item
@@ -31,7 +31,7 @@ class User
 
   def self.find_or_create_by_cookie_id(cookie_id)
     response = dynamodb.query({
-                                table_name: table_name,
+                                table_name:,
                                 index_name: 'cookie_id_index',
                                 key_condition_expression: 'cookie_id = :cookie_id',
                                 expression_attribute_values: { ':cookie_id' => cookie_id }
@@ -42,7 +42,7 @@ class User
                    'SK' => 'USER',
                    'cookie_id' => cookie_id }
       dynamodb.put_item({
-                          table_name: table_name,
+                          table_name:,
                           item: new_user
                         })
       new_user

@@ -17,8 +17,6 @@ class HistoriesController < ApplicationController
   def set_user
     user_id = @body['user_id']
     @user = User.find_by(user_id)
-    unless @user
-      render json: { error: 'User not found.' }, status: :not_found
-    end
+    render json: { error: 'User not found.' }, status: :not_found unless @user
   end
 end
