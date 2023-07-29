@@ -18,33 +18,17 @@ class ProductsController < ApplicationController
 
   def detail
     @product = Product.find_by_name(params[:name])
-    return render json: { error: 'Product not found' }, status: :not_found unless @product
+    unless @product
+      render json: { error: 'Product not found' }, status: :not_found
+      return
+    end
 
-    generate_presigned_url(@product, [:thumbnail_urls, :image_urls])
+    presigned_url_result = generate_presigned_url(@product, ['thumbnail_urls', 'image_urls'])
 
-    # unless @product
-    #   render json: { error: 'Product not found' }, status: :not_found
-    #   return
-    # end
-
-    # @bucket = Aws::S3::Resource.new.bucket(ENV.fetch('BACKEND_AWS_S3_BUCKET', nil))
-
-    # if @product['thumbnail_urls']&.any?
-    #   @product['thumbnail_urls'] = @product['thumbnail_urls'].map do |url|
-    #     @bucket.object(url).presigned_url(:get, expires_in: 3600)
-    #   end
-    # else
-    #   render json: { error: 'Product image not found' }, status: :not_found
-    #   return
-    # end
-
-    # if @product['image_urls']&.any?
-    #   @product['image_urls'] = @product['image_urls'].map do |url|
-    #     @bucket.object(url).presigned_url(:get, expires_in: 3600)
-    #   end
-    # else
-      # render json: { error: 'Product image not found' }, status: :not_found
-      # return
+    unless presigned_url_result == true
+      render json: { error: presigned_url_result }, status: :not_found
+      return
+    end
 
     render json: {
       product: @product.as_json(only: %w[name color price maker ec_site_url thumbnail_urls image_urls checked_at])
@@ -192,9 +176,9 @@ class ProductsController < ApplicationController
           @bucket.object(url).presigned_url(:get, expires_in: 3600)
         end
       else
-        render json: { error: 'Product image not found' }, status: :not_found
-        return false
+        return 'Product image not found'
       end
     end
+    true
   end
 end
