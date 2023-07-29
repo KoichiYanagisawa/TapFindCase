@@ -64,7 +64,7 @@ class ProductsController < ApplicationController
     response = Product.find_by('user_id', params[:user_id], 'user_id_index', 'FAVORITE', last_evaluated_key, limit)
     return render json: { error: 'Item not found' }, status: :not_found unless response[:products]
 
-    products = generate_thumbnail_urls(response)
+    products = generate_thumbnail_urls(response, true)
 
     render json: {
       products: products.as_json(only: %w[PK name color price thumbnail_url]),
@@ -79,7 +79,7 @@ class ProductsController < ApplicationController
     response = Product.find_by('user_id', params[:user_id], 'user_id_index', 'HISTORY', last_evaluated_key, limit)
     return render json: { error: 'Item not found' }, status: :not_found unless response[:products]
 
-    products = generate_thumbnail_urls(response)
+    products = generate_thumbnail_urls(response, true, true)
     sorted_products = products.sort_by { |product| -DateTime.parse(product['viewed_at']).to_i }
 
     render json: {
@@ -90,7 +90,7 @@ class ProductsController < ApplicationController
 
   private
 
-  def generate_thumbnail_urls(response)
+  def generate_thumbnail_urls(response, detail_required = false, viewed_at_required = false)
     response[:products].filter_map do |product|
       product = product.dup
       next unless product['thumbnail_urls']&.any? && product['thumbnail_urls'].first.present?
@@ -100,6 +100,12 @@ class ProductsController < ApplicationController
       rescue ArgumentError
         next
       end
+
+      if viewed_at_required
+        product_detail = Product.find_by_name(product['name'])
+        product['viewed_at'] = product_detail['viewed_at'] if product_detail&.viewed_at.present?
+      end
+
       product
     end
   end
