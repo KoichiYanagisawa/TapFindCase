@@ -11,7 +11,7 @@ class Product
     @dynamodb = self.class.dynamodb
   end
 
-  def self.find_by_name(name)
+  def self.query_by_product_name(name)
     response = dynamodb.query({
                                 table_name: 'TapFindCase',
                                 index_name: 'name_SK_index',
