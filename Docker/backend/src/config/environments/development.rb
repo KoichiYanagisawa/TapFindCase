@@ -1,4 +1,4 @@
-require "active_support/core_ext/integer/time"
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -19,10 +19,10 @@ Rails.application.configure do
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-  if Rails.root.join("tmp/caching-dev.txt").exist?
+  if Rails.root.join('tmp/caching-dev.txt').exist?
     config.cache_store = :memory_store
     config.public_file_server.headers = {
-      "Cache-Control" => "public, max-age=#{2.days.to_i}"
+      'Cache-Control' => "public, max-age=#{2.days.to_i}"
     }
   else
     config.action_controller.perform_caching = false
@@ -57,5 +57,5 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   # AWSに接続するための設定
-  config.hosts << "4pr1q53lx1.execute-api.ap-northeast-1.amazonaws.com"
+  config.hosts << '4pr1q53lx1.execute-api.ap-northeast-1.amazonaws.com'
 end
