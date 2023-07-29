@@ -18,13 +18,13 @@ class ProductsController < ApplicationController
   end
 
   def detail
-    @product = Product.find_by_name(params[:name])
+    @product = Product.query_by_product_name(params[:name])
     unless @product
       render json: { error: 'Product not found' }, status: :not_found
       return
     end
 
-    presigned_url_result = generate_presigned_url(@product, ['thumbnail_urls', 'image_urls'])
+    presigned_url_result = generate_presigned_url(@product, %w[thumbnail_urls image_urls])
 
     unless presigned_url_result == true
       render json: { error: presigned_url_result }, status: :not_found
@@ -79,7 +79,7 @@ class ProductsController < ApplicationController
     response = Product.find_by('user_id', params[:user_id], 'user_id_index', 'HISTORY', last_evaluated_key, limit)
     return render json: { error: 'Item not found' }, status: :not_found unless response[:products]
 
-    products = generate_thumbnail_urls(response, true)
+    products = generate_thumbnail_urls(response, viewed_at_required: true)
     sorted_products = products.sort_by { |product| -DateTime.parse(product['viewed_at']).to_i }
 
     render json: {
@@ -90,17 +90,15 @@ class ProductsController < ApplicationController
 
   private
 
-  def generate_thumbnail_urls(response, viewed_at_required = false)
-    products = response[:products].map do |product|
-      product_detail = Product.find_by_name(product['name'])
+  def generate_thumbnail_urls(response, viewed_at_required: false)
+    response[:products].map do |product|
+      product_detail = Product.query_by_product_name(product['name'])
 
       if product_detail['thumbnail_urls']
         product_detail['thumbnail_url'] =
           @bucket.object(product_detail['thumbnail_urls'].first).presigned_url(:get, expires_in: 3600)
       end
-      if viewed_at_required
-        product_detail['viewed_at'] = product['viewed_at']
-      end
+      product_detail['viewed_at'] = product['viewed_at'] if viewed_at_required
       product_detail
     end
   end

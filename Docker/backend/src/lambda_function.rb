@@ -1,32 +1,16 @@
-require 'bundler/setup'
-require 'rack'
-require 'rack/handler/puma'
-require 'puma'
-require 'json'
-require 'base64'
-require './config/environment'
-
-# 全てのネストしたハッシュに対してキーをシンボル化する関数
-def deep_symbolize_keys(obj)
-  return obj.map{ |v| deep_symbolize_keys(v) } if obj.is_a? Array
-  return obj unless obj.is_a? Hash
-
-  obj.each_with_object({}) do |(k, v), result|
-    result[k.to_sym] = deep_symbolize_keys(v)
-  end
+def lambda_handler(event:)
+  env = build_environment(event)
+  status, headers, body = call_rails_app(env)
+  format_response(status, headers, body)
+rescue StandardError => e
+  handle_error(e)
 end
 
-def lambda_handler(event:, context:)
-
-  app = Rails.application
+def build_environment(event)
   headers = event['headers'].transform_keys { |k| "HTTP_#{k.upcase.tr('-', '_')}" }
   body = event['body'].is_a?(String) ? event['body'] : event['body'].to_json
   query_params = deep_symbolize_keys(event['queryStringParameters'])
-  query_string = if query_params.nil?
-                   ''
-                 else
-                   query_params.map{ |k, v| "#{k}=#{v.is_a?(String) && v.match(/^(\{|\[).*(\}|\])$/) ? v : v.to_json}" }.join('&')
-                 end
+  query_string = build_query_string(query_params)
 
   env = {
     'rack.version' => Rack::VERSION,
@@ -48,13 +32,27 @@ def lambda_handler(event:, context:)
   }
 
   env.merge!(headers)
+  env
+end
 
-  status, headers, body = app.call(env)
+def build_query_string(query_params)
+  return '' if query_params.nil?
+
+  query_params.map { |k, v| "#{k}=#{v.is_a?(String) && v.match(/^(\{|\[).*(\}|\])$/) ? v : v.to_json}" }.join('&')
+end
+
+def call_rails_app(env)
+  status, headers, body = Rails.application.call(env)
 
   # Remove headers not supported by API Gateway
   %w[status connection server x-runtime x-powered-by].each do |header|
     headers.delete(header)
   end
+
+  [status, headers, body]
+end
+
+def format_response(status, headers, body)
   {
     statusCode: status,
     headers: headers.merge({
@@ -64,10 +62,12 @@ def lambda_handler(event:, context:)
                            }),
     body: body.join
   }
-rescue StandardError => e
-  warn "lambda_function内のエラー: #{e.message}"
+end
+
+def handle_error(handle_error)
+  warn "lambda_function内のエラー: #{handle_error.message}"
   warn 'バックトレース:'
-  warn e.backtrace
+  warn handle_error.backtrace
   {
     statusCode: 500,
     headers: {
@@ -77,5 +77,4 @@ rescue StandardError => e
     },
     body: { error: 'Internal Server Error' }.to_json
   }
-
 end
