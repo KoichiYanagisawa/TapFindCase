@@ -193,7 +193,7 @@ class ProductsController < ApplicationController
         end
       else
         render json: { error: 'Product image not found' }, status: :not_found
-        return
+        return false
       end
     end
   end
