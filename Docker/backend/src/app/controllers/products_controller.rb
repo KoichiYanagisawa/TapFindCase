@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
       return
     end
 
-    @bucket = Aws::S3::Resource.new.bucket(ENV['BACKEND_AWS_S3_BUCKET'])
+    @bucket = Aws::S3::Resource.new.bucket(ENV.fetch('BACKEND_AWS_S3_BUCKET', nil))
 
     if @product['thumbnail_urls']&.any?
       @product['thumbnail_urls'] = @product['thumbnail_urls'].map do |url|
@@ -48,11 +48,11 @@ class ProductsController < ApplicationController
 
   def modelList
     Aws.config.update({
-                        region: ENV['MY_AWS_REGION'],
-                        credentials: Aws::Credentials.new(ENV['MY_AWS_ACCESS_KEY_ID'], ENV['MY_AWS_SECRET_ACCESS_KEY'])
+                        region: ENV.fetch('MY_AWS_REGION', nil),
+                        credentials: Aws::Credentials.new(ENV.fetch('MY_AWS_ACCESS_KEY_ID', nil), ENV.fetch('MY_AWS_SECRET_ACCESS_KEY', nil))
                       })
 
-    @bucket = Aws::S3::Resource.new.bucket(ENV['BACKEND_AWS_S3_BUCKET'])
+    @bucket = Aws::S3::Resource.new.bucket(ENV.fetch('BACKEND_AWS_S3_BUCKET', nil))
 
     last_evaluated_key = params[:last_evaluated_key].present? ? JSON.parse(params[:last_evaluated_key]) : nil
     limit = params[:limit] || 20
@@ -60,9 +60,9 @@ class ProductsController < ApplicationController
     response = Product.find_by('model', params[:model], 'model_index', 'DETAILS', last_evaluated_key, limit)
     return render json: { error: 'Model not found' }, status: :not_found unless response[:products]
 
-    products = response[:products].map do |product|
+    products = response[:products].filter_map do |product|
       product = product.dup
-      next unless product['thumbnail_urls']&.any? && !product['thumbnail_urls'].first.blank?
+      next unless product['thumbnail_urls']&.any? && product['thumbnail_urls'].first.present?
 
       begin
         product['thumbnail_url'] =
@@ -71,7 +71,7 @@ class ProductsController < ApplicationController
         next
       end
       product
-    end.compact
+    end
     render json: {
       products: products.as_json(only: %w[PK name color price thumbnail_url]),
       last_evaluated_key: response[:last_evaluated_key]
@@ -80,11 +80,11 @@ class ProductsController < ApplicationController
 
   def favoriteList
     Aws.config.update({
-                        region: ENV['MY_AWS_REGION'],
-                        credentials: Aws::Credentials.new(ENV['MY_AWS_ACCESS_KEY_ID'], ENV['MY_AWS_SECRET_ACCESS_KEY'])
+                        region: ENV.fetch('MY_AWS_REGION', nil),
+                        credentials: Aws::Credentials.new(ENV.fetch('MY_AWS_ACCESS_KEY_ID', nil), ENV.fetch('MY_AWS_SECRET_ACCESS_KEY', nil))
                       })
 
-    @bucket = Aws::S3::Resource.new.bucket(ENV['BACKEND_AWS_S3_BUCKET'])
+    @bucket = Aws::S3::Resource.new.bucket(ENV.fetch('BACKEND_AWS_S3_BUCKET', nil))
 
     last_evaluated_key = params[:last_evaluated_key].present? ? JSON.parse(params[:last_evaluated_key]) : nil
     limit = params[:limit] || 20
@@ -110,11 +110,11 @@ class ProductsController < ApplicationController
 
   def historyList
     Aws.config.update({
-                        region: ENV['MY_AWS_REGION'],
-                        credentials: Aws::Credentials.new(ENV['MY_AWS_ACCESS_KEY_ID'], ENV['MY_AWS_SECRET_ACCESS_KEY'])
+                        region: ENV.fetch('MY_AWS_REGION', nil),
+                        credentials: Aws::Credentials.new(ENV.fetch('MY_AWS_ACCESS_KEY_ID', nil), ENV.fetch('MY_AWS_SECRET_ACCESS_KEY', nil))
                       })
 
-    @bucket = Aws::S3::Resource.new.bucket(ENV['BACKEND_AWS_S3_BUCKET'])
+    @bucket = Aws::S3::Resource.new.bucket(ENV.fetch('BACKEND_AWS_S3_BUCKET', nil))
 
     last_evaluated_key = params[:last_evaluated_key].present? ? JSON.parse(params[:last_evaluated_key]) : nil
     limit = params[:limit] || 20
@@ -131,7 +131,7 @@ class ProductsController < ApplicationController
       end
 
       viewed_at = product['viewed_at']
-      product_detail.merge!('viewed_at' => viewed_at)
+      product_detail['viewed_at'] = viewed_at
 
       product_detail
     end

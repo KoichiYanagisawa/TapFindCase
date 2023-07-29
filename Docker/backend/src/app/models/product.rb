@@ -28,9 +28,7 @@ class Product
   end
 
   def self.all_unique_models
-    dynamodb.scan(table_name: 'TapFindCase').items.map do |item|
-      item['model']
-    end.uniq.compact.map { |model| { model: model } }
+    dynamodb.scan(table_name: 'TapFindCase').items.pluck('model').uniq.compact.map { |model| { model: } }
   end
 
   def self.find_by(field, value, index, sk, last_evaluated_key = nil, limit = 20)
@@ -43,7 +41,7 @@ class Product
         ':SK' => sk,
         ':val' => value
       },
-      limit: limit
+      limit:
     }
     options[:exclusive_start_key] = last_evaluated_key if last_evaluated_key
     response = dynamodb.query(options)
