@@ -59,3 +59,5 @@ CDにもRubyの準備が必要になってしまったので対応
 一旦rubocopをオフにする
 
 バックエンド作り直してみる
+
+IAMユーザーにiam:CreateRoleを付与
