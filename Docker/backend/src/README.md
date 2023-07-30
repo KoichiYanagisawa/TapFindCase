@@ -61,3 +61,5 @@ CDにもRubyの準備が必要になってしまったので対応
 バックエンド作り直してみる
 
 IAMユーザーにiam:CreateRoleを付与
+
+IAMユーザーにlogs:CreateLogGroupを付与
