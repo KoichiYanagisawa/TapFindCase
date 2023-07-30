@@ -69,3 +69,5 @@ CloudFormationでロールバックできないので手動で削除
 CloudFormationでロールバックできないので手動で削除2回目
 
 IAMユーザーにlogs:TagResourceを付与
+
+設定を変えず再度デプロイ
