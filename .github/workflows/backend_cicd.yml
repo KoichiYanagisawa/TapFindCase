@@ -32,9 +32,9 @@ jobs:
         working-directory: Docker/backend/src
         run: bundle exec rubocop
 
-      # - name: Run RSpec
-      #   working-directory: Docker/backend/src
-      #   run: bundle exec rspec
+      - name: Run RSpec
+        working-directory: Docker/backend/src
+        run: bundle exec rspec
 
   deploy:
     name: CD
