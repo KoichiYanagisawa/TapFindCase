@@ -21,6 +21,11 @@ jobs:
         with:
           ruby-version: 3.0
 
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -yqq
+          sudo apt-get install -yqq libssl1.1
+
       - name: Install Dependencies
         working-directory: Docker/backend/src
         run: bundle install
