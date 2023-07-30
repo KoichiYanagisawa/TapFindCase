@@ -63,3 +63,5 @@ CDにもRubyの準備が必要になってしまったので対応
 IAMユーザーにiam:CreateRoleを付与
 
 IAMユーザーにlogs:CreateLogGroupを付与
+
+CloudFormationでロールバックできないので手動で削除
