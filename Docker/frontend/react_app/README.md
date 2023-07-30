@@ -17,3 +17,5 @@ GitHubSecretsに環境変数をセットし忘れていた。
 一度デプロイする。
 
 一旦node_modulesのキャッシュをやめてみる。
+
+APIGatewayのエンドポイントが変わったので反映させる
