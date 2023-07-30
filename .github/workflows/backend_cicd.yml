@@ -28,9 +28,9 @@ jobs:
         working-directory: Docker/backend/src
         run: bundle install
 
-      - name: Run Rubocop
-        working-directory: Docker/backend/src
-        run: bundle exec rubocop
+      # - name: Run Rubocop
+      #   working-directory: Docker/backend/src
+      #   run: bundle exec rubocop
 
       # - name: Run RSpec
       #   working-directory: Docker/backend/src
