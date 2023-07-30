@@ -13,3 +13,6 @@
 
 # Railsのtmpディレクトリを以下に記載
 **/tmp
+
+**/ruby
+**/ruby-layer.zip
