@@ -57,3 +57,5 @@ githubactions側でbundle installを実行させることとした。
 CDにもRubyの準備が必要になってしまったので対応
 
 一旦rubocopをオフにする
+
+バックエンド作り直してみる
