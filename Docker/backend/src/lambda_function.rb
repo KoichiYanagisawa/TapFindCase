@@ -52,12 +52,6 @@ end
 
 # rubocop:disable Lint/UnusedMethodArgument
 def lambda_handler(event:, context:)
-  begin
-    dir_contents = Dir.entries('/opt/libcrypt/lib/')
-    puts("ディレクトリの中身: #{dir_contents}")
-  rescue Exception => e
-      puts("エラーの中身: #{e.message}")
-  end
   app = Rails.application
   headers = event['headers'].transform_keys { |k| "HTTP_#{k.upcase.tr('-', '_')}" }
   body = event['body'].is_a?(String) ? event['body'] : event['body'].to_json
