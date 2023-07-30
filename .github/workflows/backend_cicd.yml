@@ -1,4 +1,4 @@
-name: Build and Deploy to Lambda and API Gateway
+name: CI/CD
 
 on:
   push:
@@ -8,7 +8,8 @@ on:
       - "Docker/backend/src/**"
 
 jobs:
-  build-and-deploy:
+  build-and-test:
+    name: CI
     runs-on: ubuntu-latest
 
     steps:
@@ -25,12 +26,36 @@ jobs:
         with:
           node-version: "18"
 
-      - name: Install Serverless CLI
-        run: npm install -g serverless
-
       - name: Install Dependencies
         working-directory: Docker/backend/src
-        run: bundle install
+        run: |
+          bundle install
+          npm install
+
+      - name: Run Rubocop
+        working-directory: Docker/backend/src
+        run: bundle exec rubocop
+
+      - name: Run RSpec
+        working-directory: Docker/backend/src
+        run: bundle exec rspec
+
+  deploy:
+    name: CD
+    needs: build-and-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: Install Serverless CLI
+        run: npm install -g serverless
 
       - name: Deploy to Lambda and API Gateway
         working-directory: Docker/backend/src
