@@ -11,4 +11,5 @@
 **/ruby-layer.zip
 **/.serverless
 
-
+# Railsのtmpディレクトリを以下に記載
+**/tmp
