@@ -50,6 +50,12 @@ jobs:
         with:
           node-version: "18"
 
+      - name: Bundle install
+        run: |
+          cd Docker/backend/src
+          bundle config set path 'vendor/bundle'
+          bundle install --jobs 4 --retry 3
+
       - name: Install Serverless CLI
         run: npm install -g serverless
 
