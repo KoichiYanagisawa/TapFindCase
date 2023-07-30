@@ -67,3 +67,5 @@ IAMユーザーにlogs:CreateLogGroupを付与
 CloudFormationでロールバックできないので手動で削除
 
 CloudFormationでロールバックできないので手動で削除2回目
+
+IAMユーザーにlogs:TagResourceを付与
