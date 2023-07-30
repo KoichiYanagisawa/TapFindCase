@@ -21,16 +21,9 @@ jobs:
         with:
           ruby-version: 3.0
 
-      - name: Set up Node.js environment
-        uses: actions/setup-node@v2
-        with:
-          node-version: "18"
-
       - name: Install Dependencies
         working-directory: Docker/backend/src
-        run: |
-          bundle install
-          npm install
+        run: bundle install
 
       - name: Run Rubocop
         working-directory: Docker/backend/src
