@@ -75,3 +75,5 @@ IAMユーザーにlogs:TagResourceを付与
 libssl.so.3の共有ライブラリレイヤーをLambdaに追加
 
 GitHubActionsを使うとlibssl.so.3が足りないと求められる不具合を確認
+
+BackendのCICDを通すとlibssl.so.3が無いというエラーがでる調査
