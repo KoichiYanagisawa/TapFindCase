@@ -44,6 +44,9 @@ jobs:
       image: amazonlinux:2
 
     steps:
+      - name: Install tar
+        run: yum install -y tar
+
       - name: Checkout code
         uses: actions/checkout@v2
 
