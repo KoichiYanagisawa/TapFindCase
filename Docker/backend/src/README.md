@@ -73,3 +73,5 @@ IAMユーザーにlogs:TagResourceを付与
 設定を変えず再度デプロイ
 
 libssl.so.3の共有ライブラリレイヤーをLambdaに追加
+
+GitHubActionsを使うとlibssl.so.3が足りないと求められる不具合を確認
