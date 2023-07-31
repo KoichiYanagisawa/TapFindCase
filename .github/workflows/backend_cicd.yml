@@ -46,8 +46,7 @@ jobs:
     steps:
       - name: Install necessary dependencies
         run: |
-          yum update -y
-          yum install -y gcc make openssl-devel zlib-devel tar gzip git
+          yum install -y gcc make openssl-devel zlib-devel tar gzip git libyaml-devel libreadline-dev libssl-dev
 
       - name: Install Ruby
         run: |
