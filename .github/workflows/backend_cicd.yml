@@ -44,8 +44,8 @@ jobs:
       image: amazonlinux:2
 
     steps:
-      - name: Install tar
-        run: yum install -y tar
+      - name: Install necessary commands
+        run: yum install -y tar gzip git curl unzip
 
       - name: Checkout code
         uses: actions/checkout@v2
