@@ -68,6 +68,9 @@ jobs:
 
       - name: Bundle install
         run: |
+          echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+          echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+          source ~/.bashrc
           cd Docker/backend/src
           rbenv rehash
           bundle config set path 'vendor/bundle'
