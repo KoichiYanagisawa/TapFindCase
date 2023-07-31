@@ -15,10 +15,7 @@ RSpec.describe Favorite do
   before do
     allow(DynamoDbClient).to receive(:new).and_return(dynamodb_client)
     allow(described_class).to receive(:dynamodb).and_return(dynamodb_client)
-    allow(dynamodb_client).to receive(:put_item).and_return(put_item_result)
-    allow(dynamodb_client).to receive(:delete_item).and_return(delete_item_result)
-    allow(dynamodb_client).to receive(:get_item).and_return(get_item_result)
-    allow(dynamodb_client).to receive(:query).and_return(query_result)
+    allow(dynamodb_client).to receive_messages(put_item: put_item_result, delete_item: delete_item_result, get_item: get_item_result, query: query_result)
   end
 
   describe '.create' do

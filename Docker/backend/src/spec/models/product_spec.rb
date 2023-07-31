@@ -10,8 +10,7 @@ RSpec.describe Product do
   before do
     allow(DynamoDbClient).to receive(:new).and_return(dynamodb_client)
     allow(described_class).to receive(:dynamodb).and_return(dynamodb_client)
-    allow(dynamodb_client).to receive(:query).and_return(query_result)
-    allow(dynamodb_client).to receive(:scan).and_return(scan_result)
+    allow(dynamodb_client).to receive_messages(query: query_result, scan: scan_result)
   end
 
   describe '.query_by_product_name' do
