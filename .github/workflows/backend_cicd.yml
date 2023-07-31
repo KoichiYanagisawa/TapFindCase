@@ -40,6 +40,8 @@ jobs:
     name: CD
     needs: build-and-test
     runs-on: ubuntu-latest
+    container:
+      image: amazonlinux:2
 
     steps:
       - name: Checkout code
