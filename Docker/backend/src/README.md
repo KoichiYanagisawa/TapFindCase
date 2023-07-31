@@ -83,3 +83,5 @@ CICDでRubyのバージョン変更
 CDでserverless deployの環境を揃える
 
 ubuntuのバージョンを20.04に指定
+
+CICD上で共有ライブラリをインストールする
