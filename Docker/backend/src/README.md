@@ -79,3 +79,5 @@ GitHubActionsを使うとlibssl.so.3が足りないと求められる不具合�
 BackendのCICDを通すとlibssl.so.3が無いというエラーがでる調査
 
 CICDでRubyのバージョン変更
+
+CDでserverless deployの環境を揃える
