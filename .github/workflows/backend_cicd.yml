@@ -56,6 +56,7 @@ jobs:
           source ~/.bashrc
           rbenv install 3.2.2
           rbenv global 3.2.2
+          gem install bundler
 
       - name: Install Node.js
         run: |
@@ -68,6 +69,7 @@ jobs:
       - name: Bundle install
         run: |
           cd Docker/backend/src
+          rbenv rehash
           bundle config set path 'vendor/bundle'
           bundle install --jobs 4 --retry 3
 
