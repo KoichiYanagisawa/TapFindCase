@@ -85,3 +85,5 @@ CDでserverless deployの環境を揃える
 ubuntuのバージョンを20.04に指定
 
 CICD上で共有ライブラリをインストールする
+
+エラーメッセージが変わったので一旦ubuntu-latestに戻す
