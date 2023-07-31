@@ -71,3 +71,5 @@ CloudFormationでロールバックできないので手動で削除2回目
 IAMユーザーにlogs:TagResourceを付与
 
 設定を変えず再度デプロイ
+
+libssl.so.3の共有ライブラリレイヤーをLambdaに追加
