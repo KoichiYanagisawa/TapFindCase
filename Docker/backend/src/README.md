@@ -81,3 +81,5 @@ BackendのCICDを通すとlibssl.so.3が無いというエラーがでる調査
 CICDでRubyのバージョン変更
 
 CDでserverless deployの環境を揃える
+
+ubuntuのバージョンを20.04に指定
