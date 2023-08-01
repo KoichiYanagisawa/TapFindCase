@@ -158,7 +158,6 @@ function ProductDetailPage() {
       .then(response => response.json())
       .then(data => {
         setProduct(data.product);
-        console.log(data.product);
         setDisplayImage(data.product.image_urls[0]);
         setImageCount(data.product.thumbnail_urls.length);
       });
@@ -179,16 +178,13 @@ function ProductDetailPage() {
       },
       body: JSON.stringify({ user_id: userInfo.id, name: caseName, viewed_at: new Date() }),
       })
-      .then(data => {
-        console.log('Success:', caseName);
-      })
       .catch((error) => {
         console.error('Error:', error);
       });
   }, [caseName, userInfo.id]);
 
   if (!product) {
-    return <div>Loading...</div>;
+    return <div>商品情報を読み込んでいます...</div>;
   }
 
   const handleThumbnailClick = (index) => {

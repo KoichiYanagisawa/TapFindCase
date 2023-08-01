@@ -47,5 +47,5 @@ services:
       - ./frontend/:/app/
     ports:
       - 3001:3000
-    depends_on:
-      - backend
+    # depends_on:
+    #   - backend
