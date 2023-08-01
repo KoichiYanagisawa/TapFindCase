@@ -41,8 +41,8 @@ function App() {
       });
   }, [dispatch]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div>ロード中...</div>;
+  if (error) return <div>エラー：管理者に問い合わせてください。</div>;
 
 
   return (

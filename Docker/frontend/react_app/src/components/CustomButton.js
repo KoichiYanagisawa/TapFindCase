@@ -13,7 +13,7 @@ const containerStyles = css`
   }
 `;
 
-const buttonStyles = css`
+const getButtonStyles = (style) => css`
   margin-top: 20px;
   text-align: center;
   width: 100%;
@@ -34,6 +34,7 @@ const buttonStyles = css`
   @media (max-width: 425px) {
     font-size: 1.0rem;
   }
+  ${style}
 `;
 
 const getIconStyles = (position, iconColor) => css`
@@ -45,7 +46,8 @@ const getIconStyles = (position, iconColor) => css`
   transform: translateY(-50%);
 `;
 
-function CustomButton({ onClick, disabled, text, Icon, iconColor = '#fff', iconPosition = '5px' }) {
+function CustomButton({ onClick, disabled, text, style, Icon, iconColor = '#fff', iconPosition = '5px' }) {
+  const buttonStyles = getButtonStyles(style);
   const iconStyles = getIconStyles(iconPosition, iconColor);
   return (
     <div css={containerStyles}>

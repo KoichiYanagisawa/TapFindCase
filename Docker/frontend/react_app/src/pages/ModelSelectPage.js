@@ -64,7 +64,10 @@ function ModelSelectPage() {
         />
         <CustomButton onClick={handleSearchClick}
                       disabled={!selectedModelName}
-                      text="ケースを探す"
+                      text={selectedModelName ? "ケースを探しに行く" : "機種選択待機中"}
+                      style={css`
+                        background-color: ${selectedModelName ? '#000' : '#262626'};
+                      `}
                       Icon={IoSearchCircleSharp}
         />
     </div>

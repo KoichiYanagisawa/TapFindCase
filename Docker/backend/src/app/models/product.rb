@@ -28,7 +28,7 @@ class Product
   end
 
   def self.all_unique_models
-    dynamodb.scan(table_name: 'TapFindCase').items.pluck('model').uniq.compact.map { |model| { model: } }
+    dynamodb.scan(table_name: 'TapFindCase').items.pluck('model').uniq.compact.sort.map { |model| { model: } }
   end
 
   def self.find_by(field, value, index, sort_key, last_evaluated_key = nil, limit = 20)
