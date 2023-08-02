@@ -20,31 +20,31 @@ https://tapfindcase.com
 
 |PC版|スマートフォン版|
 |:-----------|:-----------|
-|<img src="./pc_top.gif">|<img src="./iphone_top.gif" width="390px">|
+|<img src="./pc_top.gif">|<img src="./iphone_top.gif">|
 
 ### 製品一覧
 
 |PC版|スマートフォン版|
 |:-----------|:-----------|
-|<img src="./pc_products_list.gif">|<img src="./iphone_products_list.gif" width="390px">|
+|<img src="./pc_products_list.gif">|<img src="./iphone_products_list.gif">|
 
 ### 商品詳細
 
 |PC版|スマートフォン版|
 |:-----------|:-----------|
-|<img src="./pc_detail.gif">|<img src="./iphone_detail.gif" width="390px">|
+|<img src="./pc_detail.gif">|<img src="./iphone_detail.gif">|
 
 ### お気に入り
 
 |PC版|スマートフォン版|
 |:-----------|:-----------|
-|<img src="./pc_favorites_list.gif">|<img src="./iphone_favorites_list.gif" width="390px">|
+|<img src="./pc_favorites_list.gif">|<img src="./iphone_favorites_list.gif">|
 
 ### 閲覧履歴
 
 |PC版|スマートフォン版|
 |:-----------|:-----------|
-|<img src="./pc_histories_list.gif">|<img src="./iphone_histories_list.gif" width="390px">|
+|<img src="./pc_histories_list.gif">|<img src="./iphone_histories_list.gif">|
 
 ## インフラ構成図
 
