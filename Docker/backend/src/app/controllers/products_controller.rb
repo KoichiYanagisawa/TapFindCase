@@ -50,7 +50,7 @@ class ProductsController < ApplicationController
     response = Product.find_by('model', params[:model], 'model_index', 'DETAILS', last_evaluated_key, limit)
     return render json: { error: 'Model not found' }, status: :not_found unless response[:products]
 
-    products = generate_thumbnail_urls(response)
+    products = generate_thumbnail_urls(response).sort_by { |product| product['name'] }
     render json: {
       products: products.as_json(only: %w[PK name color price thumbnail_url]),
       last_evaluated_key: response[:last_evaluated_key]
@@ -64,7 +64,7 @@ class ProductsController < ApplicationController
     response = Product.find_by('user_id', params[:user_id], 'user_id_index', 'FAVORITE', last_evaluated_key, limit)
     return render json: { error: 'Item not found' }, status: :not_found unless response[:products]
 
-    products = generate_thumbnail_urls(response)
+    products = generate_thumbnail_urls(response).sort_by { |product| product['name'] }
 
     render json: {
       products: products.as_json(only: %w[PK name color price thumbnail_url]),
