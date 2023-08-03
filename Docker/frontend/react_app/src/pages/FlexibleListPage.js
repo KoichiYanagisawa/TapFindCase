@@ -17,7 +17,7 @@ function FlexibleListPage() {
     if (modelType === 'product') {
       setPageTitle('ー製品一覧');
     } else if (modelType === 'favorite') {
-      setPageTitle('ーお気に入り一覧');
+      setPageTitle('ーお気に入り');
     } else if (modelType === 'history') {
       setPageTitle('ー閲覧履歴');
     }
