@@ -12,7 +12,7 @@
 
 3. ワイヤーフレーム
 
-<a href="https://xd.adobe.com/view/1d001441-66de-4edf-b514-529cb98e2cef-4853/">https://xd.adobe.com/view/</a>
+https://xd.adobe.com/view/1d001441-66de-4edf-b514-529cb98e2cef-4853/
 
 ## ステップ2(テーブル定義書)
 
@@ -90,6 +90,6 @@ rails generate migration CreateHistories user:references product:references view
 
 ## ステップ3(システム構成図)
 
-- NoSQLから変更中
+- SQLからNoSQLに変更しました。
 
 <img src="./TapFindCase.drawio.png">
