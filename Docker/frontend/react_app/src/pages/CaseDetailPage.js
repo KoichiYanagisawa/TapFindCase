@@ -5,13 +5,27 @@ import { useParams } from 'react-router-dom';
 import { Carousel } from 'react-responsive-carousel';
 import { useSelector } from 'react-redux';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { usePageTitle } from '../contexts/PageTitle';
+import '../styles/three-dots.min.css';
 
+import { usePageTitle } from '../contexts/PageTitle';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import CustomButton from '../components/CustomButton';
 import { MdFavorite } from 'react-icons/md';
 import { BsShop } from 'react-icons/bs';
+
+const loadingStyles = css`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #000;
+`;
 
 const containerStyles = css`
   display: flex;
@@ -80,26 +94,6 @@ const detailContainerStyles = css`
   }
 `;
 
-// const favoriteIconStyles = css`
-//   position: absolute;
-//   right: 15%;
-//   bottom: 5%;
-//   color: red;
-//   font-size: 4.5rem;
-//   @media (max-width: 1024px) {
-//     font-size: 3.5rem;
-//   }
-//   @media (max-width: 768px) {
-//     font-size: 2.5rem;
-//   }
-//   @media (max-width: 640px) {
-//     font-size: 2rem;
-//   }
-//   @media (max-width: 320px) {
-//     font-size: 1.5rem;
-//   }
-// `;
-
 const productPrice = css`
   color: #ff0000;
   font-size: 1.5rem;
@@ -140,7 +134,7 @@ const hideOnDesktop = css`
 
 
 function ProductDetailPage() {
-  const userInfo = useSelector((state) => state.userInfo); // useSelectorフックを使ってStoreからユーザー情報を取得
+  const userInfo = useSelector((state) => state.userInfo);
   const [product, setProduct] = useState(null);
   const [imageCount, setImageCount] = useState(0);
   const [displayImage, setDisplayImage] = useState(null);
@@ -184,7 +178,9 @@ function ProductDetailPage() {
   }, [caseName, userInfo.id]);
 
   if (!product) {
-    return <div>商品情報を読み込んでいます...</div>;
+    return <div css={loadingStyles}>
+             <div className="dot-spin"></div>
+           </div>;
   }
 
   const handleThumbnailClick = (index) => {
