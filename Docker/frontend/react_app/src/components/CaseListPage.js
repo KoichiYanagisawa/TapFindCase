@@ -4,7 +4,22 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import '../styles/three-dots.min.css';
+
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
+
+const loadingStyles = css`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #000;
+`;
 
 const containerStyles = css`
   display: flex;
@@ -213,7 +228,9 @@ function CaseListPage({apiPath}) {
       })}
         {hasMore && (
           <div ref={loader}>
-            <h2>Loading...</h2>
+            <div css={loadingStyles}>
+              <div className="dot-spin"></div>
+            </div>
           </div>
         )}
       </div>

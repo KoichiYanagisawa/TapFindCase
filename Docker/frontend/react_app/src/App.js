@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+import { Global,css } from '@emotion/react';
 import { Provider, useDispatch } from 'react-redux';
 import store from './store';
 import axios from 'axios';
@@ -8,10 +10,22 @@ import Cookies from 'js-cookie';
 import { PageTitleProvider } from './contexts/PageTitle';
 import ModelSelectPage from './pages/ModelSelectPage';
 import CaseDetailPage from './pages/CaseDetailPage';
-import { Global } from '@emotion/react';
 import reset from './styles/reset.css';
 import FlexibleListPage from './pages/FlexibleListPage';
+import './styles/three-dots.min.css';
 
+const loadingStyles = css`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #000;
+`;
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -41,9 +55,10 @@ function App() {
       });
   }, [dispatch]);
 
-  if (loading) return <div>ロード中...</div>;
+  if (loading) return <div css={loadingStyles}>
+                        <div className="dot-spin"></div>
+                      </div>;
   if (error) return <div>エラー：管理者に問い合わせてください。</div>;
-
 
   return (
     <PageTitleProvider>
