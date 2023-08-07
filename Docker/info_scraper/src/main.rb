@@ -5,7 +5,6 @@ require 'selenium-webdriver'
 require_relative 'info_scraper'
 require_relative 'image_scraper'
 
-# スクレイピングを行うクラス
 class Main
   attr_reader :driver, :options
   attr_accessor :wait, :urls
@@ -13,9 +12,8 @@ class Main
   def initialize
     setup_user_agents
     setup_options
-    setup_driver
     @wait = Selenium::WebDriver::Wait.new(timeout: 20)
-    @info_scraper = InfoScraper.new
+    @info_scraper = InfoScraper.new(user_agents: @user_agents, options: @options, wait: @wait)
     @image_scraper = ImageScraper.new
   end
 
@@ -36,14 +34,8 @@ class Main
     @options.add_argument("--user-agent=#{@user_agents.sample}")
   end
 
-  def setup_driver
-    @driver = Selenium::WebDriver.for :chrome, options: @options
-    @driver.manage.timeouts.implicit_wait = 20
-    @driver.manage.timeouts.page_load = 20
-  end
-
   def scraping
-    @info_scraper.get_item_info(@wait, @driver)
+    @info_scraper.get_item_info
   end
 end
 
