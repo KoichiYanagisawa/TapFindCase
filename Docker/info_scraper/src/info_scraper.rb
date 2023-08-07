@@ -7,7 +7,7 @@ require 'aws-sdk-secretsmanager'
 require_relative './image_scraper'
 
 class InfoScraper
-  MAX_THREADS = 5
+  MAX_THREADS = 3
 
   def initialize(user_agents: nil, options: nil, wait: nil)
     @user_agents = user_agents
@@ -15,13 +15,22 @@ class InfoScraper
     @wait = wait
 
     @image_scraper = ImageScraper.new
-    @s3 = Aws::S3::Resource.new(
+    setup_s3
+
+    @mutex = Mutex.new
+  end
+
+  def setup_s3
+    s3_options = {
       region: ENV['MY_AWS_REGION'],
       access_key_id: ENV['MY_AWS_ACCESS_KEY_ID'],
       secret_access_key: ENV['MY_AWS_SECRET_ACCESS_KEY']
-    )
+    }
+    @s3 = Aws::S3::Resource.new(s3_options)
+    @s3_client = Aws::S3::Client.new(s3_options)
     @bucket = @s3.bucket(ENV['BACKEND_AWS_S3_BUCKET'])
   end
+
 
   def setup_new_driver
     driver = Selenium::WebDriver.for :chrome, options: @options
@@ -31,57 +40,87 @@ class InfoScraper
   end
 
   def get_item_info
-    s3_client = Aws::S3::Client.new(
-      region: ENV['MY_AWS_REGION'],
-      access_key_id: ENV['MY_AWS_ACCESS_KEY_ID'],
-      secret_access_key: ENV['MY_AWS_SECRET_ACCESS_KEY']
-    )
-
     @bucket.objects(prefix: 'products_detail_urls/').each do |obj_summary|
       obj = @bucket.object(obj_summary.key)
-
-      # タグを取得
-      resp = s3_client.get_object_tagging({
-                                            bucket: @bucket.name,
-                                            key: obj.key
-                                          })
-      next if resp.tag_set.any? { |tag| tag.key == 'processing' && tag.value == 'true' }
-
-      # タグを設定
-      resp.tag_set << { key: 'processing', value: 'true' }
-      s3_client.put_object_tagging({
-                                     bucket: @bucket.name,
-                                     key: obj.key,
-                                     tagging: { tag_set: resp.tag_set }
-                                   })
-
-      urls = get_urls_from_s3(obj)
-      item_infos = []
-      threads = []
-
-      urls.each_with_index do |url, index|
-        # 同時に実行する最大のスレッド数に達するまでループ
-        while threads.size >= MAX_THREADS
-          # 終了したスレッドを削除する
-          threads.delete_if { |t| !t.status }
-          sleep(0.1)  # 0.1秒待機して再評価
-        end
-
-        sleep(1)
-
-        puts "Processing URL #{index + 1} out of #{urls.count}"
-        threads << Thread.new do
-          local_wait = @wait
-          local_driver = setup_new_driver
-          item_info = process_url(url, local_wait, local_driver)
-          item_infos << item_info
-          local_driver.quit
-        end
-      end
-      threads.each(&:join)
-      obj.delete
-      save_item_infos_to_s3(obj.key, item_infos)
+      process_s3_object(obj)
     end
+  end
+
+  def process_s3_object(obj)
+    resp = get_object_tags(obj)
+
+    return if resp.tag_set.any? { |tag| tag.key == 'processing' && tag.value == 'true' }
+    update_object_tag(obj, resp.tag_set)
+
+    urls = get_urls_from_s3(obj)
+    item_infos = process_urls(urls)
+    obj.delete
+    save_item_infos_to_s3(obj.key, item_infos)
+  end
+
+  def get_object_tags(obj)
+    @s3_client.get_object_tagging({
+      bucket: ENV['BACKEND_AWS_S3_BUCKET'],
+      key: obj.key
+    })
+  end
+
+  def update_object_tag(obj, existing_tags)
+    new_tags = existing_tags << { key: 'processing', value: 'true' }
+    @s3_client.put_object_tagging({
+      bucket: ENV['BACKEND_AWS_S3_BUCKET'],
+      key: obj.key,
+      tagging: {
+        tag_set: new_tags
+      }
+    })
+  end
+
+  def get_urls_from_s3(s3_object)
+    urls = []
+    s3_object.get.body.read.split("\n").each do |url|
+      urls << url
+    end
+    urls
+  end
+
+  def save_item_infos_to_s3(object_key, item_infos)
+    file_name = object_key.split('/').last
+    @bucket.object("store_data_to_db/#{file_name}").put(body: JSON.generate(item_infos))
+  end
+
+  def process_urls(urls)
+    item_infos = []
+    threads = []
+    urls.each_with_index do |url, index|
+      manage_threads(threads)
+      threads << Thread.new do
+        process_url_in_thread(url, item_infos)
+      end
+      puts "Processing URL #{index + 1} out of #{urls.count}"
+    end
+    threads.each(&:join)
+    item_infos
+  end
+
+  def manage_threads(threads)
+    while threads.size >= MAX_THREADS
+      threads.delete_if { |t| !t.status }
+      sleep(0.5)
+    end
+    sleep(1)
+  end
+
+  def process_url_in_thread(url, item_infos)
+    local_wait = @wait
+    local_driver = setup_new_driver
+    item_info = process_url(url, local_wait, local_driver)
+
+    @mutex.synchronize do
+      item_infos << item_info
+    end
+
+    local_driver.quit
   end
 
   def process_url(url, wait, driver)
@@ -97,18 +136,7 @@ class InfoScraper
     item_info
   end
 
-  def get_urls_from_s3(s3_object)
-    urls = []
-    s3_object.get.body.read.split("\n").each do |url|
-      urls << url
-    end
-    urls
-  end
 
-  def save_item_infos_to_s3(object_key, item_infos)
-    file_name = object_key.split('/').last
-    @bucket.object("store_data_to_db/#{file_name}").put(body: JSON.generate(item_infos))
-  end
 
   def extract_item_info(wait, driver)
     item_info = {}
