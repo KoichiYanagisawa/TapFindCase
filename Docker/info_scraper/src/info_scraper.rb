@@ -7,7 +7,13 @@ require 'aws-sdk-secretsmanager'
 require_relative './image_scraper'
 
 class InfoScraper
-  def initialize
+  MAX_THREADS = 5
+
+  def initialize(user_agents: nil, options: nil, wait: nil)
+    @user_agents = user_agents
+    @options = options
+    @wait = wait
+
     @image_scraper = ImageScraper.new
     @s3 = Aws::S3::Resource.new(
       region: ENV['MY_AWS_REGION'],
@@ -17,7 +23,14 @@ class InfoScraper
     @bucket = @s3.bucket(ENV['BACKEND_AWS_S3_BUCKET'])
   end
 
-  def get_item_info(wait, driver)
+  def setup_new_driver
+    driver = Selenium::WebDriver.for :chrome, options: @options
+    driver.manage.timeouts.implicit_wait = 20
+    driver.manage.timeouts.page_load = 20
+    driver
+  end
+
+  def get_item_info
     s3_client = Aws::S3::Client.new(
       region: ENV['MY_AWS_REGION'],
       access_key_id: ENV['MY_AWS_ACCESS_KEY_ID'],
@@ -42,23 +55,46 @@ class InfoScraper
                                      tagging: { tag_set: resp.tag_set }
                                    })
 
-      item_infos = []
       urls = get_urls_from_s3(obj)
+      item_infos = []
+      threads = []
+
       urls.each_with_index do |url, index|
-        retry_on_error do
-          puts "現在の処理: #{index + 1}/#{urls.length}"
-          driver.navigate.to(url)
-          sleep(1)
-          item_info = extract_item_info(wait, driver)
-          item_info[:models] = extract_models(wait, driver)
-          item_info[:image_url], item_info[:thumbnail_url] = @image_scraper.get_item_images(wait, driver,
-                                                                                            driver.current_url)
+        # 同時に実行する最大のスレッド数に達するまでループ
+        while threads.size >= MAX_THREADS
+          # 終了したスレッドを削除する
+          threads.delete_if { |t| !t.status }
+          sleep(0.1)  # 0.1秒待機して再評価
+        end
+
+        sleep(1)
+
+        puts "Processing URL #{index + 1} out of #{urls.count}"
+        threads << Thread.new do
+          local_wait = @wait
+          local_driver = setup_new_driver
+          item_info = process_url(url, local_wait, local_driver)
           item_infos << item_info
+          local_driver.quit
         end
       end
+      threads.each(&:join)
       obj.delete
       save_item_infos_to_s3(obj.key, item_infos)
     end
+  end
+
+  def process_url(url, wait, driver)
+    item_info = nil
+    retry_on_error do
+      driver.navigate.to(url)
+      sleep(1)
+      item_info = extract_item_info(wait, driver)
+      item_info[:models] = extract_models(wait, driver)
+      item_info[:image_url], item_info[:thumbnail_url] = @image_scraper.get_item_images(wait, driver,
+                                                                                            driver.current_url)
+    end
+    item_info
   end
 
   def get_urls_from_s3(s3_object)
