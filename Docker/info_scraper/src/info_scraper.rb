@@ -49,7 +49,7 @@ class InfoScraper
   def process_s3_object(obj)
     resp = get_object_tags(obj)
 
-    return if resp.tag_set.any? { |tag| tag.key == 'processing' && tag.value == 'true' }
+    return if resp&.tag_set&.any? { |tag| tag.key == 'processing' && tag.value == 'true' }
     update_object_tag(obj, resp.tag_set)
 
     urls = get_urls_from_s3(obj)
@@ -66,7 +66,7 @@ class InfoScraper
   end
 
   def update_object_tag(obj, existing_tags)
-    new_tags = existing_tags << { key: 'processing', value: 'true' }
+    new_tags = existing_tags + [{ key: 'processing', value: 'true' }]
     @s3_client.put_object_tagging({
       bucket: ENV['BACKEND_AWS_S3_BUCKET'],
       key: obj.key,
