@@ -67,11 +67,12 @@ Rails.application.configure do
   # require "syslog/logger"
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new "app-name")
 
+  # AWSに接続するための設定
+  config.hosts << 'lr0o88x4u3.execute-api.ap-northeast-1.amazonaws.com'
+
   if ENV['RAILS_LOG_TO_STDOUT'].present?
     logger           = ActiveSupport::Logger.new($stdout)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
-  # AWSに接続するための設定
-  config.hosts << 'f51cfes6ol.execute-api.ap-northeast-1.amazonaws.com'
 end
