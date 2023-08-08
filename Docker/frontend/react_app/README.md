@@ -19,3 +19,5 @@ GitHubSecretsに環境変数をセットし忘れていた。
 一旦node_modulesのキャッシュをやめてみる。
 
 APIGatewayのエンドポイントが変わったので反映させる
+
+バックエンドをプロダクト環境へ移行したので、REACT_APP_API_URLを変更した
