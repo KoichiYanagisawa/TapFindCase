@@ -13,9 +13,6 @@ import './styles/three-dots.min.css';
 import CookieConsent from './components/CookieConsent';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-// import { Provider, useDispatch } from 'react-redux';
-// import React, { useEffect, useState } from 'react';
-// import {v4 as uuidv4} from 'uuid';
 
 const loadingStyles = css`
   position: fixed;
@@ -51,46 +48,6 @@ function App() {
       }
     }
   }, [dispatch]);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
-  // const [cookieConsent, setCookieConsent] = useState(null);
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   if(cookieConsent) {
-  //     let userId = Cookies.get('userId');
-
-  //     if (!userId) {
-  //       userId = uuidv4();
-  //       Cookies.set('userId', userId);
-  //     }
-
-  //     axios.get(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
-  //       .then((response) => {
-  //         dispatch({
-  //           type: 'SET_USER_INFO',
-  //           payload: response.data
-  //         });
-  //       })
-  //       .catch((error) => {
-  //         setError(`Failed to fetch user info: ${error}`);
-  //       })
-  //       .finally(() => {
-  //         setLoading(false);
-  //       });
-  //   } else if (CookieConsent === false) {
-  //     dispatch({
-  //       type: 'SET_USER_CONSENT',
-  //       payload: false
-  //     });
-  //     setLoading(false);
-  //   }
-  // }, [dispatch, cookieConsent]);
-
-  // if (loading) return <div css={loadingStyles}>
-  //                       <div className="dot-spin"></div>
-  //                     </div>;
-  // if (error) return <div>エラー：管理者に問い合わせてください。</div>;
 
   return (
     <PageTitleProvider>
@@ -105,9 +62,6 @@ function App() {
           </Routes>
         </Suspense>
       </Router>
-      {/* <CookieConsent setLoading={setLoading} /> */}
-      {/* {loading === null && <CookieConsent onConsent={setCookieConsent} />} */}
-      {/* {loading && <div css={loadingStyles}><div className="dot-spin"></div></div>} */}
     </PageTitleProvider>
   );
 }
