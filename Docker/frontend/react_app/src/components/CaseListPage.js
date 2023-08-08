@@ -149,35 +149,39 @@ function CaseListPage({apiPath}) {
 
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/favorites/user/${userInfo.id}`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        setFavorites(data.favorites);
-      })
-      .catch(error => console.error(error));
-  }, [userInfo.id]);
+    if (userInfo && userInfo.id){
+      fetch(`${process.env.REACT_APP_API_URL}/api/favorites/user/${userInfo.id}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          setFavorites(data.favorites);
+        })
+        .catch(error => console.error(error));
+    }
+  }, [userInfo]);
 
   const toggleFavorite = (productName) => {
-    if(favorites.includes(productName)) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/favorites/${userInfo.id}/${productName}`, {
-        method: 'DELETE'
-      })
-      .then(() => {
-        setFavorites(prevFavorites => prevFavorites.filter(name => name !== productName));
-      });
-    } else {
-      fetch(`${process.env.REACT_APP_API_URL}/api/favorites/${userInfo.id}/${productName}`, {
-        method: 'POST'
-      })
-      .then(() => {
-        setFavorites(prevFavorites => [...prevFavorites, productName]);
-      })
-      .catch(error => console.error(error));
+    if (userInfo && userInfo.id) {
+      if(favorites.includes(productName)) {
+        fetch(`${process.env.REACT_APP_API_URL}/api/favorites/${userInfo.id}/${productName}`, {
+          method: 'DELETE'
+        })
+        .then(() => {
+          setFavorites(prevFavorites => prevFavorites.filter(name => name !== productName));
+        });
+      } else {
+        fetch(`${process.env.REACT_APP_API_URL}/api/favorites/${userInfo.id}/${productName}`, {
+          method: 'POST'
+        })
+        .then(() => {
+          setFavorites(prevFavorites => [...prevFavorites, productName]);
+        })
+        .catch(error => console.error(error));
+      }
     }
   };
 
@@ -201,10 +205,10 @@ function CaseListPage({apiPath}) {
           >
             <div css={thumbnailContainerStyles}>
               <img src={caseItem.thumbnail_url} alt={caseItem.name} css={imageStyles} />
-              {isFavorite
+              {userInfo && userInfo.id && (isFavorite
                 ? <MdFavorite css={favoriteIconStyles(isFavorite)} onClick={(e) => { e.stopPropagation(); toggleFavorite(caseItem.name); }} />
                 : <MdFavoriteBorder css={favoriteIconStyles(isFavorite)} onClick={(e) => { e.stopPropagation(); toggleFavorite(caseItem.name); }} />
-              }
+              )}
             </div>
             <h2>{caseItem.name}</h2>
             <p>{caseItem.color}</p>
