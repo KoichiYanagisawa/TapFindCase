@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { Global,css } from '@emotion/react';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import store from './store';
-import React, { Suspense } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { PageTitleProvider } from './contexts/PageTitle';
 import ModelSelectPage from './pages/ModelSelectPage';
@@ -11,11 +11,11 @@ import FlexibleListPage from './pages/FlexibleListPage';
 import reset from './styles/reset.css';
 import './styles/three-dots.min.css';
 import CookieConsent from './components/CookieConsent';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 // import { Provider, useDispatch } from 'react-redux';
-// import axios from 'axios';
 // import React, { useEffect, useState } from 'react';
 // import {v4 as uuidv4} from 'uuid';
-// import Cookies from 'js-cookie';
 
 const loadingStyles = css`
   position: fixed;
@@ -31,6 +31,26 @@ const loadingStyles = css`
 `;
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const hasGivenConsent = Cookies.get('hasGivenConsent');
+    if (hasGivenConsent === 'true') {
+      const userId = Cookies.get('userId');
+      if (userId) {
+        axios.get(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+          .then((response) => {
+            dispatch({
+              type: 'SET_USER_INFO',
+              payload: response.data
+            });
+          })
+          .catch((error) => {
+            console.error(`Failed to fetch user info: ${error}`);
+          });
+      }
+    }
+  }, [dispatch]);
   // const [loading, setLoading] = useState(true);
   // const [error, setError] = useState(null);
   // const [cookieConsent, setCookieConsent] = useState(null);

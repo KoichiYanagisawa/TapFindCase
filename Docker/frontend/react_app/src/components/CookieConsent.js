@@ -18,13 +18,13 @@ const consentContainer = css`
 const consentButton = css`
   margin-top: 10px;
   padding: 10px 20px;
-  background-color: #4CAF50; /* Green */
+  background-color: #4CAF50;
   border: none;
   color: white;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 1.2rem;
   transition-duration: 0.4s;
   cursor: pointer;
 
@@ -36,13 +36,13 @@ const consentButton = css`
 const declineButton = css`
   margin-top: 10px;
   padding: 10px 20px;
-  background-color: #f44336; /* Red */
+  background-color: #f44336;
   border: none;
   color: white;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 1.2rem;
   transition-duration: 0.4s;
   cursor: pointer;
   margin-left: 10px;
@@ -98,8 +98,9 @@ function CookieConsent() {
 
   return (
     <div css={consentContainer}>
-      <p>当サイトはユーザーエクスペリエンスの向上のためにCookieを使用しています。詳細は<a href="/privacy">プライバシーポリシー</a>をご覧ください。</p>
-      <button css={consentButton} onClick={handleConsent}>同意する</button>
+      <p>当サイトはユーザーエクスペリエンスの向上のためにCookieを使用しています。Cookieの保存に同意しますか？</p>
+      <p>詳細は<a href="/privacy">プライバシーポリシー</a>をご覧ください。</p>
+      <button css={consentButton} onClick={handleConsent}> 同意する </button>
       <button css={declineButton} onClick={handleDecline}>同意しない</button>
     </div>
   );
