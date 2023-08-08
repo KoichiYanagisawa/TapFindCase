@@ -156,26 +156,28 @@ function ProductDetailPage() {
         setImageCount(data.product.thumbnail_urls.length);
       });
 
-    fetch(`${process.env.REACT_APP_API_URL}/api/favorites/${userInfo.id}/${caseName}`)
-      .then(response => response.json())
-      .then(data => {
-        setIsFavorited(data.is_favorited);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    if (userInfo && userInfo.id){
+      fetch(`${process.env.REACT_APP_API_URL}/api/favorites/${userInfo.id}/${caseName}`)
+        .then(response => response.json())
+        .then(data => {
+          setIsFavorited(data.is_favorited);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
 
-    fetch(`${process.env.REACT_APP_API_URL}/api/histories`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ user_id: userInfo.id, name: caseName, viewed_at: new Date() }),
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  }, [caseName, userInfo.id]);
+      fetch(`${process.env.REACT_APP_API_URL}/api/histories`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user_id: userInfo.id, name: caseName, viewed_at: new Date() }),
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
+  }, [caseName, userInfo]);
 
   if (!product) {
     return <div css={loadingStyles}>
@@ -246,14 +248,16 @@ function ProductDetailPage() {
 
           <p>最終確認日: {new Date(product.checked_at).toLocaleString()}</p>
 
-          <CustomButton
-            onClick={() => {toggleFavorites()}}
-            disabled={false}
-            text={isFavorited ? 'お気に入りを解除' : 'お気に入りに登録'}
-            Icon={MdFavorite}
-            iconColor={isFavorited ? 'red' : 'white'}
-            iconPosition='14px'
-          />
+          {userInfo && userInfo.id && (
+            <CustomButton
+              onClick={() => {toggleFavorites()}}
+              disabled={false}
+              text={isFavorited ? 'お気に入りを解除' : 'お気に入りに登録'}
+              Icon={MdFavorite}
+              iconColor={isFavorited ? 'red' : 'white'}
+              iconPosition='14px'
+            />
+          )}
 
           <CustomButton
             onClick={() => {

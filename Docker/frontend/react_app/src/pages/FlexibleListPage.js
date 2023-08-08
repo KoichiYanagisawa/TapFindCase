@@ -34,7 +34,7 @@ function FlexibleListPage() {
       default:
         return `/`;
     }
-  }, [modelType, params.model, userInfo.id]);
+  }, [modelType, params.model, userInfo]);
 
   return (
     <div>
