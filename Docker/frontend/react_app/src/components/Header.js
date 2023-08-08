@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { usePageTitle } from '../contexts/PageTitle';
 
@@ -100,7 +101,8 @@ const hamburgerContainerStyles = css`
   justify-content: center;
 `;
 
-function Header({ model}) {
+function Header({ model }) {
+  const userInfo = useSelector(state => state.userInfo);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { pageTitle } = usePageTitle();
@@ -136,8 +138,12 @@ function Header({ model}) {
 
       <div css={menuStyles({isMenuOpen})}>
         <div css={menuItemStyles} onClick={handleHomeClick}>ホーム画面</div>
-        <div css={menuItemStyles} onClick={handleFavoriteClick}>お気に入り</div>
-        <div css={menuItemStyles} onClick={handleHistoryClick}>閲覧履歴</div>
+        {userInfo && userInfo.id && (
+          <>
+            <div css={menuItemStyles} onClick={handleFavoriteClick}>お気に入り</div>
+            <div css={menuItemStyles} onClick={handleHistoryClick}>閲覧履歴</div>
+          </>
+        )}
       </div>
     </div>
   );
