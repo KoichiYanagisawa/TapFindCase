@@ -3,7 +3,7 @@ service: backend
 provider:
   name: aws
   runtime: ruby3.2
-  stage: ${opt:stage, 'dev'} # 本番環境に切り替えること!(prodと入れること！)
+  stage: prod
   region: ap-northeast-1
   environment:
     MY_AWS_REGION: ${ssm:/backend/dev/aws_region}
@@ -24,7 +24,7 @@ functions:
           path: /{proxy+}
           method: any
           cors:
-            origin: '*' # ここを適切なオリジンに設定
+            origin: 'tapfindcase.com'
             headers:
               - Content-Type
               - X-Amz-Date
