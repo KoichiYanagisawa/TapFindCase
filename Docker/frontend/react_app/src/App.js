@@ -35,15 +35,16 @@ function App() {
     if (hasGivenConsent === 'true') {
       const userId = Cookies.get('userId');
       if (userId) {
+        dispatch({ type: 'SET_USER_INFO_LOADING', payload: true });
         axios.get(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
           .then((response) => {
-            dispatch({
-              type: 'SET_USER_INFO',
-              payload: response.data
-            });
+            dispatch({ type: 'SET_USER_INFO', payload: response.data });
           })
           .catch((error) => {
             console.error(`Failed to fetch user info: ${error}`);
+          })
+          .finally(() => {
+            dispatch({ type: 'SET_USER_INFO_LOADING', payload: false });
           });
       }
     }
