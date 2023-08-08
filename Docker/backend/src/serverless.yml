@@ -25,7 +25,7 @@ functions:
           path: /{proxy+}
           method: any
           cors:
-            origin: '*'
+            origin: 'https://tapfindcase.com'
             headers:
               - Content-Type
               - X-Amz-Date
