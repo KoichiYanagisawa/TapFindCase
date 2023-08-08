@@ -72,4 +72,6 @@ Rails.application.configure do
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
+  # AWSに接続するための設定
+  config.hosts << 'f51cfes6ol.execute-api.ap-northeast-1.amazonaws.com'
 end
