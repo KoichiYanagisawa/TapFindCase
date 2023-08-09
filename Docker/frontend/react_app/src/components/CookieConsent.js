@@ -15,44 +15,45 @@ const consentContainer = css`
   text-align: center;
 `;
 
-const consentButton = css`
+const buttonContainer = css`
+  display: inline-block; // ボタンを横に並べるためのスタイル
+`;
+
+const buttonCommonStyles = css`
   margin-top: 10px;
   padding: 10px 20px;
-  background-color: #4CAF50;
   border: none;
   color: white;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
+  display: inline-block; // ボタンを横に並べるためのスタイル
   font-size: 1.2rem;
   transition-duration: 0.4s;
   cursor: pointer;
+  width: 150px; // ボタンの幅を固定
+  margin-right: 10px; // ボタン間のスペース
+`;
 
+const consentButton = css`
+  background-color: #4CAF50;
   &:hover {
     background-color: #45a049;
   }
 `;
 
 const declineButton = css`
-  margin-top: 10px;
-  padding: 10px 20px;
   background-color: #f44336;
-  border: none;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 1.2rem;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  margin-left: 10px;
-
   &:hover {
     background-color: #d32f2f;
   }
 `;
 
-function CookieConsent() {
+const privacyPolicy = css`
+  color: blue;
+  cursor: pointer;
+`;
+
+function CookieConsent({onPrivacyClick}) {
   const dispatch = useDispatch();
 
   const hasGivenConsent = Cookies.get('hasGivenConsent');
@@ -99,9 +100,11 @@ function CookieConsent() {
   return (
     <div css={consentContainer}>
       <p>当サイトはユーザーエクスペリエンスの向上のためにCookieを使用しています。Cookieの保存に同意しますか？</p>
-      <p>詳細は<a href="/privacy">プライバシーポリシー</a>をご覧ください。</p>
-      <button css={consentButton} onClick={handleConsent}> 同意する </button>
-      <button css={declineButton} onClick={handleDecline}>同意しない</button>
+      <p>詳細は<span css={privacyPolicy} onClick={onPrivacyClick}>プライバシーポリシー</span>をご覧ください。</p>
+      <div css={buttonContainer}>
+        <button css={[consentButton, buttonCommonStyles]} onClick={handleConsent}> 同意する </button>
+        <button css={[declineButton, buttonCommonStyles]} onClick={handleDecline}>同意しない</button>
+      </div>
     </div>
   );
 }

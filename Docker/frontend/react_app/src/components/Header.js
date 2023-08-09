@@ -67,13 +67,21 @@ const menuStyles = props => css`
   top: 60px;
   transform : translateX(${props.isMenuOpen ? "0" : "100%"});
   width: 70%;
-  max-width: 200px;
+  max-width: 250px;
   height: 100vh;
   display: flex;
   flex-direction: column;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.7);
   transition: transform .3s;
+
+  @media (max-width: 600px) {
+    max-width: 200px;
+  }
+
+  @media (max-width: 450px) {
+    max-width: 150px;
+  }
 `;
 
 const menuItemStyles = css`
@@ -81,6 +89,7 @@ const menuItemStyles = css`
   padding: 20px 0;
   text-align: center;
   font-size: 0.5em;
+  white-space: nowrap; // この行を追加
   border-bottom: 1px solid #fff;
   &:last-child {
     border-bottom: 0;
@@ -101,7 +110,7 @@ const hamburgerContainerStyles = css`
   justify-content: center;
 `;
 
-function Header({ model }) {
+function Header({ model, onTermsClick, onPrivacyClick }) {
   const userInfo = useSelector(state => state.userInfo);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -126,7 +135,6 @@ function Header({ model }) {
     setIsMenuOpen(false);
   };
 
-
   return (
     <div css={headerStyles}>
       <h1>
@@ -144,6 +152,8 @@ function Header({ model }) {
             <div css={menuItemStyles} onClick={handleHistoryClick}>閲覧履歴</div>
           </>
         )}
+        <div css={menuItemStyles} onClick={onTermsClick}>利用規約</div>
+        <div css={menuItemStyles} onClick={onPrivacyClick}>プライバシーポリシー</div>
       </div>
     </div>
   );
