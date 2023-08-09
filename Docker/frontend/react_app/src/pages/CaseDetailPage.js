@@ -8,8 +8,6 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import '../styles/three-dots.min.css';
 
 import { usePageTitle } from '../contexts/PageTitle';
-// import Header from '../components/Header';
-// import Footer from '../components/Footer';
 import CustomButton from '../components/CustomButton';
 import { MdFavorite } from 'react-icons/md';
 import { BsShop } from 'react-icons/bs';

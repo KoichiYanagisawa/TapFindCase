@@ -20,10 +20,10 @@ const modalContentStyles = css`
   background-color: #fff;
   padding: 20px;
   border-radius: 10px;
-  width: 90%; // 横幅を90%に設定
-  height: 90%; // 縦幅を90%に設定
+  width: 90%;
+  height: 90%;
   overflow: auto;
-  position: relative; // クローズボタンの位置指定のため
+  position: relative;
 
   h1 {
     font-size: 2rem;
@@ -56,7 +56,7 @@ const closeButtonStyles = css`
   top: 10px;
   right: 10px;
   cursor: pointer;
-  font-size: 1.5rem; // クローズボタンのサイズ調整
+  font-size: 1.5rem;
 `;
 
 function Modal({ content, onClose }) {

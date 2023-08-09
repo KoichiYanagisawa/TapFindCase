@@ -1,11 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import { Global,css } from '@emotion/react';
+import { Global, css } from '@emotion/react';
 import reset from './styles/reset.css';
 import { Provider, useDispatch } from 'react-redux';
 import store from './store';
 import React, { useEffect, Suspense, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-// import ReactMarkdown from 'react-markdown';
 import { PageTitleProvider } from './contexts/PageTitle';
 import ModelSelectPage from './pages/ModelSelectPage';
 import CaseDetailPage from './pages/CaseDetailPage';

@@ -89,7 +89,7 @@ const menuItemStyles = css`
   padding: 20px 0;
   text-align: center;
   font-size: 0.5em;
-  white-space: nowrap; // この行を追加
+  white-space: nowrap;
   border-bottom: 1px solid #fff;
   &:last-child {
     border-bottom: 0;
