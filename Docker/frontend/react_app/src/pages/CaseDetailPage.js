@@ -8,8 +8,8 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import '../styles/three-dots.min.css';
 
 import { usePageTitle } from '../contexts/PageTitle';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+// import Header from '../components/Header';
+// import Footer from '../components/Footer';
 import CustomButton from '../components/CustomButton';
 import { MdFavorite } from 'react-icons/md';
 import { BsShop } from 'react-icons/bs';
@@ -215,7 +215,6 @@ function ProductDetailPage() {
 
   return (
     <>
-      <Header />
       <div css={containerStyles}>
         <div css={thumbnailContainerStyles}>
           <Carousel showStatus={false} showIndicators={false} showThumbs={false}>
@@ -233,7 +232,6 @@ function ProductDetailPage() {
 
         <div css={imageContainerStyles}>
           <img src={displayImage} alt={product.name} css={imageStyles} />
-          {/* {isFavorited && <MdFavorite css={favoriteIconStyles} />} */}
         </div>
 
         <div css={detailContainerStyles}>
@@ -270,7 +268,6 @@ function ProductDetailPage() {
           />
         </div>
       </div>
-      <Footer />
     </>
   );
 }

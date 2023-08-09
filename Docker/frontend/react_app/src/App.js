@@ -1,14 +1,19 @@
 /** @jsxImportSource @emotion/react */
 import { Global,css } from '@emotion/react';
+import reset from './styles/reset.css';
 import { Provider, useDispatch } from 'react-redux';
 import store from './store';
-import React, { useEffect, Suspense } from 'react';
+import React, { useEffect, Suspense, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// import ReactMarkdown from 'react-markdown';
 import { PageTitleProvider } from './contexts/PageTitle';
 import ModelSelectPage from './pages/ModelSelectPage';
 import CaseDetailPage from './pages/CaseDetailPage';
 import FlexibleListPage from './pages/FlexibleListPage';
-import reset from './styles/reset.css';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Modal from './components/Modal';
+import { termsContent, privacyContent } from './components/Terms';
 import './styles/three-dots.min.css';
 import CookieConsent from './components/CookieConsent';
 import axios from 'axios';
@@ -29,6 +34,21 @@ const loadingStyles = css`
 
 function App() {
   const dispatch = useDispatch();
+  const [isTermsModalOpen, setTermsModalOpen] = useState(false);
+  const [isPrivacyModalOpen, setPrivacyModalOpen] = useState(false);
+
+  const handleTermsClick = () => {
+    setTermsModalOpen(true);
+  };
+
+  const handlePrivacyClick = () => {
+    setPrivacyModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setPrivacyModalOpen(false);
+    setTermsModalOpen(false);
+  };
 
   useEffect(() => {
     const hasGivenConsent = Cookies.get('hasGivenConsent');
@@ -53,6 +73,7 @@ function App() {
   return (
     <PageTitleProvider>
       <Router>
+        <Header onTermsClick={handleTermsClick} onPrivacyClick={handlePrivacyClick} />
         <Suspense fallback={<div css={loadingStyles}><div className="dot-spin"></div></div>}>
           <Routes>
             <Route path="/" element={<ModelSelectPage />} />
@@ -62,6 +83,10 @@ function App() {
             <Route path="/product/detail/:caseName" element={<CaseDetailPage />} />
           </Routes>
         </Suspense>
+        {isTermsModalOpen && <Modal content={termsContent} onClose={handleCloseModal} />}
+        {isPrivacyModalOpen && <Modal content={privacyContent} onClose={handleCloseModal} />}
+        <Footer />
+        <CookieConsent onPrivacyClick={handlePrivacyClick} />
       </Router>
     </PageTitleProvider>
   );
@@ -72,7 +97,6 @@ function AppWithStore() {
     <Provider store={store}>
       <Global styles={reset} />
       <App />
-      <CookieConsent />
     </Provider>
   );
 }

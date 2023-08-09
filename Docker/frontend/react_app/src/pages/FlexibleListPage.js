@@ -4,9 +4,7 @@ import React, { useMemo, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { usePageTitle } from '../contexts/PageTitle';
-import Header from '../components/Header';
 import CaseListPage from '../components/CaseListPage';
-import Footer from '../components/Footer';
 import '../styles/three-dots.min.css';
 
 const loadingStyles = css`
@@ -59,9 +57,7 @@ function FlexibleListPage() {
 
   return (
     <div>
-      <Header model={params.model} />
       <CaseListPage key={location.pathname} apiPath={apiPath} />
-      <Footer />
     </div>
   );
 }

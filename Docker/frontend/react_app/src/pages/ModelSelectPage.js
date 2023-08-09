@@ -3,10 +3,8 @@ import { css } from '@emotion/react';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePageTitle } from '../contexts/PageTitle';
-import Header from '../components/Header';
 import Dropdown from '../components/Dropdown';
 import CustomButton from '../components/CustomButton';
-import Footer from '../components/Footer';
 import { IoSearchCircleSharp } from 'react-icons/io5';
 
 const containerStyles = css`
@@ -36,7 +34,6 @@ function ModelSelectPage() {
       .then(response => response.json())
       .then(data => setProducts(data))
       .catch((error) => {
-        // ここでエラーをキャッチしてログに出力
         console.error('Failed to fetch data:', error);
       });
   }, []);
@@ -54,7 +51,6 @@ function ModelSelectPage() {
 
   return (
     <>
-      <Header />
       <div css={containerStyles}>
         <Dropdown
           options={products.map(product => ({ value: product.model, label: product.model }))}
@@ -70,8 +66,7 @@ function ModelSelectPage() {
                       `}
                       Icon={IoSearchCircleSharp}
         />
-    </div>
-    <Footer />
+      </div>
     </>
   );
 }
