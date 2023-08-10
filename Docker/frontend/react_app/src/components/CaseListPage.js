@@ -92,9 +92,8 @@ const loaderStyles = css`
   display: flex;
   justify-content: center;
   width: 100%;
-  clear: both; // 商品の行からクリアする
+  clear: both;
 `;
-
 
 function CaseListPage({apiPath}) {
   const userInfo = useSelector((state) => state.userInfo);
@@ -155,7 +154,6 @@ function CaseListPage({apiPath}) {
       }
     };
   }, [handleScroll, loader]);
-
 
   useEffect(() => {
     if (userInfo && userInfo.id){
