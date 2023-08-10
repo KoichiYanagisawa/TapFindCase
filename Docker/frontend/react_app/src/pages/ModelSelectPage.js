@@ -1,11 +1,49 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import { css, keyframes } from '@emotion/react';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePageTitle } from '../contexts/PageTitle';
 import Dropdown from '../components/Dropdown';
 import CustomButton from '../components/CustomButton';
 import { IoSearchCircleSharp } from 'react-icons/io5';
+import { PiArrowFatLinesDownFill } from 'react-icons/pi';
+
+
+const bounce1 = keyframes`
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-15px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+`;
+
+const bounce2 = keyframes`
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-12px);
+  }
+  60% {
+    transform: translateY(-8px);
+  }
+`;
+
+const bounce3 = keyframes`
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-9px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+`;
 
 const containerStyles = css`
   display: flex;
@@ -15,10 +53,70 @@ const containerStyles = css`
   height: calc(100vh - 20px);
   padding: 20px;
   box-sizing: border-box;
-  background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), url('./alina-chernysheva-jFfNeWDikOY-unsplash.jpg') no-repeat center center fixed;
+  background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3)), url('./alina-chernysheva-jFfNeWDikOY-unsplash.jpg') no-repeat center center fixed;
   background-size: cover;
   font-family: 'Montserrat', sans-serif;
 `;
+
+const sloganStyles = css`
+  font-weight: 900;
+  position: absolute;
+  top: 20%;
+  width: 100%;
+  color: #000000;
+  text-align: center;
+`;
+
+const sloganLineStyles1 = css`
+  padding: 0.5rem 0;
+  -webkit-text-stroke: 0.3px white;
+  font-size: 2.5rem;
+  animation: ${bounce1} 2s infinite ease-out;
+
+  @media (max-width: 640px) {
+    font-size: 2.0rem;
+  }
+  @media (max-width: 550px) {
+    font-size: 1.5rem;
+  }
+  @media (max-width: 400px) {
+    font-size: 1.2rem;
+  }
+`;
+
+const sloganLineStyles2 = css`
+  padding: 0.5rem 0;
+  -webkit-text-stroke: 0.3px white;
+  font-size: 2.5rem;
+  animation: ${bounce2} 2s infinite ease-out;
+
+  @media (max-width: 640px) {
+    font-size: 2.0rem;
+  }
+  @media (max-width: 550px) {
+    font-size: 1.5rem;
+  }
+  @media (max-width: 400px) {
+    font-size: 1.2rem;
+  }
+`;
+const sloganLineStyles3 = css`
+  padding: 0.5rem 0;
+  -webkit-text-stroke: 0.3px white;
+  font-size: 2.5rem;
+  animation: ${bounce3} 2s infinite ease-out;
+
+  @media (max-width: 640px) {
+    font-size: 2.0rem;
+  }
+  @media (max-width: 550px) {
+    font-size: 1.5rem;
+  }
+  @media (max-width: 400px) {
+    font-size: 1.2rem;
+  }
+`;
+
 
 function ModelSelectPage() {
   const [products, setProducts] = useState([]);
@@ -52,6 +150,11 @@ function ModelSelectPage() {
   return (
     <>
       <div css={containerStyles}>
+        <div css={sloganStyles}>
+          <div css={sloganLineStyles1}>画面をタップするだけ！</div>
+          <div css={sloganLineStyles2}>お気に入りのケースを見つけよう！</div>
+          <div css={sloganLineStyles3}><PiArrowFatLinesDownFill/></div>
+        </div>
         <Dropdown
           options={products.map(product => ({ value: product.model, label: product.model }))}
           value={selectedModelName}
