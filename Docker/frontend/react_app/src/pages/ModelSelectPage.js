@@ -53,7 +53,7 @@ const containerStyles = css`
   height: calc(100vh - 20px);
   padding: 20px;
   box-sizing: border-box;
-  background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3)), url('./alina-chernysheva-jFfNeWDikOY-unsplash.jpg') no-repeat center center fixed;
+  background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3)), url('/alina-chernysheva-jFfNeWDikOY-unsplash.jpg') no-repeat center center fixed;
   background-size: cover;
   font-family: 'Montserrat', sans-serif;
 `;
