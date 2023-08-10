@@ -116,6 +116,7 @@ function Header({ model, onTermsClick, onPrivacyClick }) {
   const navigate = useNavigate();
   const { pageTitle } = usePageTitle();
   const menuRef = useRef(null);
+  const hamburgerContainerRef = useRef(null);
 
   const handleMenuClick = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -137,6 +138,9 @@ function Header({ model, onTermsClick, onPrivacyClick }) {
   };
 
   const handleClickOutside = (event) => {
+    if (hamburgerContainerRef.current && hamburgerContainerRef.current.contains(event.target)) {
+      return;
+    }
     if (menuRef.current && !menuRef.current.contains(event.target)) {
       setIsMenuOpen(false);
     }
@@ -164,7 +168,7 @@ function Header({ model, onTermsClick, onPrivacyClick }) {
       <h1>
         <span css={titleStyles} onClick={handleHomeClick}>TapFindCase</span> {pageTitle}
       </h1>
-      <div css={hamburgerContainerStyles} onClick={handleMenuClick}>
+      <div css={hamburgerContainerStyles} onClick={handleMenuClick} ref={hamburgerContainerRef}>
         <div css={hamburgerStyles({isMenuOpen})} />
       </div>
 
