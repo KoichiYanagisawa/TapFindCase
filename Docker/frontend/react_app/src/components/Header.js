@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { usePageTitle } from '../contexts/PageTitle';
@@ -115,6 +115,7 @@ function Header({ model, onTermsClick, onPrivacyClick }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { pageTitle } = usePageTitle();
+  const menuRef = useRef(null);
 
   const handleMenuClick = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -135,6 +136,29 @@ function Header({ model, onTermsClick, onPrivacyClick }) {
     setIsMenuOpen(false);
   };
 
+  const handleClickOutside = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setIsMenuOpen(false);
+    }
+  };
+
+  const handleMenuItemClick = (clickEvent) => {
+    setIsMenuOpen(false);
+    clickEvent();
+  };
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
   return (
     <div css={headerStyles}>
       <h1>
@@ -144,16 +168,16 @@ function Header({ model, onTermsClick, onPrivacyClick }) {
         <div css={hamburgerStyles({isMenuOpen})} />
       </div>
 
-      <div css={menuStyles({isMenuOpen})}>
-        <div css={menuItemStyles} onClick={handleHomeClick}>ホーム画面</div>
+      <div css={menuStyles({isMenuOpen})} ref={menuRef}>
+        <div css={menuItemStyles} onClick={() => handleMenuItemClick(handleHomeClick)}>ホーム画面</div>
         {userInfo && userInfo.id && (
           <>
-            <div css={menuItemStyles} onClick={handleFavoriteClick}>お気に入り</div>
+            <div css={menuItemStyles} onClick={() => handleMenuItemClick(handleFavoriteClick)}>お気に入り</div>
             <div css={menuItemStyles} onClick={handleHistoryClick}>閲覧履歴</div>
           </>
         )}
-        <div css={menuItemStyles} onClick={onTermsClick}>利用規約</div>
-        <div css={menuItemStyles} onClick={onPrivacyClick}>プライバシーポリシー</div>
+        <div css={menuItemStyles} onClick={() => handleMenuItemClick(onTermsClick)}>利用規約</div>
+        <div css={menuItemStyles} onClick={() => handleMenuItemClick(onPrivacyClick)}>プライバシーポリシー</div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 const modalStyles = css`
@@ -20,8 +20,8 @@ const modalContentStyles = css`
   background-color: #fff;
   padding: 20px;
   border-radius: 10px;
-  width: 90%;
-  height: 90%;
+  width: 80%;
+  height: 80%;
   overflow: auto;
   position: relative;
 
@@ -60,9 +60,25 @@ const closeButtonStyles = css`
 `;
 
 function Modal({ content, onClose }) {
+  const modalRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  });
+
   return (
     <div css={modalStyles}>
-      <div css={modalContentStyles}>
+      <div css={modalContentStyles} ref={modalRef}>
         <div css={closeButtonStyles} onClick={onClose}>×</div>
         <ReactMarkdown>{content}</ReactMarkdown>
       </div>

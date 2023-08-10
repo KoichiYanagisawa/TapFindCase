@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FaCircleChevronDown } from 'react-icons/fa6';
 
 const dropdownContainerStyles = css`
@@ -66,7 +66,7 @@ const dropdownListItemStyles = css`
 `;
 
 const dropdownIconStyles = css`
-  color: red; // アイコンの色を赤に設定
+  color: red;
   position: absolute;
   right: 10px;
   font-size: 40px;
@@ -74,6 +74,22 @@ const dropdownIconStyles = css`
 
 function Dropdown({ options, value, onChange, placeholder }) {
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  }
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('click', handleClickOutside, true);
+    } else {
+      document.removeEventListener('click', handleClickOutside, true);
+    }
+    return () => document.removeEventListener('click', handleClickOutside, true);
+  }, [isOpen]);
 
   const handleToggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -85,7 +101,7 @@ function Dropdown({ options, value, onChange, placeholder }) {
   };
 
   return (
-    <div css={dropdownContainerStyles}>
+    <div css={dropdownContainerStyles} ref={dropdownRef}>
       <div css={dropdownHeaderStyles} onClick={handleToggleDropdown}>
         {value || placeholder}
         <FaCircleChevronDown css={dropdownIconStyles} />
