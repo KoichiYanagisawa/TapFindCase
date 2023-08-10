@@ -27,6 +27,7 @@ const casesContainerStyles = css`
   justify-content: center;
   gap: 20px;
   width: 100%;
+  align-content: flex-start;
 `;
 
 const caseStyles = css`
@@ -85,6 +86,13 @@ const casesPrice = css`
   color: #ff0000;
   font-size: 1.5rem;
   font-weight: bold;
+`;
+
+const loaderStyles = css`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  clear: both;
 `;
 
 function CaseListPage({apiPath}) {
@@ -146,7 +154,6 @@ function CaseListPage({apiPath}) {
       }
     };
   }, [handleScroll, loader]);
-
 
   useEffect(() => {
     if (userInfo && userInfo.id){
@@ -217,7 +224,7 @@ function CaseListPage({apiPath}) {
         );
       })}
         {hasMore && (
-          <div ref={loader}>
+          <div ref={loader} css={loaderStyles}>
               <div className="dot-pulse"></div>
           </div>
         )}
