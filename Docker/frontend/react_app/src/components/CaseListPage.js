@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -105,6 +105,37 @@ function CaseListPage({apiPath}) {
   const [lastKey, setLastKey] = useState(null);
   const loader = useRef(null);
   const navigate = useNavigate();
+  const containerRef = useRef(null);
+
+  const removeDuplicates = (newCases, existingCases) => {
+    return newCases.filter(
+      (product) => !existingCases.some((caseItem) => caseItem.name === product.name)
+    );
+  };
+
+  useLayoutEffect(() => {
+    const savedState = sessionStorage.getItem('caseListPageState');
+    if (savedState) {
+      const { savedCases, savedHasMore, savedLastKey, scrollPosition } = JSON.parse(savedState);
+      setCases(savedCases);
+      setHasMore(savedHasMore);
+      setLastKey(savedLastKey);
+      if (containerRef.current) {
+        containerRef.current.scrollTop = scrollPosition;
+      }
+    }
+  }, []);
+
+  const handleItemClick = (caseItem) => {
+    const stateToSave = {
+      savedCases: cases,
+      savedHasMore: hasMore,
+      savedLastKey: lastKey,
+      scrollPosition: containerRef.current ? containerRef.current.scrollTop : 0,
+    };
+    sessionStorage.setItem('caseListPageState', JSON.stringify(stateToSave));
+    navigate(`/product/detail/${caseItem.name}`);
+  };
 
   const fetchCases = useCallback(() => {
     if (loading || !hasMore) return;
@@ -114,19 +145,21 @@ function CaseListPage({apiPath}) {
     if (lastKey) url += `&last_evaluated_key=${encodeURIComponent(JSON.stringify(lastKey))}`;
 
     fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      if (data.products.length > 0) {
-        setCases(prevCases => [...prevCases, ...data.products]);
-        setLastKey(data.last_evaluated_key);
-      }
-      if(data.products.length < 20 || !data.last_evaluated_key){
-        setHasMore(false);
-      }
-    })
-    .catch(error => console.error(error))
-    .finally(() => setLoading(false));
-  }, [apiPath, loading, hasMore, lastKey]);
+      .then(response => response.json())
+      .then(data => {
+        if (data.products.length > 0) {
+          const uniqueProducts = removeDuplicates(data.products, cases);
+          const updatedCases = [...cases, ...uniqueProducts];
+          setCases(updatedCases);
+          setLastKey(data.last_evaluated_key);
+        }
+        if(data.products.length < 20 || !data.last_evaluated_key){
+          setHasMore(false);
+        }
+      })
+      .catch(error => console.error(error))
+      .finally(() => setLoading(false));
+  }, [apiPath, loading, hasMore, lastKey, cases]);
 
   const handleScroll = useCallback((entries) => {
     const target = entries[0];
@@ -199,7 +232,7 @@ function CaseListPage({apiPath}) {
 }, [initialLoad]);
 
   return (
-    <div css={containerStyles}>
+    <div css={containerStyles} ref={containerRef}>
       <div id="caseListContainer" css={casesContainerStyles}>
       {cases.map((caseItem) => {
         const isFavorite = favorites.includes(caseItem.name);
@@ -208,7 +241,7 @@ function CaseListPage({apiPath}) {
           <div
             css={caseStyles}
             key={caseItem.PK}
-            onClick={() => navigate(`/product/detail/${caseItem.name}`)}
+            onClick={() => handleItemClick(caseItem)}
           >
             <div css={thumbnailContainerStyles}>
               <img src={caseItem.thumbnail_url} alt={caseItem.name} css={imageStyles} />

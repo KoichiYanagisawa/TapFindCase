@@ -128,6 +128,8 @@ function ModelSelectPage() {
   }, [setPageTitle]);
 
   useEffect(() => {
+    sessionStorage.removeItem('caseListPageState');
+
     fetch(`${process.env.REACT_APP_API_URL}/products`)
       .then(response => response.json())
       .then(data => setProducts(data))
