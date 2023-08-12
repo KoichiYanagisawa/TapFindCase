@@ -43,8 +43,10 @@ function FlexibleListPage() {
       case 'product':
         return `${params.model}`;
       case 'favorite':
+        sessionStorage.removeItem('caseListPageState');
         return userInfo ? `favorite/${userInfo.id}` : null;
       case 'history':
+        sessionStorage.removeItem('caseListPageState');
         return userInfo ? `history/${userInfo.id}`: null;
       default:
         return `/`;
