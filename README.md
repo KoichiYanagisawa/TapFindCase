@@ -69,7 +69,7 @@ https://tapfindcase.com
 
 |PC版|スマートフォン版|
 |:-----------:|:-----------:|
-|<img src="./documents/pc_top.png">|<img src="./documents/iphone_top.png">|
+|<img src="./documents/pc_top.png">|<img src="./documents/iphone_top.PNG">|
 
 |説明|
 |:---|
@@ -79,7 +79,7 @@ https://tapfindcase.com
 
 |PC版|スマートフォン版|
 |:-----------:|:-----------:|
-|<img src="./documents/pc_products_list.png">|<img src="./documents/iphone_products_list.png">|
+|<img src="./documents/pc_products_list.png">|<img src="./documents/iphone_products_list.PNG">|
 
 |説明|
 |:---|
@@ -89,7 +89,7 @@ https://tapfindcase.com
 
 |PC版|スマートフォン版|
 |:-----------:|:-----------:|
-|<img src="./documents/pc_detail.png">|<img src="./documents/iphone_detail.png">|
+|<img src="./documents/pc_detail.png">|<img src="./documents/iphone_detail.PNG">|
 
 |説明|
 |:---|
@@ -99,7 +99,7 @@ https://tapfindcase.com
 
 |PC版|スマートフォン版|
 |:-----------:|:-----------:|
-|<img src="./documents/pc_favorites_list.png">|<img src="./documents/iphone_favorites_list.png">|
+|<img src="./documents/pc_favorites_list.png">|<img src="./documents/iphone_favorites_list.PNG">|
 
 |説明|
 |:---|
@@ -109,7 +109,7 @@ https://tapfindcase.com
 
 |PC版|スマートフォン版|
 |:-----------:|:-----------:|
-|<img src="./documents/pc_histories_list.png">|<img src="./documents/iphone_histories_list.png">|
+|<img src="./documents/pc_histories_list.png">|<img src="./documents/iphone_histories_list.PNG">|
 
 |説明|
 |:---|
