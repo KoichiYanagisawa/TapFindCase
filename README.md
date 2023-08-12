@@ -69,7 +69,7 @@ https://tapfindcase.com
 
 |PC版|スマートフォン版|
 |:-----------:|:-----------:|
-|<img src="./documents/pc_top.png">|<img src="./documents/iphone_top.PNG">|
+|<img src="./documents/pc_top.png">|<img src="./documents/iphone_top.png">|
 
 |説明|
 |:---|
@@ -79,7 +79,7 @@ https://tapfindcase.com
 
 |PC版|スマートフォン版|
 |:-----------:|:-----------:|
-|<img src="./documents/pc_products_list.png">|<img src="./documents/iphone_products_list.PNG">|
+|<img src="./documents/pc_products_list.png">|<img src="./documents/iphone_products_list.png">|
 
 |説明|
 |:---|
@@ -89,7 +89,7 @@ https://tapfindcase.com
 
 |PC版|スマートフォン版|
 |:-----------:|:-----------:|
-|<img src="./documents/pc_detail.png">|<img src="./documents/iphone_detail.PNG">|
+|<img src="./documents/pc_detail.png">|<img src="./documents/iphone_detail.png">|
 
 |説明|
 |:---|
@@ -99,7 +99,7 @@ https://tapfindcase.com
 
 |PC版|スマートフォン版|
 |:-----------:|:-----------:|
-|<img src="./documents/pc_favorites_list.png">|<img src="./documents/iphone_favorites_list.PNG">|
+|<img src="./documents/pc_favorites_list.png">|<img src="./documents/iphone_favorites_list.png">|
 
 |説明|
 |:---|
@@ -109,11 +109,47 @@ https://tapfindcase.com
 
 |PC版|スマートフォン版|
 |:-----------:|:-----------:|
-|<img src="./documents/pc_histories_list.png">|<img src="./documents/iphone_histories_list.PNG">|
+|<img src="./documents/pc_histories_list.png">|<img src="./documents/iphone_histories_list.png">|
 
 |説明|
 |:---|
 |過去に商品詳細画面へ遷移したことのある商品の一覧を表示します。20件以上ある場合は無限スクロールになります。ソート順は商品詳細画面を開いた時間が新しい順に並んでいます。|
+
+<details>
+
+<summary>その他画面</summary>
+
+### Cookieの保存許可を得る画面
+
+|PC版|スマートフォン版|
+|:-----------:|:-----------:|
+|<img src="./documents/pc_cookie.png">|<img src="./documents/iphone_cookie.png">|
+
+|説明|
+|:---|
+|Cookieの保存許可を得る画面は、全ての画面で表示されます。どの画面で保存許可を出しても即座に反映されます。|
+
+### モーダルによる利用規約の表示
+
+|PC版|スマートフォン版|
+|:-----------:|:-----------:|
+|<img src="./documents/pc_terms.png">|<img src="./documents/iphone_terms.png">|
+
+|説明|
+|:---|
+|利用規約はもともと別画面で表示していましたが、ブラウザで別画面から元の画面へ戻ってこれないユーザーが居ましたのでモーダルでの表示に変更しました。モーダル画面外を押すことで画面を閉じることができます。|
+
+### モーダルによるプライバシーポリシーの表示
+
+|PC版|スマートフォン版|
+|:-----------:|:-----------:|
+|<img src="./documents/pc_privacy.png">|<img src="./documents/iphone_privacy.png">|
+
+|説明|
+|:---|
+|プライバシーポリシーも利用規約と同様、モーダルでの表示にしました。モーダル画面外を押すことで画面を閉じることができます。|
+
+</details>
 
 ## インフラ構成図
 
