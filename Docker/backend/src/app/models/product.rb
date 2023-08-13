@@ -28,7 +28,13 @@ class Product
   end
 
   def self.all_unique_models
-    dynamodb.scan(table_name: 'TapFindCase').items.pluck('model').uniq.compact.sort.map { |model| { model: } }
+    items = dynamodb.scan(table_name: 'TapFindCase').items
+    models_with_non_empty_images = items.select do |item|
+      image_urls = item['image_urls']
+      thumbnail_urls = item['thumbnail_urls']
+      !(image_urls.nil? || image_urls.empty? || thumbnail_urls.nil? || thumbnail_urls.empty?)
+    end
+    models_with_non_empty_images.map { |item| item['model'] }.uniq.compact.sort.map { |model| { model: model } }
   end
 
   def self.find_by(field, value, index, sort_key, last_evaluated_key = nil, limit = 20)
