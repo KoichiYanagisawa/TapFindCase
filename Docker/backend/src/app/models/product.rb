@@ -29,10 +29,10 @@ class Product
 
   def self.all_unique_models
     items = dynamodb.scan(table_name: 'TapFindCase').items
-    models_with_non_empty_images = items.select do |item|
+    models_with_non_empty_images = items.reject do |item|
       image_urls = item['image_urls']
       thumbnail_urls = item['thumbnail_urls']
-      !(image_urls.nil? || image_urls.empty? || thumbnail_urls.nil? || thumbnail_urls.empty?)
+      image_urls.blank? || thumbnail_urls.blank?
     end
     models_with_non_empty_images.map { |item| item['model'] }.uniq.compact.sort.map { |model| { model: model } }
   end
