@@ -144,7 +144,7 @@ function ModelSelectPage() {
 
   const handleSearchClick = () => {
     if (selectedModelName !== '') {
-      navigate(`/product/${selectedModelName}`);
+      navigate(`/product/${encodeURIComponent(selectedModelName)}`);
     }
   };
 
