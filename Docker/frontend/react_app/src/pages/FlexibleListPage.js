@@ -59,7 +59,7 @@ function FlexibleListPage() {
 
   return (
     <div>
-      <CaseListPage key={location.pathname} apiPath={encodeURIComponent(apiPath)} />
+      <CaseListPage key={location.pathname} apiPath={apiPath} />
     </div>
   );
 }
