@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   get '/products', to: 'products#index'
   get '/products/detail/:name', to: 'products#detail', name: /.*/
-  get '/products/list/:model', to: 'products#model_list', constraints: { model: /[^\/]+/ }
+  get '/products/list/:model', to: 'products#model_list', constraints: { model: %r{[^/]+} }
   get '/products/list/favorite/:user_id', to: 'products#favorite_list'
   get '/products/list/history/:user_id', to: 'products#history_list'
 
