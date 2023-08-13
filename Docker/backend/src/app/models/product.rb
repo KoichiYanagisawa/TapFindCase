@@ -41,7 +41,7 @@ class Product
         ':SK' => sort_key,
         ':val' => value
       },
-      limit:limit
+      limit: limit
     }
     options[:exclusive_start_key] = last_evaluated_key if last_evaluated_key
     response = dynamodb.query(options)
