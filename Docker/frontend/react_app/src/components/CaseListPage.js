@@ -153,7 +153,7 @@ function CaseListPage({apiPath}) {
           setCases(updatedCases);
           setLastKey(data.last_evaluated_key);
         }
-        if(data.products.length < 20 || !data.last_evaluated_key){
+        if(data.products.length === 0 || !data.last_evaluated_key){
           setHasMore(false);
         }
       })
