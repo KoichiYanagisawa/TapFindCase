@@ -1,35 +1,35 @@
-name: info_scraper_cicd
+# name: info_scraper_cicd
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - "Docker/info_scraper/**"
+# on:
+#   push:
+#     branches:
+#       - main
+#     paths:
+#       - "Docker/info_scraper/**"
 
-env:
-  AWS_REGION: ap-northeast-1
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+# env:
+#   AWS_REGION: ap-northeast-1
+#   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
+#     steps:
+#       - uses: actions/checkout@v2
 
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+#       - name: Login to Amazon ECR
+#         id: login-ecr
+#         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build, tag, and push image to Amazon ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: info_scraper
-          IMAGE_TAG: latest
-        run: |
-          cd Docker
-          docker-compose --project-name tapfindcase build info_scraper
-          docker tag tapfindcase_info_scraper:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+#       - name: Build, tag, and push image to Amazon ECR
+#         env:
+#           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+#           ECR_REPOSITORY: info_scraper
+#           IMAGE_TAG: latest
+#         run: |
+#           cd Docker
+#           docker-compose --project-name tapfindcase build info_scraper
+#           docker tag tapfindcase_info_scraper:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+#           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG

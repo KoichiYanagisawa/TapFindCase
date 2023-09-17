@@ -1,52 +1,52 @@
-name: Build and Deploy to S3
+# name: Build and Deploy to S3
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - "Docker/frontend/react_app/**" #mainブランチにマージした時、Docker/frontend/react_app配下のファイルが更新されたら実行
+# on:
+#   push:
+#     branches:
+#       - main
+#     paths:
+#       - "Docker/frontend/react_app/**" #mainブランチにマージした時、Docker/frontend/react_app配下のファイルが更新されたら実行
 
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+# jobs:
+#   build-and-deploy:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code #GitHubActionsランナーにダウンロードする
-        uses: actions/checkout@v2
+#     steps:
+#       - name: Checkout code #GitHubActionsランナーにダウンロードする
+#         uses: actions/checkout@v2
 
-      - name: Setup Node.js environment #ランナーにnode.js環境のセットアップを行う
-        uses: actions/setup-node@v2
-        with:
-          node-version: "18"
+#       - name: Setup Node.js environment #ランナーにnode.js環境のセットアップを行う
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: "18"
 
-      # - name: Cache Node.js modules #node_modulesをキャッシュする
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: Docker/frontend/react_app/node_modules
-      #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-node-
+#       # - name: Cache Node.js modules #node_modulesをキャッシュする
+#       #   uses: actions/cache@v3
+#       #   with:
+#       #     path: Docker/frontend/react_app/node_modules
+#       #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#       #     restore-keys: |
+#       #       ${{ runner.os }}-node-
 
-      - name: Install Dependencies #依存関係をインストールする
-        working-directory: Docker/frontend/react_app
-        run: npm ci
+#       - name: Install Dependencies #依存関係をインストールする
+#         working-directory: Docker/frontend/react_app
+#         run: npm ci
 
-      - name: Build project #プロジェクトをビルドする
-        working-directory: Docker/frontend/react_app
-        run: npm run build
-        env:
-          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+#       - name: Build project #プロジェクトをビルドする
+#         working-directory: Docker/frontend/react_app
+#         run: npm run build
+#         env:
+#           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
 
-      - name: Configure AWS credentials #AWSの認証情報を設定する
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-1
+#       - name: Configure AWS credentials #AWSの認証情報を設定する
+#         uses: aws-actions/configure-aws-credentials@v1
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           aws-region: ap-northeast-1
 
-      - name: Upload to S3
-        run: aws s3 cp --recursive Docker/frontend/react_app/build/ s3://${{ secrets.AWS_S3_BUCKET }}/
+#       - name: Upload to S3
+#         run: aws s3 cp --recursive Docker/frontend/react_app/build/ s3://${{ secrets.AWS_S3_BUCKET }}/
 
-      - name: Invalidate CloudFront cache
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+#       - name: Invalidate CloudFront cache
+#         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
